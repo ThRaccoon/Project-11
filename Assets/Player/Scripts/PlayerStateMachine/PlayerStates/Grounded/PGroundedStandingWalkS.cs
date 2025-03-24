@@ -14,11 +14,6 @@ public class PGroundedStandingWalkS : PGroundedSuperState
 
         _player.currentPlayerScale = PlayerScale.Standing;
 
-        if (_player.previousPlayerScale == PlayerScale.Crouching)
-        {
-            _player.ApplyScale(true);
-        }
-
         //Debug.Log("Standing Walk");
     }
 
@@ -47,6 +42,12 @@ public class PGroundedStandingWalkS : PGroundedSuperState
     {
         base.PhysicsUpdate();
 
+        if (_player.previousPlayerScale == PlayerScale.Crouching)
+        {
+            _player.ApplyScale(true);
+            _player.previousPlayerScale = PlayerScale.Standing;
+        }
+
         _player.CalculateSlopeAngle();
 
         _movementVector = _player.ProcessMovementVector(_movementInput, _player.walkSpeed);
@@ -64,7 +65,5 @@ public class PGroundedStandingWalkS : PGroundedSuperState
     public override void OnExit()
     {
         base.OnExit();
-
-        _player.previousPlayerScale = PlayerScale.Standing;
     }
 }

@@ -10,7 +10,8 @@ public enum PlayerScale { Standing, Crouching }
 public class Player : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
-    [Header("Components Auto Assigning")]
+    [Header("Components")]
+    [Header("Auto Assigned")]
     [SerializeField] private CapsuleCollider _CapsuleCollider = null;
     [SerializeField] private Rigidbody _Rigidbody = null;
     [Header("----------")]
@@ -73,6 +74,8 @@ public class Player : MonoBehaviour
     private float _playerAngularDrag = 4.0f;
 
     // --- Scaling ---
+    [SerializeField] private float _crouchedYScale = 0.0f;
+
     private float _standingScaleY = 0.0f;
     private float _crouchingScaleY = 0.0f;
     private Vector3 _standingScaleVector = Vector3.zero;
@@ -111,15 +114,10 @@ public class Player : MonoBehaviour
         _Rigidbody = GetComponent<Rigidbody>();
 
         // --- Scaling ---
-        _standingScaleY = transform.localScale.y;
-        _crouchingScaleY = transform.localScale.y / 2.5f;
-
-        _standingScaleVector.Set(transform.localScale.x,
-                                 _standingScaleY,
-                                 transform.localScale.z);
+        _standingScaleVector = transform.localScale;
 
         _crouchingScaleVector.Set(transform.localScale.x,
-                                  _crouchingScaleY,
+                                  _crouchedYScale,
                                   transform.localScale.z);
 
         // --- Ray Casts ---
@@ -217,7 +215,16 @@ public class Player : MonoBehaviour
     // --- Apply Scale ---
     public void ApplyScale(bool isStanding)
     {
-        transform.localScale = isStanding ? _standingScaleVector : _crouchingScaleVector;
+        if (isStanding)
+        {
+            transform.localScale = _standingScaleVector;
+            _Rigidbody.position = new Vector3(transform.position.x, transform.position.y + _crouchedYScale, transform.position.z);
+        }
+        else
+        {
+            transform.localScale = _crouchingScaleVector;
+            _Rigidbody.position = new Vector3(transform.position.x, transform.position.y - _crouchedYScale, transform.position.z);
+        }
     }
 
 

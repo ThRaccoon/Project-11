@@ -11,9 +11,10 @@ public class PlayerInteract : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
+    [Header("Auto Assigned")]
     [Header("----------")]
-    [SerializeField] private Transform _PlayerCamera = null;
     [SerializeField] private PlayerInput _PlayerInput = null;
+    [SerializeField] private Camera _PlayerCamera = null;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -28,10 +29,15 @@ public class PlayerInteract : MonoBehaviour
     private RaycastHit _hitInfo;
 
 
+    private void Awake()
+    {
+        _PlayerCamera = Camera.main;        
+    }
+
     private void Update()
     {
         if (_PlayerInput != null && _PlayerInput.UseInput)
-        {
+        {   
             _shouldCastRay = true;
             _didCastRay = false;
         }
@@ -43,8 +49,8 @@ public class PlayerInteract : MonoBehaviour
         {
             if (_PlayerCamera != null)
             {
-                Debug.DrawRay(_PlayerCamera.position, _PlayerCamera.forward * _interactionRange);
-                Physics.Raycast(_PlayerCamera.position, _PlayerCamera.forward, out _hitInfo, _interactionRange);
+                Debug.DrawRay(_PlayerCamera.transform.position, _PlayerCamera.transform.forward * _interactionRange);
+                Physics.Raycast(_PlayerCamera.transform.position, _PlayerCamera.transform.forward, out _hitInfo, _interactionRange);
             }
 
             _shouldCastRay = false;
