@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &955920311749267875
 Transform:
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955920311749102979}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.5, y: -0.04, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
@@ -118,45 +118,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 955920311749267875}
     m_Modifications:
-    - target: {fileID: 1834747258217504268, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_ShapeRadius
-      value: 1.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 3558847252067689109, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_Range
-      value: 5.16
-      objectReference: {fileID: 0}
     - target: {fileID: 3558847252067689109, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
       propertyPath: m_Intensity
-      value: 2.1656446
+      value: 5.9838
       objectReference: {fileID: 0}
     - target: {fileID: 3558847252067689109, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_Lightmapping
-      value: 2
+      propertyPath: m_BoundingSphereOverride.w
+      value: 4.513251e+27
       objectReference: {fileID: 0}
     - target: {fileID: 3558847252067689109, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_ShadowRadius
-      value: 1.07
+      propertyPath: m_BoundingSphereOverride.x
+      value: 6.028e-42
       objectReference: {fileID: 0}
     - target: {fileID: 3558847252067689109, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_ColorTemperature
-      value: 6075
+      propertyPath: m_BoundingSphereOverride.y
+      value: 2.524355e-29
       objectReference: {fileID: 0}
     - target: {fileID: 3790853346848032100, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
       propertyPath: m_Name
       value: Spot Light
       objectReference: {fileID: 0}
-    - target: {fileID: 8171395899614431570, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.009999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 8171395899614431570, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.009999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 8171395899614431570, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.009999998
+    - target: {fileID: 3790853346848032100, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8171395899614431570, guid: 0e42245c3f90e97439cb7906a67bd023, type: 3}
       propertyPath: m_LocalPosition.x

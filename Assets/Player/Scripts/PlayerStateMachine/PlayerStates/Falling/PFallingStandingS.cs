@@ -12,11 +12,6 @@ public class PFallingStandingS : PFallingSuperState
 
         _player.currentPlayerScale = PlayerScale.Standing;
 
-        if (_player.previousPlayerScale == PlayerScale.Crouching)
-        {
-            _player.ApplyScale(true);
-        }
-
         //Debug.Log("Falling Standing");
     }
 
@@ -40,6 +35,12 @@ public class PFallingStandingS : PFallingSuperState
     {
         base.PhysicsUpdate();
 
+        if (_player.previousPlayerScale == PlayerScale.Crouching)
+        {
+            _player.ApplyScale(true);
+            _player.previousPlayerScale = PlayerScale.Standing;
+        }
+
         _movementVector = _player.ProcessMovementVector(_movementInput, _player.walkSpeed);
         _movementVector.y = _player.CalculatePullDownForce();
 
@@ -52,7 +53,6 @@ public class PFallingStandingS : PFallingSuperState
     {
         base.OnExit();
 
-        _player.previousPlayerScale = PlayerScale.Standing;
         _player.wasPreviousStateFalling = true;
     }
 }

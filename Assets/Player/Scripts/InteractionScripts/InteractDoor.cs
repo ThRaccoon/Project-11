@@ -6,7 +6,8 @@ using UnityEngine;
 public class InteractDoor : MonoBehaviour, IInteractable
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
-    [Header("Components Auto Assigning")]
+    [Header("Components")]
+    [Header("Auto Assigned")]
     [SerializeField] private MeshCollider _MeshCollider = null;
     [Header("----------")]
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -14,6 +15,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Settings")]
+    [SerializeField] private bool _isInitiallyOpened = false;
     [SerializeField] private bool _isOpenDirectionReversed = false;
     [SerializeField] private float _openAngle = 0.0f;
     [SerializeField] private float _closeAngle = 0.0f;
@@ -33,16 +35,17 @@ public class InteractDoor : MonoBehaviour, IInteractable
         Opened, Opening, Closed, Closing
     }
 
-    private DoorState _currentState = DoorState.Closed;
+    private DoorState _currentState;
 
 
     private void Awake()
     {
         // --- Components ---
-
         _MeshCollider = GetComponent<MeshCollider>();
 
         meshColliders = GetComponentsInChildren<MeshCollider>();
+
+        _currentState = _isInitiallyOpened ? DoorState.Opened : DoorState.Closed;
 
         if (_isOpenDirectionReversed)
         {
@@ -54,26 +57,20 @@ public class InteractDoor : MonoBehaviour, IInteractable
     {
         if (_currentState == DoorState.Opening || _currentState == DoorState.Closing)
         {
-
             _rotationLerpProgress += _rotationSpeed * Time.deltaTime;
 
             transform.localRotation = Quaternion.Slerp(_startRotationPoint, _targetRotationPoint, _rotationLerpProgress);
 
             if (_rotationLerpProgress >= 1.0f)
             {
+                if (_MeshCollider != null)
+                {
+                    _MeshCollider.enabled = true;
+                }
+
                 foreach (MeshCollider meshCollider in meshColliders)
                 {
                     meshCollider.enabled = true;
-                }
-
-                if (transform.childCount > 0)
-                {
-                    MeshCollider meshCollider = transform.GetChild(0).GetComponent<MeshCollider>();
-
-                    if (meshCollider != null)
-                    {
-                        meshCollider.enabled = false;
-                    }
                 }
 
                 // Play Sound
@@ -107,12 +104,9 @@ public class InteractDoor : MonoBehaviour, IInteractable
             _MeshCollider.enabled = false;
         }
 
-        if (transform.childCount > 0)
+        foreach (MeshCollider meshCollider in meshColliders)
         {
-            foreach (MeshCollider meshCollider in meshColliders)
-            {
-                meshCollider.enabled = false;
-            }
+            meshCollider.enabled = false;
         }
 
         _rotationLerpProgress = 0.0f;

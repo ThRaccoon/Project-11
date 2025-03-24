@@ -1506,7 +1506,7 @@ MonoBehaviour:
     m_Value: 1
   planetRadius:
     m_OverrideState: 1
-    m_Value: 6378.1
+    m_Value: 6400
   renderingSpace:
     m_OverrideState: 1
     m_Value: 1
@@ -2507,7 +2507,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
   useFullACES:
     m_OverrideState: 1
     m_Value: 0
@@ -2654,7 +2654,7 @@ MonoBehaviour:
     m_Value: 8
   m_FarMaxBlur:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 1
   m_Resolution:
     m_OverrideState: 1
     m_Value: 1

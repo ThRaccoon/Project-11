@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     [Header("Components")]
+    [Header("Auto Assigned")]
     [SerializeField] private Transform _CameraHolder = null;
     [SerializeField] private Transform _CameraRotation = null;
     [SerializeField] private PlayerInput _PlayerInput = null;

@@ -13,11 +13,6 @@ public class PGroundedCrouchingIdleS : PGroundedSuperState
 
         _player.currentPlayerScale = PlayerScale.Crouching;
 
-        if (_player.previousPlayerScale == PlayerScale.Standing)
-        {
-            _player.ApplyScale(false);
-        }
-
         //Debug.Log("Crouching Idle");
     }
 
@@ -46,6 +41,12 @@ public class PGroundedCrouchingIdleS : PGroundedSuperState
     {
         base.PhysicsUpdate();
 
+        if (_player.previousPlayerScale == PlayerScale.Standing)
+        {
+            _player.ApplyScale(false);
+            _player.previousPlayerScale = PlayerScale.Crouching;
+        }
+
         _player.ApplyStoppingForce();
 
         _didPhysicsUpdateRan = true;
@@ -54,7 +55,5 @@ public class PGroundedCrouchingIdleS : PGroundedSuperState
     public override void OnExit()
     {
         base.OnExit();
-
-        _player.previousPlayerScale = PlayerScale.Crouching;
     }
 }
