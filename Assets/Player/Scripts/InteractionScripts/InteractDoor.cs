@@ -8,7 +8,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [Header("Auto Assigned")]
-    [SerializeField] private MeshCollider _MeshCollider = null;
+    [SerializeField] private BoxCollider _MeshCollider = null;
     [Header("----------")]
     // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
     private float _rotationLerpProgress = 0.0f;
     private Quaternion _startRotationPoint = Quaternion.identity;
     private Quaternion _targetRotationPoint = Quaternion.identity;
-    MeshCollider[] meshColliders;
+    BoxCollider[] meshColliders;
 
     private enum DoorState
     {
@@ -41,9 +41,9 @@ public class InteractDoor : MonoBehaviour, IInteractable
     private void Awake()
     {
         // --- Components ---
-        _MeshCollider = GetComponent<MeshCollider>();
+        _MeshCollider = GetComponent<BoxCollider>();
 
-        meshColliders = GetComponentsInChildren<MeshCollider>();
+        meshColliders = GetComponentsInChildren<BoxCollider>();
 
         _currentState = _isInitiallyOpened ? DoorState.Opened : DoorState.Closed;
 
@@ -68,7 +68,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
                     _MeshCollider.enabled = true;
                 }
 
-                foreach (MeshCollider meshCollider in meshColliders)
+                foreach (BoxCollider meshCollider in meshColliders)
                 {
                     meshCollider.enabled = true;
                 }
@@ -104,7 +104,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
             _MeshCollider.enabled = false;
         }
 
-        foreach (MeshCollider meshCollider in meshColliders)
+        foreach (BoxCollider meshCollider in meshColliders)
         {
             meshCollider.enabled = false;
         }
