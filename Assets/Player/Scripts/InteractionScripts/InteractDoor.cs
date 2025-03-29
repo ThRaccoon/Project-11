@@ -8,7 +8,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [Header("Auto Assigned")]
-    [SerializeField] private BoxCollider _MeshCollider = null;
+    [SerializeField] private BoxCollider _BoxCollider = null;
     [Header("----------")]
     // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
     private float _rotationLerpProgress = 0.0f;
     private Quaternion _startRotationPoint = Quaternion.identity;
     private Quaternion _targetRotationPoint = Quaternion.identity;
-    BoxCollider[] meshColliders;
+    BoxCollider[] boxColliders;
 
     private enum DoorState
     {
@@ -41,9 +41,9 @@ public class InteractDoor : MonoBehaviour, IInteractable
     private void Awake()
     {
         // --- Components ---
-        _MeshCollider = GetComponent<BoxCollider>();
+        _BoxCollider = GetComponent<BoxCollider>();
 
-        meshColliders = GetComponentsInChildren<BoxCollider>();
+        boxColliders = GetComponentsInChildren<BoxCollider>();
 
         _currentState = _isInitiallyOpened ? DoorState.Opened : DoorState.Closed;
 
@@ -63,12 +63,12 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
             if (_rotationLerpProgress >= 1.0f)
             {
-                if (_MeshCollider != null)
+                if (_BoxCollider != null)
                 {
-                    _MeshCollider.enabled = true;
+                    _BoxCollider.enabled = true;
                 }
 
-                foreach (BoxCollider meshCollider in meshColliders)
+                foreach (BoxCollider meshCollider in boxColliders)
                 {
                     meshCollider.enabled = true;
                 }
@@ -99,12 +99,12 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void Rotate(Quaternion targetRotation)
     {
-        if (_MeshCollider != null)
+        if (_BoxCollider != null)
         {
-            _MeshCollider.enabled = false;
+            _BoxCollider.enabled = false;
         }
 
-        foreach (BoxCollider meshCollider in meshColliders)
+        foreach (BoxCollider meshCollider in boxColliders)
         {
             meshCollider.enabled = false;
         }

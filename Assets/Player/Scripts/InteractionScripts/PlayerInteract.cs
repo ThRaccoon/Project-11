@@ -12,9 +12,9 @@ public class PlayerInteract : MonoBehaviour
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [Header("Auto Assigned")]
+    private Camera _PlayerCamera = null;
     [Header("----------")]
     [SerializeField] private PlayerInput _PlayerInput = null;
-    [SerializeField] private Camera _PlayerCamera = null;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -50,13 +50,14 @@ public class PlayerInteract : MonoBehaviour
             if (_PlayerCamera != null)
             {
                 Debug.DrawRay(_PlayerCamera.transform.position, _PlayerCamera.transform.forward * _interactionRange);
-                Physics.Raycast(_PlayerCamera.transform.position, _PlayerCamera.transform.forward, out _hitInfo, _interactionRange);
+                
+                if (Physics.Raycast(_PlayerCamera.transform.position, _PlayerCamera.transform.forward, out _hitInfo, _interactionRange))
+                {
+                    TryToInteract(); 
+                }
             }
-
             _shouldCastRay = false;
             _didCastRay = true;
-
-            TryToInteract();
         }
     }
 
