@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 8941191080730500412}
   - component: {fileID: 2723459006059611635}
   m_Layer: 0
-  m_Name: Point light
+  m_Name: Surgery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1769014781462305098
 Transform:
@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 47834589122619612}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000009477094, y: 0.96797264, z: 0.000000036539955, w: -0.2510558}
-  m_LocalPosition: {x: 0.00085, y: -0.01486, z: -0.00047}
+  m_LocalRotation: {x: 0, y: -0.9659258, z: 0, w: 0.2588191}
+  m_LocalPosition: {x: 0.00191, y: -0.01683, z: -0.00106}
   m_LocalScale: {x: 0.009999998, y: 0.01, z: 0.009999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1554058323909379590}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -150, z: 0}
 --- !u!108 &8941191080730500412
 Light:
   m_ObjectHideFlags: 0
@@ -40,17 +40,17 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 47834589122619612}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 47.746483
-  m_Range: 5
+  m_Intensity: 11.936621
+  m_Range: 0.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -87,9 +87,9 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_ColorTemperature: 6500
   m_UseColorTemperature: 1
-  m_BoundingSphereOverride: {x: NaN, y: 0, z: 0, w: 1e-45}
+  m_BoundingSphereOverride: {x: 6.211e-41, y: 2.524355e-29, z: 0, w: 5.790138e+29}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
@@ -256,7 +256,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1554058323909379590
 Transform:
@@ -268,7 +268,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.96797264, z: 0, w: -0.2510558}
   m_LocalPosition: {x: -0.049000002, y: 3.625, z: 0.109000206}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 100.000015, y: 100, z: 100.000015}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1769014781462305098}
