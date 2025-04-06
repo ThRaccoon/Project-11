@@ -2361,7 +2361,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "441464b78ae242978075188d47cd3152",
     "m_Id": 0,
-    "m_DisplayName": "devide",
+    "m_DisplayName": "Divide",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -5969,10 +5969,10 @@
     "m_Guid": {
         "m_GuidSerialized": "c855476b-f579-470f-94d3-84460520dcc0"
     },
-    "m_Name": "devide",
+    "m_Name": "Divide",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "devide",
-    "m_DefaultReferenceName": "_devide",
+    "m_RefNameGeneratedByDisplayName": "Divide",
+    "m_DefaultReferenceName": "_Divide",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
