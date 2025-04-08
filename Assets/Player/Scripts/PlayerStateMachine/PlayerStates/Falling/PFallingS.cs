@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class PFallingS : PFallingSuperState
 {
-    public PFallingS(Player player, PlayerStateManager stateMachine, bool didPhysicsUpdateRan) : base(player, stateMachine, didPhysicsUpdateRan) { }
+    public PFallingS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
+    {
+    }
 
     public override void OnEnter()
     {
         base.OnEnter();
 
-        //Debug.Log("Falling");
+        // Debug.Log("Falling State");
     }
 
     public override void LogicUpdate()
@@ -22,20 +25,19 @@ public class PFallingS : PFallingSuperState
 
 
         // --- State Transitions ---
-        if (_player.previousPlayerScale == PlayerScale.Standing)
-        {
-            _stateMachine.ChangeState(_player.FallingStandingS);
-        }
-        else
-        {
-            _stateMachine.ChangeState(_player.FallingCrouchingS);
-        }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        _movementVector = ProcessMovementVector(_movementInput, _Player.walkSpeed);
+        _movementVector.y = CalculatePullDownForce();
+
+        ApplyMovementForce(_movementVector);
+
+        _didPhysicsUpdateRan = true;
     }
 
     public override void OnExit()

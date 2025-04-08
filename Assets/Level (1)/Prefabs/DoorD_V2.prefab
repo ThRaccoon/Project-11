@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 336456431463145392}
   - component: {fileID: 2973620315899614352}
   - component: {fileID: 8631533141261251160}
-  - component: {fileID: 7312192726737635090}
+  - component: {fileID: 7402283057731480027}
   - component: {fileID: 6743178698649059748}
   m_Layer: 0
   m_Name: DoorD_V2_Left
@@ -123,7 +123,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7312192726737635090
+--- !u!65 &7402283057731480027
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,8 +142,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.00948614, y: 0.020984178, z: 0.0015871}
-  m_Center: {x: -0.0047025033, y: 0.008798363, z: -0.000014125719}
+  m_Size: {x: 0.009486144, y: 0.020984178, z: 0.0015871008}
+  m_Center: {x: -0.0047025057, y: 0.008798354, z: -0.000014096039}
 --- !u!114 &6743178698649059748
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PLandedS : PGroundedSuperState
 {
-    public PLandedS(Player player, PlayerStateManager stateManager, bool didPhysicsUpdateRan)
-        : base(player, stateManager, didPhysicsUpdateRan) { }
+    public PLandedS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
+    {
+    }
 
     public override void OnEnter()
     {
         base.OnEnter();
 
-        //Debug.Log("Landed");
+        // Debug.Log("Landed State");
     }
 
     public override void LogicUpdate()
@@ -23,14 +25,7 @@ public class PLandedS : PGroundedSuperState
 
 
         // --- State Transitions ---
-        if (_player.previousPlayerScale == PlayerScale.Standing)
-        {
-            _stateMachine.ChangeState(_player.GroundedStandingWalkS);
-        }
-        else
-        {
-            _stateMachine.ChangeState(_player.GroundedCrouchingWalkS);
-        }
+        _StateMachine.ChangeState(_Player.GroundedWalkS);
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
@@ -42,7 +37,5 @@ public class PLandedS : PGroundedSuperState
     public override void OnExit()
     {
         base.OnExit();
-
-        _player.ResetPullDownForce();
     }
 }

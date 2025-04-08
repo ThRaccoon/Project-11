@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PGroundedSuperState : PlayerBaseState
 {
-    public PGroundedSuperState(Player player, PlayerStateManager stateMachine, bool didPhysicsUpdateRan) : base(player, stateMachine, didPhysicsUpdateRan) { }
+    protected float _slopeAngle = 0.0f;
+
+
+    public PGroundedSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
+    {
+    }
 
     public override void OnEnter()
     {
         base.OnEnter();
 
-        //Debug.Log("Grounded Super State");
+        // Debug.Log("Grounded Super State");
     }
 
     public override void LogicUpdate()
@@ -22,9 +28,9 @@ public class PGroundedSuperState : PlayerBaseState
 
 
         // --- State Transitions ---
-        if (!_player.isGrounded && _didPhysicsUpdateRan)
+        if (!_Player.IsGrounded && _didPhysicsUpdateRan)
         {
-            _stateMachine.ChangeState(_player.FallingS);
+            _StateMachine.ChangeState(_Player.AirborneS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
@@ -33,19 +39,37 @@ public class PGroundedSuperState : PlayerBaseState
     {
         base.PhysicsUpdate();
 
-        if (_player.currentPlayerScale == PlayerScale.Standing)
-        {
-            _player.IsGrounded(_player.standingGroundCheckLength);
-        }
-        else
-        {
-            _player.CanStandUp();
-            _player.IsGrounded(_player.crouchingGroundCheckLength);
-        }
+        IsGrounded(_Player.standingGroundCheckLength);
     }
 
     public override void OnExit()
     {
         base.OnExit();
+    }
+
+
+    // --- Slope Angle / Projection ---
+    public void CalculateSlopeAngle()
+    {
+        _slopeAngle = Vector3.Angle(Vector3.up, _hitInfo.normal);
+    }
+
+    public Vector3 CalculateSlopeProjection(Vector3 movementVector)
+    {
+        return Vector3.ProjectOnPlane(movementVector, _hitInfo.normal);
+    }
+
+
+    // --- Apply Force ---
+    public void ApplyStoppingForce()
+    {
+        if (_Rigidbody != null)
+        {
+            _Rigidbody.linearVelocity *= _Player.stoppingForce;
+            if (_Rigidbody.linearVelocity.magnitude < 0.01f)
+            {
+                _Rigidbody.linearVelocity = Vector3.zero;
+            }
+        }
     }
 }
