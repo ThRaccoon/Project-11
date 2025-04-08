@@ -7,10 +7,9 @@ public class PGroundedSuperState : PlayerBaseState
     protected float _slopeAngle = 0.0f;
 
 
-    public PGroundedSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
-    {
-    }
+    public PGroundedSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+
 
     public override void OnEnter()
     {
@@ -40,6 +39,8 @@ public class PGroundedSuperState : PlayerBaseState
         base.PhysicsUpdate();
 
         IsGrounded(_Player.standingGroundCheckLength);
+
+        _didPhysicsUpdateRan = true;
     }
 
     public override void OnExit()
@@ -48,20 +49,17 @@ public class PGroundedSuperState : PlayerBaseState
     }
 
 
-    // --- Slope Angle / Projection ---
-    public void CalculateSlopeAngle()
+    protected void CalculateSlopeAngle()
     {
         _slopeAngle = Vector3.Angle(Vector3.up, _hitInfo.normal);
     }
 
-    public Vector3 CalculateSlopeProjection(Vector3 movementVector)
+    protected Vector3 CalculateSlopeProjection(Vector3 movementVector)
     {
         return Vector3.ProjectOnPlane(movementVector, _hitInfo.normal);
     }
 
-
-    // --- Apply Force ---
-    public void ApplyStoppingForce()
+    protected void ApplyStoppingForce()
     {
         if (_Rigidbody != null)
         {

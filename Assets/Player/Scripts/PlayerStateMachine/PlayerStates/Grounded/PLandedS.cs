@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PLandedS : PGroundedSuperState
 {
-    public PLandedS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
-    {
-    }
+    public PLandedS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+
 
     public override void OnEnter()
     {
@@ -37,5 +36,7 @@ public class PLandedS : PGroundedSuperState
     public override void OnExit()
     {
         base.OnExit();
+
+        ResetPullDownForce();
     }
 }

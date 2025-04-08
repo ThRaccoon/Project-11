@@ -110,7 +110,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Crouch"",
+                    ""name"": ""Run"",
                     ""type"": ""Button"",
                     ""id"": ""aaf13fcb-60c1-4297-a6b2-806455fc7eec"",
                     ""expectedControlType"": """",
@@ -207,11 +207,11 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""29adb050-01fe-4356-90d9-6945826d26af"",
-                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -246,7 +246,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround = asset.FindActionMap("OnGround", throwIfNotFound: true);
         m_OnGround_Rotation = m_OnGround.FindAction("Rotation", throwIfNotFound: true);
         m_OnGround_Movement = m_OnGround.FindAction("Movement", throwIfNotFound: true);
-        m_OnGround_Crouch = m_OnGround.FindAction("Crouch", throwIfNotFound: true);
+        m_OnGround_Run = m_OnGround.FindAction("Run", throwIfNotFound: true);
         m_OnGround_Shoot = m_OnGround.FindAction("Shoot", throwIfNotFound: true);
         m_OnGround_Use = m_OnGround.FindAction("Use", throwIfNotFound: true);
     }
@@ -331,7 +331,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private List<IOnGroundActions> m_OnGroundActionsCallbackInterfaces = new List<IOnGroundActions>();
     private readonly InputAction m_OnGround_Rotation;
     private readonly InputAction m_OnGround_Movement;
-    private readonly InputAction m_OnGround_Crouch;
+    private readonly InputAction m_OnGround_Run;
     private readonly InputAction m_OnGround_Shoot;
     private readonly InputAction m_OnGround_Use;
     /// <summary>
@@ -354,9 +354,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Movement => m_Wrapper.m_OnGround_Movement;
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Crouch".
+        /// Provides access to the underlying input action "OnGround/Run".
         /// </summary>
-        public InputAction @Crouch => m_Wrapper.m_OnGround_Crouch;
+        public InputAction @Run => m_Wrapper.m_OnGround_Run;
         /// <summary>
         /// Provides access to the underlying input action "OnGround/Shoot".
         /// </summary>
@@ -397,9 +397,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Crouch.started += instance.OnCrouch;
-            @Crouch.performed += instance.OnCrouch;
-            @Crouch.canceled += instance.OnCrouch;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
@@ -423,9 +423,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Crouch.started -= instance.OnCrouch;
-            @Crouch.performed -= instance.OnCrouch;
-            @Crouch.canceled -= instance.OnCrouch;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
@@ -487,12 +487,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMovement(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Run" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCrouch(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Shoot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

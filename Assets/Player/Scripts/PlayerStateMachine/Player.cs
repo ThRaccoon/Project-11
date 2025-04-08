@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float forceIncrementTimeInterval { get; private set; } = 0.2f;
 
 
+    #region Getters / Setters
+
     private float _currentPullDownForce = 0.0f;
 
     public float CurrentPullDownForce
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
         get => _accumulatedForceValue;
         set => _accumulatedForceValue = value;
     }
+    #endregion
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -73,6 +76,7 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float standingGroundCheckLength { get; private set; } = 0.125f;
 
 
+    #region Getters / Setters
     private bool _isGrounded = false;
 
     public bool IsGrounded
@@ -80,6 +84,7 @@ public class Player : MonoBehaviour
         get => _isGrounded;
         set => _isGrounded = value;
     }
+    #endregion
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -129,9 +134,9 @@ public class Player : MonoBehaviour
 
 
         // --- State Machine / States --- 
-        BaseState = new PlayerBaseState(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
         StateManager = new PlayerStateManager();
-
+        BaseState = new PlayerBaseState(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
+        
         // --- Grounded States ---
         GroundedSuperState = new PGroundedSuperState(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
         LandedS = new PLandedS(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);

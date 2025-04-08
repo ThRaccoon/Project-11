@@ -11,7 +11,7 @@ public class PlayerInput : MonoBehaviour
 
     public Vector2 MovementInput { get; private set; } = Vector2.zero;
 
-    public bool CrouchInput { get; private set; } = false;
+    public bool RunInput { get; private set; } = false;
 
     public bool ShootInput { get; private set; } = false;
 
@@ -33,8 +33,8 @@ public class PlayerInput : MonoBehaviour
         _PlayerInputManager.OnGround.Movement.performed += GetMovementInput;
         _PlayerInputManager.OnGround.Movement.canceled += GetMovementInput;
 
-        _PlayerInputManager.OnGround.Crouch.performed += GetCrouchInput;
-        _PlayerInputManager.OnGround.Crouch.canceled += GetCrouchInput;
+        _PlayerInputManager.OnGround.Run.performed += GetRunInput;
+        _PlayerInputManager.OnGround.Run.canceled += GetRunInput;
 
         _PlayerInputManager.OnGround.Shoot.performed += GetShootInput;
         _PlayerInputManager.OnGround.Shoot.canceled += GetShootInput;
@@ -51,8 +51,8 @@ public class PlayerInput : MonoBehaviour
         _PlayerInputManager.OnGround.Movement.performed -= GetMovementInput;
         _PlayerInputManager.OnGround.Movement.canceled -= GetMovementInput;
 
-        _PlayerInputManager.OnGround.Crouch.performed -= GetCrouchInput;
-        _PlayerInputManager.OnGround.Crouch.canceled -= GetCrouchInput;
+        _PlayerInputManager.OnGround.Run.performed -= GetRunInput;
+        _PlayerInputManager.OnGround.Run.canceled -= GetRunInput;
 
         _PlayerInputManager.OnGround.Shoot.performed -= GetShootInput;
         _PlayerInputManager.OnGround.Shoot.canceled -= GetShootInput;
@@ -74,9 +74,9 @@ public class PlayerInput : MonoBehaviour
         MovementInput = ctx.ReadValue<Vector2>();
     }
 
-    private void GetCrouchInput(InputAction.CallbackContext ctx)
+    private void GetRunInput(InputAction.CallbackContext ctx)
     {
-        CrouchInput = ctx.ReadValueAsButton();
+        RunInput = ctx.ReadValueAsButton();
     }
 
     private void GetShootInput(InputAction.CallbackContext ctx)

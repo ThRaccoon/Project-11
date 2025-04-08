@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PlayerBaseState
 {
+    // --- Components ---
     protected Player _Player = null;
     protected Rigidbody _Rigidbody = null;
     protected PlayerInput _PlayerInput = null;
     protected PlayerStateManager _StateMachine = null;
     protected Transform _CameraRotation = null;
     
+    // --- variables ---
     protected bool _didPhysicsUpdateRan = false;
     protected RaycastHit _hitInfo;
 
@@ -34,6 +35,7 @@ public class PlayerBaseState
         _didPhysicsUpdateRan = false;
     }
 
+
     public virtual void OnEnter()
     {
         _didPhysicsUpdateRan = false;
@@ -42,6 +44,7 @@ public class PlayerBaseState
     public virtual void LogicUpdate()
     {
         _movementInput = _PlayerInput.MovementInput;
+        _runInput = _PlayerInput.RunInput;
     }
 
     public virtual void PhysicsUpdate() { }
@@ -49,7 +52,6 @@ public class PlayerBaseState
     public virtual void OnExit() { }
 
 
-    // --- Rotation / Movement Input / Movement Speed ---
     protected Vector3 ProcessMovementVector(Vector2 movementInput, float movementSpeed)
     {
         Vector3 movementVector = new Vector3(movementInput.x * movementSpeed, 0.0f, movementInput.y * movementSpeed);
@@ -62,9 +64,7 @@ public class PlayerBaseState
         return movementVector;
     }
 
-
-    // --- Apply Force ---
-    public void ApplyMovementForce(Vector3 movementVector)
+    protected void ApplyMovementForce(Vector3 movementVector)
     {
         if (_Rigidbody != null)
         {
@@ -72,9 +72,14 @@ public class PlayerBaseState
         }
     }
 
+    protected void ResetPullDownForce()
+    {
+        _Player.AccumulatedForceValue = 0;
+        _Player.CurrentPullDownForce = _Player.defaultPullDownForce;
+        _Player.ForceIncrementTimer = _Player.forceIncrementTimeInterval;
+    }
 
-    // --- Ground Check ---
-    public void IsGrounded(float raycastLength)
+    protected void IsGrounded(float raycastLength)
     {
         _Player.IsGrounded = false;
 

@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PGroundedWalkS : PGroundedSuperState
 {
-    public PGroundedWalkS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
-    {
-    }
+    public PGroundedWalkS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+
 
     public override void OnEnter()
     {
@@ -24,7 +22,7 @@ public class PGroundedWalkS : PGroundedSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
-      
+
         // --- State Transitions ---
         if (_movementInput == Vector2.zero && _didPhysicsUpdateRan)
         {
@@ -39,9 +37,7 @@ public class PGroundedWalkS : PGroundedSuperState
 
         CalculateSlopeAngle();
 
-        //_movementVector = _player.ProcessMovementVector(_movementInput, _player.walkSpeed);
         _movementVector = ProcessMovementVector(_movementInput, _Player.walkSpeed);
-
 
         if (_slopeAngle > 0)
         {

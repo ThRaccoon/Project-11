@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PGroundedIdleS : PGroundedSuperState
 {
-    public PGroundedIdleS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
-    {
-    }
+    public PGroundedIdleS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+
 
     public override void OnEnter()
     {

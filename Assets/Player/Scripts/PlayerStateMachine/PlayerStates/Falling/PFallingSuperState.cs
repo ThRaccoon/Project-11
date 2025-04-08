@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PFallingSuperState : PlayerBaseState
 {
-    public PFallingSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine) 
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine)
-    {
-    }
+    public PFallingSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
+        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+
 
     public override void OnEnter()
     {
@@ -37,18 +36,17 @@ public class PFallingSuperState : PlayerBaseState
         base.PhysicsUpdate();
 
         IsGrounded(_Player.standingGroundCheckLength);
+
+        _didPhysicsUpdateRan = true;
     }
 
     public override void OnExit()
     {
         base.OnExit();
-
-        ResetPullDownForce();
     }
 
 
-    // --- Pull-Down Force ---
-    public float CalculatePullDownForce()
+    protected float CalculatePullDownForce()
     {
         _Player.ForceIncrementTimer -= Time.fixedDeltaTime;
         _Player.CurrentPullDownForce = _Player.AccumulatedForceValue + _Player.minPullDownForce;
@@ -63,12 +61,5 @@ public class PFallingSuperState : PlayerBaseState
             _Player.ForceIncrementTimer = _Player.forceIncrementTimeInterval;
         }
         return _Player.CurrentPullDownForce;
-    }
-
-    public void ResetPullDownForce()
-    {
-        _Player.AccumulatedForceValue = 0;
-        _Player.CurrentPullDownForce = _Player.defaultPullDownForce;
-        _Player.ForceIncrementTimer = _Player.forceIncrementTimeInterval;
     }
 }

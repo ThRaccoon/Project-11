@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Crouch",
+                    "name": "Run",
                     "type": "Button",
                     "id": "aaf13fcb-60c1-4297-a6b2-806455fc7eec",
                     "expectedControlType": "",
@@ -121,11 +121,11 @@
                 {
                     "name": "",
                     "id": "29adb050-01fe-4356-90d9-6945826d26af",
-                    "path": "<Keyboard>/leftCtrl",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Crouch",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
