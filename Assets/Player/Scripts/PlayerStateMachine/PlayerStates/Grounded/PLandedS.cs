@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PLandedS : PGroundedSuperState
 {
-    public PLandedS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+    public PLandedS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
+        : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
 
     public override void OnEnter()
@@ -24,7 +24,7 @@ public class PLandedS : PGroundedSuperState
 
 
         // --- State Transitions ---
-        _StateMachine.ChangeState(_Player.GroundedWalkS);
+        _StateManager.ChangeState(_Player.GroundedWalkS);
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 

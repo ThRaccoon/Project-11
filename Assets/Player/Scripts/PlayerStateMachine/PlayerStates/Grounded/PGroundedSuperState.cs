@@ -7,8 +7,8 @@ public class PGroundedSuperState : PlayerBaseState
     protected float _slopeAngle = 0.0f;
 
 
-    public PGroundedSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+    public PGroundedSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
+        : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
 
     public override void OnEnter()
@@ -29,7 +29,7 @@ public class PGroundedSuperState : PlayerBaseState
         // --- State Transitions ---
         if (!_Player.IsGrounded && _didPhysicsUpdateRan)
         {
-            _StateMachine.ChangeState(_Player.AirborneS);
+            _StateManager.ChangeState(_Player.AirborneS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
@@ -69,5 +69,12 @@ public class PGroundedSuperState : PlayerBaseState
                 _Rigidbody.linearVelocity = Vector3.zero;
             }
         }
+    }
+
+    protected void ResetPullDownForce()
+    {
+        _Player.AccumulatedForceValue = 0;
+        _Player.CurrentPullDownForce = _Player.defaultPullDownForce;
+        _Player.forceIncrementTimer.Reset();
     }
 }

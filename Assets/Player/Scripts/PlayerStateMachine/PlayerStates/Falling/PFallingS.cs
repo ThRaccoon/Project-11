@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PFallingS : PFallingSuperState
 {
-    public PFallingS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+    public PFallingS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
+        : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
 
     public override void OnEnter()

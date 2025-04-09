@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PFallingSuperState : PlayerBaseState
 {
-    public PFallingSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+    public PFallingSuperState(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
+        : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
 
     public override void OnEnter()
@@ -26,7 +26,7 @@ public class PFallingSuperState : PlayerBaseState
         // --- State Transitions ---
         if (_Player.IsGrounded && _didPhysicsUpdateRan)
         {
-            _StateMachine.ChangeState(_Player.LandedS);
+            _StateManager.ChangeState(_Player.LandedS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
@@ -48,18 +48,27 @@ public class PFallingSuperState : PlayerBaseState
 
     protected float CalculatePullDownForce()
     {
-        _Player.ForceIncrementTimer -= Time.fixedDeltaTime;
+        if (_Player.CurrentPullDownForce == _Player.maxPullDownForce)
+        {
+            return _Player.maxPullDownForce;
+        }
+
+        _Player.forceIncrementTimer.CountDownTimer();
+
+        if (_Player.forceIncrementTimer.flag)
+        {
+            _Player.AccumulatedForceValue += _Player.pullDownForceIncrement;
+            _Player.forceIncrementTimer.Reset();
+        }
+
         _Player.CurrentPullDownForce = _Player.AccumulatedForceValue + _Player.minPullDownForce;
 
-        if (_Player.ForceIncrementTimer < 0)
+        if (_Player.CurrentPullDownForce < _Player.maxPullDownForce) 
         {
-            if (_Player.CurrentPullDownForce > _Player.maxPullDownForce)
-            {
-                _Player.AccumulatedForceValue += _Player.pullDownForceIncrement;
-            }
-
-            _Player.ForceIncrementTimer = _Player.forceIncrementTimeInterval;
+            _Player.CurrentPullDownForce = _Player.maxPullDownForce;
         }
+
         return _Player.CurrentPullDownForce;
     }
 }
+

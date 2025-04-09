@@ -9,9 +9,9 @@ public class PlayerBaseState
     protected Player _Player = null;
     protected Rigidbody _Rigidbody = null;
     protected PlayerInput _PlayerInput = null;
-    protected PlayerStateManager _StateMachine = null;
+    protected PlayerStateManager _StateManager = null;
     protected Transform _CameraRotation = null;
-    
+
     // --- variables ---
     protected bool _didPhysicsUpdateRan = false;
     protected RaycastHit _hitInfo;
@@ -29,9 +29,9 @@ public class PlayerBaseState
         _Player = player;
         _Rigidbody = rigidbody;
         _PlayerInput = playerInput;
-        _StateMachine = stateManager;
+        _StateManager = stateManager;
         _CameraRotation = cameraRotation;
-         
+
         _didPhysicsUpdateRan = false;
     }
 
@@ -45,6 +45,15 @@ public class PlayerBaseState
     {
         _movementInput = _PlayerInput.MovementInput;
         _runInput = _PlayerInput.RunInput;
+
+        if (_runInput)
+        {
+            _Player.staminaRegenTimer.Reset();
+        }
+        else if (_Player.staminaRegenTimer.CountDownTimer())
+        {
+            RegenStamina();
+        }
     }
 
     public virtual void PhysicsUpdate() { }
@@ -72,11 +81,22 @@ public class PlayerBaseState
         }
     }
 
-    protected void ResetPullDownForce()
+    protected void RegenStamina()
     {
-        _Player.AccumulatedForceValue = 0;
-        _Player.CurrentPullDownForce = _Player.defaultPullDownForce;
-        _Player.ForceIncrementTimer = _Player.forceIncrementTimeInterval;
+        if (_Player.CurrentStamina < _Player.maxStamina)
+        {
+            _Player.CurrentStamina += _Player.regenRate * Time.deltaTime;
+            _Player.CurrentStamina = Mathf.Clamp(_Player.CurrentStamina, 0, _Player.maxStamina);
+        }
+    }
+
+    protected void DepleteStamina()
+    {
+        if (_Player.CurrentStamina > 0.0f)
+        {
+            _Player.CurrentStamina -= _Player.depleteRate * Time.deltaTime;
+            _Player.CurrentStamina = Mathf.Clamp(_Player.CurrentStamina, 0, _Player.maxStamina);
+        }
     }
 
     protected void IsGrounded(float raycastLength)

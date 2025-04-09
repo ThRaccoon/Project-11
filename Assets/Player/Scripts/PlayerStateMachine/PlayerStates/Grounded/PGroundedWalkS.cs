@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PGroundedWalkS : PGroundedSuperState
 {
-    public PGroundedWalkS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+    public PGroundedWalkS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
+        : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
 
     public override void OnEnter()
@@ -26,7 +26,12 @@ public class PGroundedWalkS : PGroundedSuperState
         // --- State Transitions ---
         if (_movementInput == Vector2.zero && _didPhysicsUpdateRan)
         {
-            _StateMachine.ChangeState(_Player.GroundedIdleS);
+            _StateManager.ChangeState(_Player.GroundedIdleS);
+        }
+        
+        if ((_runInput && _Player.CurrentStamina > 0.0f && _movementInput != Vector2.zero) && _didPhysicsUpdateRan) 
+        {
+            _StateManager.ChangeState(_Player.GroundedRunS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }

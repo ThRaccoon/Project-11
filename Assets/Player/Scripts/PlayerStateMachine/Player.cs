@@ -18,6 +18,43 @@ public class Player : MonoBehaviour
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
+    [field: Space(30)]
+    [field: Header("Walk")]
+    [field: SerializeField] public float walkSpeed { get; private set; } = 8.0f;
+
+    [Header("----------")]
+    [Tooltip("How fast the player stops. Value should be between 0 and 0.9.")]
+    [field: SerializeField] public float stoppingForce { get; private set; } = 0.5f;
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    [field: Header("Run")]
+    [field: SerializeField] public float runSpeed { get; private set; } = 12.0f;
+
+    [field: SerializeField] public float maxStamina { get; private set; } = 100.0f;
+    [field: SerializeField] public float regenRate { get; private set; } = 10.0f;
+    [field: SerializeField] public float depleteRate { get; private set; } = 30.0f;
+
+    [field: SerializeField] public float staminaRegenDelay { get; private set; } = 3.0f;
+    public GlobalTimer staminaRegenTimer { get; private set; } = null;
+    
+    
+    #region Getters / Setters
+
+    [SerializeField] private float _currentStamina = 0.0f;
+
+    public float CurrentStamina
+    {
+        get => _currentStamina;
+        set => _currentStamina = value;
+    }
+    #endregion
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    [field: Space(30)]
     [Header("Pull-Down Force Settings")]
     [field: SerializeField] public float defaultPullDownForce { get; private set; } = 0.0f;
     [field: SerializeField] public float minPullDownForce { get; private set; } = -65.0f;
@@ -27,28 +64,19 @@ public class Player : MonoBehaviour
     [field: SerializeField] public float pullDownForceIncrement { get; private set; } = -4.0f;
 
     [Tooltip("The time interval after which the pull-down force is incremented.")]
-    [field: SerializeField] public float forceIncrementTimeInterval { get; private set; } = 0.2f;
+    [field: SerializeField] public float forceIncrementDelay { get; private set; } = 0.2f;
+    public GlobalTimer forceIncrementTimer { get; private set; } = null;
 
 
     #region Getters / Setters
 
-    private float _currentPullDownForce = 0.0f;
+    [SerializeField] private float _currentPullDownForce = 0.0f;
 
     public float CurrentPullDownForce
     {
         get => _currentPullDownForce;
         set => _currentPullDownForce = value;
     }
-
-
-    private float _forceIncrementTimer = 0.0f;
-
-    public float ForceIncrementTimer
-    {
-        get => _forceIncrementTimer;
-        set => _forceIncrementTimer = value;
-    }
-
 
     private float _accumulatedForceValue = 0.0f;
 
@@ -62,16 +90,7 @@ public class Player : MonoBehaviour
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
-    [field: Header("Movement Speeds")]
-    [field: SerializeField] public float walkSpeed { get; private set; } = 8.0f;
-    [field: SerializeField] public float runSpeed { get; private set; } = 12.0f;
-
-    [Header("----------")]
-    [Tooltip("How fast the player stops. Value should be between 0 and 0.9.")]
-    [field: SerializeField] public float stoppingForce { get; private set; } = 0.5f;
-    // ----------------------------------------------------------------------------------------------------------------------------------
-
-    // ----------------------------------------------------------------------------------------------------------------------------------
+    [field: Space(30)]
     [field: Header("Ground / Ceiling  Checks")]
     [field: SerializeField] public float standingGroundCheckLength { get; private set; } = 0.125f;
 
@@ -92,7 +111,6 @@ public class Player : MonoBehaviour
     private float _playerDrag = 4.0f;
     private float _playerAngularDrag = 4.0f;
 
-
     // --- State Machine / States / States Related --- 
     public PlayerBaseState BaseState { get; private set; } = null;
     public PlayerStateManager StateManager { get; private set; } = null;
@@ -102,6 +120,7 @@ public class Player : MonoBehaviour
     public PLandedS LandedS { get; private set; } = null;
     public PGroundedIdleS GroundedIdleS { get; private set; } = null;
     public PGroundedWalkS GroundedWalkS { get; private set; } = null;
+    public PGroundedRunS GroundedRunS { get; private set; } = null;
 
     // --- Falling States ---
     public PFallingSuperState FallingSuperState { get; private set; } = null;
@@ -113,11 +132,14 @@ public class Player : MonoBehaviour
     {
         // --- Components ---
         _CapsuleCollider = GetComponent<CapsuleCollider>();
-
         _Rigidbody = GetComponent<Rigidbody>();
 
+        // --- Assigned On Start ---
+        _currentStamina = maxStamina;
+
         // --- Timers ---
-        _forceIncrementTimer = forceIncrementTimeInterval;
+        forceIncrementTimer = new GlobalTimer(forceIncrementDelay);
+        staminaRegenTimer = new GlobalTimer(staminaRegenDelay);
 
         // --- Ray Casts ---
         if (_CapsuleCollider != null)
@@ -132,16 +154,16 @@ public class Player : MonoBehaviour
             _Rigidbody.angularDamping = _playerAngularDrag;
         }
 
-
         // --- State Machine / States --- 
         StateManager = new PlayerStateManager();
         BaseState = new PlayerBaseState(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
-        
+
         // --- Grounded States ---
         GroundedSuperState = new PGroundedSuperState(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
         LandedS = new PLandedS(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
         GroundedIdleS = new PGroundedIdleS(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
         GroundedWalkS = new PGroundedWalkS(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
+        GroundedRunS = new PGroundedRunS(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);
 
         // --- Falling States ---
         FallingSuperState = new PFallingSuperState(this, _Rigidbody, _PlayerInput, _CameraRotation, StateManager);

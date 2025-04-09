@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PAirborneS : PFallingSuperState
 {
-    public PAirborneS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateMachine)
-        : base(player, rigidBody, playerInput, cameraRotation, stateMachine) { }
+    public PAirborneS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
+        : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
 
     public override void OnEnter()
@@ -24,7 +24,7 @@ public class PAirborneS : PFallingSuperState
 
 
         // --- State Transitions ---
-        _StateMachine.ChangeState(_Player.FallingS);
+        _StateManager.ChangeState(_Player.FallingS);
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
