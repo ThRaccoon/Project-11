@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PGroundedRunS : PGroundedSuperState
+public class PGroundedRunS : PGroundedSuperS
 {
     public PGroundedRunS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
@@ -20,9 +20,9 @@ public class PGroundedRunS : PGroundedSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
-
+        // --- Logic ---
         DepleteStamina();
-
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
         if ((!_runInput || _player.CurrentStamina <= 0.0f || _movementInput == Vector2.zero) && _didPhysicsUpdateRan)

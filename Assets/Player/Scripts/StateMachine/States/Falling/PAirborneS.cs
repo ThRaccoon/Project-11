@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PAirborneS : PFallingSuperState
+public class PAirborneS : PFallingSuperS
 {
     public PAirborneS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
@@ -20,6 +20,8 @@ public class PAirborneS : PFallingSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
         stateManager.ChangeState(_player.fallingS);

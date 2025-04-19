@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PGroundedIdleS : PGroundedSuperState
+public class PGroundedIdleS : PGroundedSuperS
 {
     public PGroundedIdleS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
@@ -20,6 +20,8 @@ public class PGroundedIdleS : PGroundedSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
         if (_movementInput != Vector2.zero && _didPhysicsUpdateRan)

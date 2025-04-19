@@ -29,19 +29,19 @@ public class Enemy : MonoBehaviour
     public EnemyBaseStateController baseStateController { get; private set; } = null;
 
     // --- States ---
-    public EIdleStateController idleStateController { get; private set; } = null;
-    public EChaseStateController chaseStateController { get; private set; } = null;
-    public EAttackStateController attackStateController { get; private set; } = null;
+    public EIdleSController idleStateController { get; private set; } = null;
+    public EChaseSController chaseStateController { get; private set; } = null;
+    public EAttackSController attackStateController { get; private set; } = null;
 
     // --- Scriptable Objects States ---
     [field: Space(30)]
-    [SerializeField] private EIdleSuperState idleSTemplate = null;
-    [SerializeField] private EChaseSuperState chaseSTemplate = null;
-    [SerializeField] private EAttackSuperState attackSTemplate = null;
+    [SerializeField] private EIdleSuperS idleSTemplate = null;
+    [SerializeField] private EChaseSuperS chaseSTemplate = null;
+    [SerializeField] private EAttackSuperS attackSTemplate = null;
 
-    public EIdleSuperState idleSInstance { get; private set; } = null;
-    public EChaseSuperState chaseSInstance { get; private set; } = null;
-    public EAttackSuperState attackSInstance { get; private set; } = null;
+    public EIdleSuperS idleSInstance { get; private set; } = null;
+    public EChaseSuperS chaseSInstance { get; private set; } = null;
+    public EAttackSuperS attackSInstance { get; private set; } = null;
 
 
     private void Awake()
@@ -67,9 +67,9 @@ public class Enemy : MonoBehaviour
         baseStateController = new EnemyBaseStateController(this);
 
         // --- States ---
-        idleStateController = new EIdleStateController(this);
-        chaseStateController = new EChaseStateController(this);
-        attackStateController = new EAttackStateController(this);
+        idleStateController = new EIdleSController(this);
+        chaseStateController = new EChaseSController(this);
+        attackStateController = new EAttackSController(this);
     }
 
     private void Start()

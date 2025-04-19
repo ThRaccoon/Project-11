@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 
 [CreateAssetMenu(fileName = "Idle Stationery", menuName = "Enemy States/Idle/Stationery")]
-public class EIdleStationeryS : EIdleSuperState
+public class EIdleStationeryS : EIdleSuperS
 {
     public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
     {
@@ -22,6 +22,15 @@ public class EIdleStationeryS : EIdleSuperState
     public override void DoLogicUpdate()
     {
         base.DoLogicUpdate();
+
+        // --- Timers ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- State Transitions ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
     public override void DoPhysicsUpdate()

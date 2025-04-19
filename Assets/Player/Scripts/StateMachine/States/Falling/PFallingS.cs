@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PFallingS : PFallingSuperState
+public class PFallingS : PFallingSuperS
 {
     public PFallingS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
@@ -20,6 +20,8 @@ public class PFallingS : PFallingSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
         // ----------------------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PLandedS : PGroundedSuperState
+public class PLandedS : PGroundedSuperS
 {
     public PLandedS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
@@ -20,6 +20,8 @@ public class PLandedS : PGroundedSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
         stateManager.ChangeState(_player.groundedWalkS);

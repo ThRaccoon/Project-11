@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PGroundedWalkS : PGroundedSuperState
+public class PGroundedWalkS : PGroundedSuperS
 {
     public PGroundedWalkS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
@@ -20,14 +20,16 @@ public class PGroundedWalkS : PGroundedSuperState
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
         if (_movementInput == Vector2.zero && _didPhysicsUpdateRan)
         {
             stateManager.ChangeState(_player.groundedIdleS);
         }
-        
-        if ((_runInput && _player.CurrentStamina > 0.0f && _movementInput != Vector2.zero) && _didPhysicsUpdateRan) 
+
+        if ((_runInput && _player.CurrentStamina > 0.0f && _movementInput != Vector2.zero) && _didPhysicsUpdateRan)
         {
             stateManager.ChangeState(_player.groundedRunS);
         }

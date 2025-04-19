@@ -114,14 +114,14 @@ public class Player : MonoBehaviour
     public PlayerStateManager stateManager { get; private set; } = null;
 
     // --- Grounded States ---
-    public PGroundedSuperState groundedSuperState { get; private set; } = null;
+    public PGroundedSuperS groundedSuperState { get; private set; } = null;
     public PLandedS landedS { get; private set; } = null;
     public PGroundedIdleS groundedIdleS { get; private set; } = null;
     public PGroundedWalkS groundedWalkS { get; private set; } = null;
     public PGroundedRunS groundedRunS { get; private set; } = null;
 
     // --- Falling States ---
-    public PFallingSuperState fallingSuperState { get; private set; } = null;
+    public PFallingSuperS fallingSuperState { get; private set; } = null;
     public PAirborneS airborneS { get; private set; } = null;
     public PFallingS fallingS { get; private set; } = null;
 
@@ -157,14 +157,14 @@ public class Player : MonoBehaviour
         baseState = new PlayerBaseState(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
 
         // --- Grounded States ---
-        groundedSuperState = new PGroundedSuperState(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+        groundedSuperState = new PGroundedSuperS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
         landedS = new PLandedS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
         groundedIdleS = new PGroundedIdleS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
         groundedWalkS = new PGroundedWalkS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
         groundedRunS = new PGroundedRunS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
 
         // --- Falling States ---
-        fallingSuperState = new PFallingSuperState(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+        fallingSuperState = new PFallingSuperS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
         airborneS = new PAirborneS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
         fallingS = new PFallingS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
     }

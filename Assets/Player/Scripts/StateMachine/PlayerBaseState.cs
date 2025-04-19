@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBaseState
@@ -8,7 +7,7 @@ public class PlayerBaseState
     protected Rigidbody _rigidbody = null;
     protected Transform _cameraRotation = null;
     protected PlayerInput _playerInput = null;
-    
+
     public PlayerStateManager stateManager = null;
 
 
@@ -30,7 +29,7 @@ public class PlayerBaseState
         _rigidbody = rigidbody;
         _cameraRotation = cameraRotation;
         _playerInput = playerInput;
-        
+
         this.stateManager = stateManager;
     }
 
@@ -42,6 +41,10 @@ public class PlayerBaseState
 
     public virtual void LogicUpdate()
     {
+        // --- Timers ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- Logic ---
         _movementInput = _playerInput.MovementInput;
         _runInput = _playerInput.RunInput;
 
@@ -53,6 +56,10 @@ public class PlayerBaseState
         {
             RegenStamina();
         }
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- State Transitions ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
     public virtual void PhysicsUpdate() { }

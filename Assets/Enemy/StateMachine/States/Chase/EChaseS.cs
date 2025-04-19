@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 
 [CreateAssetMenu(fileName = "Chase", menuName = "Enemy States/Chase/Chase")]
-public class EChaseS : EChaseSuperState
+public class EChaseS : EChaseSuperS
 {
     public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
     {
@@ -22,6 +22,15 @@ public class EChaseS : EChaseSuperState
     public override void DoLogicUpdate()
     {
         base.DoLogicUpdate();
+
+        // --- Timers ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- State Transitions ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
     public override void DoPhysicsUpdate()

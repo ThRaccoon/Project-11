@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 
 [CreateAssetMenu(fileName = "Attack", menuName = "Enemy States/Attack/Attack")]
-public class EAttackS : EAttackSuperState
+public class EAttackS : EAttackSuperS
 {
     public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
     {
@@ -22,6 +22,15 @@ public class EAttackS : EAttackSuperState
     public override void DoLogicUpdate()
     {
         base.DoLogicUpdate();
+
+        // --- Timers ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- Logic ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+        // --- State Transitions ---
+        // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
     public override void DoPhysicsUpdate()
