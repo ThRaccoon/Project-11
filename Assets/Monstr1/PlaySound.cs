@@ -2,19 +2,24 @@ using UnityEngine;
 
 public class PlaySound : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private AudioSource m_audioSource;
-    void Awake()
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    [Header("Components")]
+    [Header("Auto Assigned")]
+    [SerializeField] private AudioSource _AudioSource = null;
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+
+    private void Awake()
     {
-        m_audioSource = GetComponent<AudioSource>();
+        _AudioSource = GetComponent<AudioSource>();
     }
+
 
     public void playSound()
     {
-        if(m_audioSource != null)
+        if (_AudioSource != null)
         {
-            m_audioSource.Play();
+            _AudioSource.Play();
         }
-       
     }
 }

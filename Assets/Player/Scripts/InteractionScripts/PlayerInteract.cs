@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface IInteractable
@@ -12,13 +10,14 @@ public class PlayerInteract : MonoBehaviour
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [Header("Auto Assigned")]
-    private Camera _PlayerCamera = null;
+    private Camera _playerCamera = null;
     [Header("----------")]
-    [SerializeField] private PlayerInput _PlayerInput = null;
+    [SerializeField] private PlayerInput _playerInput = null;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
+    [Space(30)]
     [Header("Settings")]
     [SerializeField] private float _interactionRange = 0.0f;
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -31,12 +30,12 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        _PlayerCamera = Camera.main;        
+        _playerCamera = Camera.main;        
     }
 
     private void Update()
     {
-        if (_PlayerInput != null && _PlayerInput.UseInput)
+        if (_playerInput != null && _playerInput.UseInput)
         {   
             _shouldCastRay = true;
             _didCastRay = false;
@@ -47,11 +46,11 @@ public class PlayerInteract : MonoBehaviour
     {
         if (_shouldCastRay && !_didCastRay)
         {
-            if (_PlayerCamera != null)
+            if (_playerCamera != null)
             {
-                Debug.DrawRay(_PlayerCamera.transform.position, _PlayerCamera.transform.forward * _interactionRange);
+                Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward * _interactionRange);
                 
-                if (Physics.Raycast(_PlayerCamera.transform.position, _PlayerCamera.transform.forward, out _hitInfo, _interactionRange))
+                if (Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange))
                 {
                     TryToInteract(); 
                 }

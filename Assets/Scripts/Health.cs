@@ -13,21 +13,15 @@ public class Health : MonoBehaviour
     public GameObject Attacker = null;
 
 
-
-    private void Update()
-    {
-        if (_health <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-
-
     public void TakeDamage(int damage, GameObject attacker)
     {
         _health -= damage;
         Attacker = attacker;
+
+        if (_health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void GainHealth(int health)
