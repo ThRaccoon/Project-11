@@ -12,8 +12,6 @@ public class EAttackSuperS : EnemyBaseSuperState
     public override void DoOnEnter()
     {
         base.DoOnEnter();
-
-        PlayAnimation("Attack");
     }
 
     public override void DoLogicUpdate()

@@ -17,8 +17,6 @@ public class EChaseSuperS : EnemyBaseSuperState
     public override void DoOnEnter()
     {
         base.DoOnEnter();
-
-        PlayAnimation("Chase");
     }
 
     public override void DoLogicUpdate()
@@ -34,7 +32,7 @@ public class EChaseSuperS : EnemyBaseSuperState
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
-        if (IsPlayerInAttackRange())
+        if (IsPlayerInAttackRange() && _navMeshPath.status == NavMeshPathStatus.PathComplete)
         {
             _stateManager.ChangeState(_enemy.attackStateController);
         }

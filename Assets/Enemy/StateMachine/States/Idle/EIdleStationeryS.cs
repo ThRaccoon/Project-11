@@ -14,6 +14,7 @@ public class EIdleStationeryS : EIdleSuperS
     {
         base.DoOnEnter();
 
+        PlayAnimation("Idle");
         ToggleRigWeight(true);
 
         Debug.Log("Enemy Idle Stationery State");

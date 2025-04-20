@@ -109,9 +109,13 @@ public class Player : MonoBehaviour
     private float _playerDrag = 4.0f;
     private float _playerAngularDrag = 4.0f;
 
-    // --- State Machine / States --- 
-    public PlayerBaseState baseState { get; private set; } = null;
+
+    #region State Machine
+    // --- State Manager --- 
     public PlayerStateManager stateManager { get; private set; } = null;
+
+    // --- Base State ---
+    public PlayerBaseState baseState { get; private set; } = null;
 
     // --- Grounded States ---
     public PGroundedSuperS groundedSuperState { get; private set; } = null;
@@ -124,6 +128,7 @@ public class Player : MonoBehaviour
     public PFallingSuperS fallingSuperState { get; private set; } = null;
     public PAirborneS airborneS { get; private set; } = null;
     public PFallingS fallingS { get; private set; } = null;
+    #endregion
 
 
     private void Awake()

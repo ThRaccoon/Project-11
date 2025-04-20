@@ -14,6 +14,7 @@ public class EChaseS : EChaseSuperS
     {
         base.DoOnEnter();
 
+        PlayAnimation("Chase");
         ToggleRigWeight(true);
 
         Debug.Log("Enemy Chase State");

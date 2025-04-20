@@ -16,8 +16,6 @@ public class EIdleSuperS : EnemyBaseSuperState
     {
         base.DoOnEnter();
 
-        PlayAnimation("Idle");
-
         _shouldAttack = false;
     }
 

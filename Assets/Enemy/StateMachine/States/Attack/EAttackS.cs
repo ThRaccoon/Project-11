@@ -14,6 +14,7 @@ public class EAttackS : EAttackSuperS
     {
         base.DoOnEnter();
 
+        PlayAnimation("Attack");
         ToggleRigWeight(true);
 
         Debug.Log("Enemy Attack State");
