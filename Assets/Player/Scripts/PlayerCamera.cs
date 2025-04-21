@@ -21,41 +21,52 @@ public class PlayerCamera : MonoBehaviour
 
 
     // --- Private Variables ---
+    private bool _isRotationEnable = true;
     private float _rotationX = 0.0f;
     private float _rotationY = 0.0f;
-
-
-    private void Awake()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
+    
     private void Update()
     {
-        if (_playerInput != null)
+        if (_isRotationEnable)
         {
-            _rotationX -= _playerInput.RotationInput.y * _mouseSensitivity * Time.deltaTime;
+            if (_playerInput != null)
+            {
+                _rotationX -= _playerInput.RotationInput.y * _mouseSensitivity * Time.deltaTime;
+            }
+            _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
+
+            if (_playerInput != null)
+            {
+                _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
+            }
+
+            Quaternion xRotation = Quaternion.AngleAxis(_rotationX, Vector3.right);
+            Quaternion yRotation = Quaternion.AngleAxis(_rotationY, Vector3.up);
+
+            transform.rotation = yRotation * xRotation;
+
+          
+
+            if (_cameraRotation != null && _isRotationEnable)
+            {
+                _cameraRotation.transform.rotation = yRotation;
+            }
         }
-        _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
-
-        if (_playerInput != null)
-        {
-            _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
-        }
-
-        Quaternion xRotation = Quaternion.AngleAxis(_rotationX, Vector3.right);
-        Quaternion yRotation = Quaternion.AngleAxis(_rotationY, Vector3.up);
-
-        transform.rotation = yRotation * xRotation;
 
         if (_cameraHolder != null)
         {
             transform.position = _cameraHolder.position;
         }
 
-        if (_cameraRotation != null)
-        {
-            _cameraRotation.transform.rotation = yRotation;
-        }
+    }
+
+    public void EnableRotate()
+    {
+        _isRotationEnable = true;
+    }
+
+    public void DisableRotate() 
+    {
+        _isRotationEnable = false;
     }
 }

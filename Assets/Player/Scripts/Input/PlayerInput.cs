@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerInputManager _PlayerInputManager;
+    private GameObject _player;
 
     public Vector2 RotationInput { get; private set; } = Vector2.zero;
 
@@ -17,10 +18,13 @@ public class PlayerInput : MonoBehaviour
 
     public bool UseInput { get; private set; } = false;
 
+    public bool UseInput3 { get; private set; } = false;
+
 
     private void Awake()
     {
         _PlayerInputManager = new PlayerInputManager();
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnEnable()
@@ -41,6 +45,9 @@ public class PlayerInput : MonoBehaviour
 
         _PlayerInputManager.OnGround.Use.started += GetUseInput;
         _PlayerInputManager.OnGround.Use.canceled += GetUseInput;
+        
+        _PlayerInputManager.OnGround._3.started += GetUseInput3;
+        _PlayerInputManager.OnGround._3.canceled += GetUseInput3;
     }
 
     private void OnDisable()
@@ -59,6 +66,9 @@ public class PlayerInput : MonoBehaviour
 
         _PlayerInputManager.OnGround.Use.started -= GetUseInput;
         _PlayerInputManager.OnGround.Use.canceled -= GetUseInput;
+        
+        _PlayerInputManager.OnGround._3.started -= GetUseInput3;
+        _PlayerInputManager.OnGround._3.canceled -= GetUseInput3;
 
         _PlayerInputManager.Disable();
     }
@@ -87,5 +97,18 @@ public class PlayerInput : MonoBehaviour
     private void GetUseInput(InputAction.CallbackContext ctx)
     {
         UseInput = ctx.started;
+    }  
+    
+    private void GetUseInput3(InputAction.CallbackContext ctx)
+    {
+
+        if(_player !=null)
+        {
+            var inventoryManager = _player.GetComponent<InventoryManager>();
+            if(inventoryManager != null)
+            {
+                inventoryManager.OpenJournal();
+            }
+        }
     }
 }

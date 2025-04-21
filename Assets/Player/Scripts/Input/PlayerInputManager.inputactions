@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "3",
+                    "type": "Button",
+                    "id": "25cb1f06-71cc-4553-9600-8e481575b519",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -133,7 +142,7 @@
                     "name": "",
                     "id": "0c690c9a-0f54-444f-94f4-886adad3626e",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "SlowTap(duration=0.001)",
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13df1b1d-458f-44bf-babd-4943bedb006d",
+                    "path": "<Keyboard>/3",
+                    "interactions": "SlowTap(duration=0.001)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

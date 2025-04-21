@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - PlayerInput
+  - Canvas
+  - Note
+  - NoteText
+  - Item3DViwer
   layers:
   - Default
   - TransparentFX
