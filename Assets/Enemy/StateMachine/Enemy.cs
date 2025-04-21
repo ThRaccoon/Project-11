@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
     [field: Header("Settings")]
-    // [field: SerializeField] public float activationRange { get; private set; } = 0.0f;
+    [field: SerializeField] public float activationRange { get; private set; } = 0.0f;
     [field: SerializeField] public float chaseRange { get; private set; } = 0.0f;
     [field: SerializeField] public float attackRange { get; private set; } = 0.0f;
     [field: SerializeField] public float transformYOffset = 0.0f;
@@ -93,9 +93,12 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        idleSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
-        chaseSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
-        attackSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
+        if (NullChecker.Check(_navMeshAgent) && NullChecker.Check(_animator) && NullChecker.Check(_rig))
+        {
+            idleSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
+            chaseSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
+            attackSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
+        }
 
         stateManager.Initialize(idleStateController);
     }
@@ -118,10 +121,10 @@ public class Enemy : MonoBehaviour
         //Gizmos.color = Color.blue;
         //Gizmos.DrawWireSphere(transform.position, activationRange);
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, chaseRange);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

@@ -26,7 +26,7 @@ public class PGroundedIdleS : PGroundedSuperS
         // --- State Transitions ---
         if (_movementInput != Vector2.zero && _didPhysicsUpdateRan)
         {
-            stateManager.ChangeState(_player.groundedWalkS);
+            _stateManager.ChangeState(_player.groundedWalkS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }

@@ -27,8 +27,11 @@ public class EChaseSuperS : EnemyBaseSuperState
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---
-        _navMeshAgent.SetDestination(_playerTransform.position);
-        _navMeshAgent.CalculatePath(_playerTransform.transform.position, _navMeshPath);
+        if (_navMeshAgent != null)
+        {
+            _navMeshAgent.SetDestination(_playerTransform.position);
+            _navMeshAgent.CalculatePath(_playerTransform.transform.position, _navMeshPath);
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
@@ -53,7 +56,10 @@ public class EChaseSuperS : EnemyBaseSuperState
     {
         base.DoOnExit();
 
-        _navMeshAgent.ResetPath();
+        if (_navMeshAgent == null)
+        {
+            _navMeshAgent.ResetPath();
+        }
     }
 
 

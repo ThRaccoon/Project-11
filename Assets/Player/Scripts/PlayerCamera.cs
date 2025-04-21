@@ -32,13 +32,14 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        if (_playerInput != null)
+        if (NullChecker.Check(_playerInput))
         {
             _rotationX -= _playerInput.RotationInput.y * _mouseSensitivity * Time.deltaTime;
         }
+        
         _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
 
-        if (_playerInput != null)
+        if (NullChecker.Check(_playerInput))
         {
             _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
         }
@@ -48,12 +49,12 @@ public class PlayerCamera : MonoBehaviour
 
         transform.rotation = yRotation * xRotation;
 
-        if (_cameraHolder != null)
+        if (NullChecker.Check(_cameraHolder))
         {
             transform.position = _cameraHolder.position;
         }
 
-        if (_cameraRotation != null)
+        if (NullChecker.Check(_cameraRotation))
         {
             _cameraRotation.transform.rotation = yRotation;
         }

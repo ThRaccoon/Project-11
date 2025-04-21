@@ -29,7 +29,7 @@ public class PGroundedSuperS : PlayerBaseState
         // --- State Transitions ---
         if (!_player.IsGrounded && _didPhysicsUpdateRan)
         {
-            stateManager.ChangeState(_player.airborneS);
+            _stateManager.ChangeState(_player.airborneS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
@@ -61,13 +61,11 @@ public class PGroundedSuperS : PlayerBaseState
 
     protected void ApplyStoppingForce()
     {
-        if (_rigidbody != null)
+        _rigidbody.linearVelocity *= _player.stoppingForce;
+        
+        if (_rigidbody.linearVelocity.magnitude < 0.01f)
         {
-            _rigidbody.linearVelocity *= _player.stoppingForce;
-            if (_rigidbody.linearVelocity.magnitude < 0.01f)
-            {
-                _rigidbody.linearVelocity = Vector3.zero;
-            }
+            _rigidbody.linearVelocity = Vector3.zero;
         }
     }
 

@@ -82,7 +82,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
             if (SlerpProgress >= 1.0f)
             {
-                if (_meshCollider != null)
+                if (NullChecker.Check(_meshCollider))
                 {
                     _meshCollider.enabled = true;
                 }
@@ -140,7 +140,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void Rotate(Quaternion targetRotation)
     {
-        if (_meshCollider != null)
+        if (NullChecker.Check(_meshCollider))
         {
             _meshCollider.enabled = false;
         }
@@ -160,7 +160,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void PlaySound(AudioClip clip)
     {
-        if (_audioSource != null && clip != null)
+        if (NullChecker.Check(_audioSource) && NullChecker.Check(clip))
         {
             _audioSource.PlayOneShot(clip);
         }

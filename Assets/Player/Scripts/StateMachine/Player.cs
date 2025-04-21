@@ -145,33 +145,36 @@ public class Player : MonoBehaviour
         staminaRegenTimer = new GlobalTimer(staminaRegenDelay);
 
         // --- Ray Casts ---
-        if (_capsuleCollider != null)
+        if (NullChecker.Check(_capsuleCollider))
         {
             standingGroundCheckLength += _capsuleCollider.bounds.extents.y;
         }
 
         // --- Drags ---
-        if (_rigidbody != null)
+        if (NullChecker.Check(_rigidbody))
         {
             _rigidbody.linearDamping = _playerDrag;
             _rigidbody.angularDamping = _playerAngularDrag;
         }
 
-        // --- State Machine / States --- 
-        stateManager = new PlayerStateManager();
-        baseState = new PlayerBaseState(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+        if (NullChecker.Check(_rigidbody) && NullChecker.Check(_cameraRotation) && NullChecker.Check(_playerInput))
+        {
+            // --- State Machine / States --- 
+            stateManager = new PlayerStateManager();
+            baseState = new PlayerBaseState(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
 
-        // --- Grounded States ---
-        groundedSuperState = new PGroundedSuperS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
-        landedS = new PLandedS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
-        groundedIdleS = new PGroundedIdleS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
-        groundedWalkS = new PGroundedWalkS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
-        groundedRunS = new PGroundedRunS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            // --- Grounded States ---
+            groundedSuperState = new PGroundedSuperS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            landedS = new PLandedS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            groundedIdleS = new PGroundedIdleS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            groundedWalkS = new PGroundedWalkS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            groundedRunS = new PGroundedRunS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
 
-        // --- Falling States ---
-        fallingSuperState = new PFallingSuperS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
-        airborneS = new PAirborneS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
-        fallingS = new PFallingS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            // --- Falling States ---
+            fallingSuperState = new PFallingSuperS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            airborneS = new PAirborneS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+            fallingS = new PFallingS(this, _rigidbody, _playerInput, _cameraRotation, stateManager);
+        }
     }
 
     private void Start()

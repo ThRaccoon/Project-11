@@ -26,12 +26,12 @@ public class PGroundedWalkS : PGroundedSuperS
         // --- State Transitions ---
         if (_movementInput == Vector2.zero && _didPhysicsUpdateRan)
         {
-            stateManager.ChangeState(_player.groundedIdleS);
+            _stateManager.ChangeState(_player.groundedIdleS);
         }
 
         if ((_runInput && _player.CurrentStamina > 0.0f && _movementInput != Vector2.zero) && _didPhysicsUpdateRan)
         {
-            stateManager.ChangeState(_player.groundedRunS);
+            _stateManager.ChangeState(_player.groundedRunS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
