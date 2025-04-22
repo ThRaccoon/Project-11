@@ -40,8 +40,7 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.E.performed += GetUseInput;
 
-        _playerInputManager.OnGround._3.started += GetUseInput3;
-        _playerInputManager.OnGround._3.canceled += GetUseInput3;
+        _playerInputManager.OnGround._3.performed += GetUseInput3;
     }
 
     private void OnDisable()
@@ -59,8 +58,7 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.E.performed -= GetUseInput;
 
-        _playerInputManager.OnGround._3.started -= GetUseInput3;
-        _playerInputManager.OnGround._3.canceled -= GetUseInput3;
+        _playerInputManager.OnGround._3.performed -= GetUseInput3;
 
         _playerInputManager.Disable();
     }

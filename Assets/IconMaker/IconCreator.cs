@@ -5,7 +5,7 @@ public class IconCreator : MonoBehaviour
 {
     public Camera renderCamera;
     public RenderTexture renderTexture;
-    public string savePath = "Assets/IconMaker/";
+    public string savePath = "Assets/IconMaker/Icons/";
     private string defaultPath;
     public string iconName = "icon";
     int counter = 0;

@@ -898,7 +898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderCamera: {fileID: 1069841464}
   renderTexture: {fileID: 8400000, guid: bcacb784564f0a641a38f9fc192b9186, type: 2}
-  savePath: Assets/IconMaker/
+  savePath: Assets/IconMaker/Icons/
   iconName: GreenKey
 --- !u!4 &1091812975
 Transform:

@@ -250,7 +250,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""13df1b1d-458f-44bf-babd-4943bedb006d"",
                     ""path"": ""<Keyboard>/3"",
-                    ""interactions"": ""SlowTap(duration=0.001)"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""_3"",

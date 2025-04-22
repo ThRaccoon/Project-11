@@ -145,7 +145,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (_Notes.Count > 1)
         {
-            _noteIndex = (_noteIndex + 1) % _Notes.Count;
+            _noteIndex = (_noteIndex - 1)  < 0 ? _Notes.Count-1 : (_noteIndex - 1) ;
             SetNoteText();
             PlayJournalSound();
         }

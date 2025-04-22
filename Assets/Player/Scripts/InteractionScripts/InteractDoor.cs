@@ -160,7 +160,8 @@ public class InteractDoor : MonoBehaviour, IInteractable
     {
         if (NullChecker.Check(_audioSource) && NullChecker.Check(clip))
         {
-            _audioSource.PlayOneShot(clip);
+            _audioSource.clip = clip;
+            _audioSource.Play();
         }
     }
 }

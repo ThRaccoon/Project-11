@@ -19,7 +19,7 @@ public class PlayerCamera : MonoBehaviour
 
 
     // --- Private Variables ---
-    private bool _isRotationEnable;
+    private bool _isRotationEnable = true;
     private float _rotationX;
     private float _rotationY;
 
