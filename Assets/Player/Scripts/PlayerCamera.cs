@@ -44,38 +44,29 @@ public class PlayerCamera : MonoBehaviour
                     _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
                 }
 
+
+                _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
+
+                if (NullChecker.Check(_playerInput))
+                {
+                    _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
+                }
+
                 Quaternion xRotation = Quaternion.AngleAxis(_rotationX, Vector3.right);
                 Quaternion yRotation = Quaternion.AngleAxis(_rotationY, Vector3.up);
 
                 transform.rotation = yRotation * xRotation;
 
-          
-
-                if (_cameraRotation != null && _isRotationEnable)
+                if (NullChecker.Check(_cameraRotation))
                 {
                     _cameraRotation.transform.rotation = yRotation;
                 }
+
+
             }
 
-
-        
-            _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
-
-            if (NullChecker.Check(_playerInput))
-            {
-                _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
-            }
-
-            Quaternion xRotation = Quaternion.AngleAxis(_rotationX, Vector3.right);
-            Quaternion yRotation = Quaternion.AngleAxis(_rotationY, Vector3.up);
-
-            transform.rotation = yRotation * xRotation;
-
-            if (NullChecker.Check(_cameraRotation))
-            {
-                _cameraRotation.transform.rotation = yRotation;
-            }
         }
+
         if (NullChecker.Check(_cameraHolder))
         {
             transform.position = _cameraHolder.position;
