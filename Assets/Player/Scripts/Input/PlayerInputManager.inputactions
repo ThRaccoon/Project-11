@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Use",
+                    "name": "E",
                     "type": "Button",
                     "id": "22e73203-9317-45d9-826c-92b5ac037aa3",
                     "expectedControlType": "",
@@ -153,10 +153,10 @@
                     "name": "",
                     "id": "2a6c4d08-53d2-49ba-876e-e3e32fc0f81d",
                     "path": "<Keyboard>/e",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Use",
+                    "action": "E",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

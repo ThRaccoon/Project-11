@@ -9,10 +9,7 @@ public class PlayerInteract : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
-    [Header("Auto Assigned")]
     private Camera _playerCamera = null;
-    [Header("----------")]
-    [SerializeField] private PlayerInput _playerInput = null;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -22,9 +19,6 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float _interactionRange = 0.0f;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
-    private bool _shouldCastRay = false;
-    private bool _didCastRay = false;
     private RaycastHit _hitInfo;
 
 
@@ -33,33 +27,19 @@ public class PlayerInteract : MonoBehaviour
         _playerCamera = Camera.main;
     }
 
-    private void Update()
-    {
-        if (NullChecker.Check(_playerInput) && _playerInput.UseInput)
-        {
-            _shouldCastRay = true;
-            _didCastRay = false;
-        }
-    }
 
-    private void FixedUpdate()
+    public void PerformInteraction()
     {
-        if (_shouldCastRay && !_didCastRay)
+        if (NullChecker.Check(_playerCamera))
         {
-            if (NullChecker.Check(_playerCamera))
+            Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward * _interactionRange);
+
+            if (Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange))
             {
-                Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward * _interactionRange);
-
-                if (Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange))
-                {
-                    TryToInteract();
-                }
+                TryToInteract();
             }
-            _shouldCastRay = false;
-            _didCastRay = true;
         }
     }
-
 
     private void TryToInteract()
     {
@@ -67,7 +47,8 @@ public class PlayerInteract : MonoBehaviour
         {
             IInteractable interactable = _hitInfo.collider.GetComponent<IInteractable>();
 
-            if (NullChecker.Check(interactable))
+            // Do not use NullChecker here to prevent console spamming everytime you press E
+            if (interactable != null)
             {
                 interactable.Interact();
             }

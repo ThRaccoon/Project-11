@@ -128,7 +128,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Use"",
+                    ""name"": ""E"",
                     ""type"": ""Button"",
                     ""id"": ""22e73203-9317-45d9-826c-92b5ac037aa3"",
                     ""expectedControlType"": """",
@@ -239,10 +239,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""2a6c4d08-53d2-49ba-876e-e3e32fc0f81d"",
                     ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Use"",
+                    ""action"": ""E"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -268,7 +268,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround_Movement = m_OnGround.FindAction("Movement", throwIfNotFound: true);
         m_OnGround_Run = m_OnGround.FindAction("Run", throwIfNotFound: true);
         m_OnGround_Shoot = m_OnGround.FindAction("Shoot", throwIfNotFound: true);
-        m_OnGround_Use = m_OnGround.FindAction("Use", throwIfNotFound: true);
+        m_OnGround_E = m_OnGround.FindAction("E", throwIfNotFound: true);
         m_OnGround__3 = m_OnGround.FindAction("3", throwIfNotFound: true);
     }
 
@@ -354,7 +354,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnGround_Movement;
     private readonly InputAction m_OnGround_Run;
     private readonly InputAction m_OnGround_Shoot;
-    private readonly InputAction m_OnGround_Use;
+    private readonly InputAction m_OnGround_E;
     private readonly InputAction m_OnGround__3;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
@@ -384,9 +384,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Shoot => m_Wrapper.m_OnGround_Shoot;
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Use".
+        /// Provides access to the underlying input action "OnGround/E".
         /// </summary>
-        public InputAction @Use => m_Wrapper.m_OnGround_Use;
+        public InputAction @E => m_Wrapper.m_OnGround_E;
         /// <summary>
         /// Provides access to the underlying input action "OnGround/_3".
         /// </summary>
@@ -429,9 +429,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @Use.started += instance.OnUse;
-            @Use.performed += instance.OnUse;
-            @Use.canceled += instance.OnUse;
+            @E.started += instance.OnE;
+            @E.performed += instance.OnE;
+            @E.canceled += instance.OnE;
             @_3.started += instance.On_3;
             @_3.performed += instance.On_3;
             @_3.canceled += instance.On_3;
@@ -458,9 +458,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @Use.started -= instance.OnUse;
-            @Use.performed -= instance.OnUse;
-            @Use.canceled -= instance.OnUse;
+            @E.started -= instance.OnE;
+            @E.performed -= instance.OnE;
+            @E.canceled -= instance.OnE;
             @_3.started -= instance.On_3;
             @_3.performed -= instance.On_3;
             @_3.canceled -= instance.On_3;
@@ -533,12 +533,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShoot(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Use" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "E" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUse(InputAction.CallbackContext context);
+        void OnE(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

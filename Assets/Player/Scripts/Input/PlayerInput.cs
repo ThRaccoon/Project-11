@@ -16,10 +16,6 @@ public class PlayerInput : MonoBehaviour
 
     public bool ShootInput { get; private set; } = false;
 
-    public bool UseInput { get; private set; } = false;
-
-    public bool UseInput3 { get; private set; } = false;
-
 
     private void Awake()
     {
@@ -43,9 +39,8 @@ public class PlayerInput : MonoBehaviour
         _PlayerInputManager.OnGround.Shoot.performed += GetShootInput;
         _PlayerInputManager.OnGround.Shoot.canceled += GetShootInput;
 
-        _PlayerInputManager.OnGround.Use.started += GetUseInput;
-        _PlayerInputManager.OnGround.Use.canceled += GetUseInput;
-        
+        _PlayerInputManager.OnGround.E.performed += GetUseInput;
+
         _PlayerInputManager.OnGround._3.started += GetUseInput3;
         _PlayerInputManager.OnGround._3.canceled += GetUseInput3;
     }
@@ -64,9 +59,8 @@ public class PlayerInput : MonoBehaviour
         _PlayerInputManager.OnGround.Shoot.performed -= GetShootInput;
         _PlayerInputManager.OnGround.Shoot.canceled -= GetShootInput;
 
-        _PlayerInputManager.OnGround.Use.started -= GetUseInput;
-        _PlayerInputManager.OnGround.Use.canceled -= GetUseInput;
-        
+        _PlayerInputManager.OnGround.E.performed -= GetUseInput;
+
         _PlayerInputManager.OnGround._3.started -= GetUseInput3;
         _PlayerInputManager.OnGround._3.canceled -= GetUseInput3;
 
@@ -96,16 +90,24 @@ public class PlayerInput : MonoBehaviour
 
     private void GetUseInput(InputAction.CallbackContext ctx)
     {
-        UseInput = ctx.started;
-    }  
-    
+        if (NullChecker.Check(_player))
+        {
+            var playerInteract = _player.GetComponent<PlayerInteract>();
+
+            if (NullChecker.Check(playerInteract))
+            {
+                playerInteract.PerformInteraction();
+            }
+        }
+    }
+
     private void GetUseInput3(InputAction.CallbackContext ctx)
     {
-
-        if(_player !=null)
+        if (NullChecker.Check(_player))
         {
             var inventoryManager = _player.GetComponent<InventoryManager>();
-            if(inventoryManager != null)
+            
+            if (NullChecker.Check(inventoryManager))
             {
                 inventoryManager.OpenJournal();
             }
