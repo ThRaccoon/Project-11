@@ -80,7 +80,7 @@ public class ShootingController : MonoBehaviour
     }
     private bool GetShootInput()
     {
-        return _PlayerInput.ShootInput;
+        return _PlayerInput.shootInput;
     }
 
     private void HandleShootingCooldown()

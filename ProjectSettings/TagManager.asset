@@ -9,6 +9,8 @@ TagManager:
   - Note
   - NoteText
   - Item3DViwer
+  - CameraHolder
+  - CameraRotation
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,7 @@
             "id": "cf0d196f-e9d0-40d4-ae02-7e83b6cf0f7b",
             "actions": [
                 {
-                    "name": "Rotation",
+                    "name": "Mouse",
                     "type": "Value",
                     "id": "4501c5f1-8e1a-4a7d-8da9-4490fecfc4d6",
                     "expectedControlType": "Vector2",
@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Movement",
+                    "name": "WASD",
                     "type": "Value",
                     "id": "aa1a7a53-de73-4dd5-8df5-b107a4b969fb",
                     "expectedControlType": "Vector2",
@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Run",
+                    "name": "LShift",
                     "type": "Button",
                     "id": "aaf13fcb-60c1-4297-a6b2-806455fc7eec",
                     "expectedControlType": "",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shoot",
+                    "name": "LMB",
                     "type": "Button",
                     "id": "1c80ec48-117f-4452-85c5-2e09cd9595b2",
                     "expectedControlType": "",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Use",
+                    "name": "E",
                     "type": "Button",
                     "id": "22e73203-9317-45d9-826c-92b5ac037aa3",
                     "expectedControlType": "",
@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "3",
+                    "name": "_3",
                     "type": "Button",
                     "id": "25cb1f06-71cc-4553-9600-8e481575b519",
                     "expectedControlType": "",
@@ -68,7 +68,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "WASD",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -79,7 +79,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "WASD",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -90,7 +90,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "WASD",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -101,7 +101,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "WASD",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -112,7 +112,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Movement",
+                    "action": "WASD",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -123,7 +123,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -134,7 +134,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Run",
+                    "action": "LShift",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -142,10 +142,10 @@
                     "name": "",
                     "id": "0c690c9a-0f54-444f-94f4-886adad3626e",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "SlowTap(duration=0.001)",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Shoot",
+                    "action": "LMB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -153,10 +153,10 @@
                     "name": "",
                     "id": "2a6c4d08-53d2-49ba-876e-e3e32fc0f81d",
                     "path": "<Keyboard>/e",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Use",
+                    "action": "E",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -167,7 +167,7 @@
                     "interactions": "SlowTap(duration=0.001)",
                     "processors": "",
                     "groups": "",
-                    "action": "3",
+                    "action": "_3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

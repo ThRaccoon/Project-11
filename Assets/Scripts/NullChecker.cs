@@ -3,8 +3,8 @@ using UnityEngine;
 
 public static class NullChecker
 {
-    public static bool Check<T>(
-        T obj,
+    public static bool Check<T>
+        (T obj,
         [CallerFilePath] string file = "",
         [CallerLineNumber] int line = 0)
 

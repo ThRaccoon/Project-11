@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -19,16 +17,14 @@ public class TutorialPopup : MonoBehaviour
         _timer = new GlobalTimer(_duration);
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_shouldShowPopup)
         {
             _textMeshPro.text = _text;
             _timer.CountDownTimer();
         }
-       
+
         if (_timer.flag)
         {
             _textMeshPro.text = "";
@@ -44,6 +40,4 @@ public class TutorialPopup : MonoBehaviour
             _shouldShowPopup = true;
         }
     }
-
-
 }

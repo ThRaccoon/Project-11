@@ -5,38 +5,37 @@ public class InteractDrawer : MonoBehaviour, IInteractable
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [Header("Auto Assigned")]
-    [SerializeField] private AudioSource _audioSource = null;
-    [Header("----------")]
+    [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Settings")]
-    [SerializeField] private bool _isInitiallyLocked = false;
-    [SerializeField] private bool _isInitiallyOpened = false;
+    [SerializeField] private bool _isInitiallyLocked;
+    [SerializeField] private bool _isInitiallyOpened;
 
     [Space(10)]
     [Header("Slide Settings")]
-    [SerializeField] private float _openZPosition = 0.0f;
-    [SerializeField] private float _closedZPosition = 0.0f;
-    [SerializeField] private float _slideSpeed = 0.0f;
+    [SerializeField] private float _openZPosition;
+    [SerializeField] private float _closedZPosition;
+    [SerializeField] private float _slideSpeed;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Audio Clips")]
-    [SerializeField] private AudioClip _lockedSound = null;
-    [SerializeField] private AudioClip _unlockingSound = null;
-    [SerializeField] private AudioClip _openingSound = null;
-    [SerializeField] private AudioClip _closingSound = null;
+    [SerializeField] private AudioClip _lockedSound;
+    [SerializeField] private AudioClip _unlockingSound;
+    [SerializeField] private AudioClip _openingSound;
+    [SerializeField] private AudioClip _closingSound;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
-    private float _lerpProgress = 0.0f;
-    private Vector3 _startPosition = Vector3.zero;
-    private Vector3 _targetPosition = Vector3.zero;
+    private float _lerpProgress;
+    private Vector3 _startPosition;
+    private Vector3 _targetPosition;
 
 
     private enum DrawerState

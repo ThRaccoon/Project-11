@@ -92,7 +92,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             ""id"": ""cf0d196f-e9d0-40d4-ae02-7e83b6cf0f7b"",
             ""actions"": [
                 {
-                    ""name"": ""Rotation"",
+                    ""name"": ""Mouse"",
                     ""type"": ""Value"",
                     ""id"": ""4501c5f1-8e1a-4a7d-8da9-4490fecfc4d6"",
                     ""expectedControlType"": ""Vector2"",
@@ -101,7 +101,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""WASD"",
                     ""type"": ""Value"",
                     ""id"": ""aa1a7a53-de73-4dd5-8df5-b107a4b969fb"",
                     ""expectedControlType"": ""Vector2"",
@@ -110,7 +110,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Run"",
+                    ""name"": ""LShift"",
                     ""type"": ""Button"",
                     ""id"": ""aaf13fcb-60c1-4297-a6b2-806455fc7eec"",
                     ""expectedControlType"": """",
@@ -119,7 +119,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Shoot"",
+                    ""name"": ""LMB"",
                     ""type"": ""Button"",
                     ""id"": ""1c80ec48-117f-4452-85c5-2e09cd9595b2"",
                     ""expectedControlType"": """",
@@ -128,7 +128,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Use"",
+                    ""name"": ""E"",
                     ""type"": ""Button"",
                     ""id"": ""22e73203-9317-45d9-826c-92b5ac037aa3"",
                     ""expectedControlType"": """",
@@ -137,7 +137,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""3"",
+                    ""name"": ""_3"",
                     ""type"": ""Button"",
                     ""id"": ""25cb1f06-71cc-4553-9600-8e481575b519"",
                     ""expectedControlType"": """",
@@ -154,7 +154,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""WASD"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -165,7 +165,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""WASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -176,7 +176,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""WASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -187,7 +187,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""WASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -198,7 +198,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""WASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -209,7 +209,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Rotation"",
+                    ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -220,7 +220,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Run"",
+                    ""action"": ""LShift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -228,10 +228,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0c690c9a-0f54-444f-94f4-886adad3626e"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""SlowTap(duration=0.001)"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shoot"",
+                    ""action"": ""LMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -239,10 +239,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""2a6c4d08-53d2-49ba-876e-e3e32fc0f81d"",
                     ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Use"",
+                    ""action"": ""E"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -253,7 +253,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""interactions"": ""SlowTap(duration=0.001)"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""3"",
+                    ""action"": ""_3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -264,12 +264,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
 }");
         // OnGround
         m_OnGround = asset.FindActionMap("OnGround", throwIfNotFound: true);
-        m_OnGround_Rotation = m_OnGround.FindAction("Rotation", throwIfNotFound: true);
-        m_OnGround_Movement = m_OnGround.FindAction("Movement", throwIfNotFound: true);
-        m_OnGround_Run = m_OnGround.FindAction("Run", throwIfNotFound: true);
-        m_OnGround_Shoot = m_OnGround.FindAction("Shoot", throwIfNotFound: true);
-        m_OnGround_Use = m_OnGround.FindAction("Use", throwIfNotFound: true);
-        m_OnGround__3 = m_OnGround.FindAction("3", throwIfNotFound: true);
+        m_OnGround_Mouse = m_OnGround.FindAction("Mouse", throwIfNotFound: true);
+        m_OnGround_WASD = m_OnGround.FindAction("WASD", throwIfNotFound: true);
+        m_OnGround_LShift = m_OnGround.FindAction("LShift", throwIfNotFound: true);
+        m_OnGround_LMB = m_OnGround.FindAction("LMB", throwIfNotFound: true);
+        m_OnGround_E = m_OnGround.FindAction("E", throwIfNotFound: true);
+        m_OnGround__3 = m_OnGround.FindAction("_3", throwIfNotFound: true);
     }
 
     ~@PlayerInputManager()
@@ -350,11 +350,11 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     // OnGround
     private readonly InputActionMap m_OnGround;
     private List<IOnGroundActions> m_OnGroundActionsCallbackInterfaces = new List<IOnGroundActions>();
-    private readonly InputAction m_OnGround_Rotation;
-    private readonly InputAction m_OnGround_Movement;
-    private readonly InputAction m_OnGround_Run;
-    private readonly InputAction m_OnGround_Shoot;
-    private readonly InputAction m_OnGround_Use;
+    private readonly InputAction m_OnGround_Mouse;
+    private readonly InputAction m_OnGround_WASD;
+    private readonly InputAction m_OnGround_LShift;
+    private readonly InputAction m_OnGround_LMB;
+    private readonly InputAction m_OnGround_E;
     private readonly InputAction m_OnGround__3;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
@@ -368,25 +368,25 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// </summary>
         public OnGroundActions(@PlayerInputManager wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Rotation".
+        /// Provides access to the underlying input action "OnGround/Mouse".
         /// </summary>
-        public InputAction @Rotation => m_Wrapper.m_OnGround_Rotation;
+        public InputAction @Mouse => m_Wrapper.m_OnGround_Mouse;
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Movement".
+        /// Provides access to the underlying input action "OnGround/WASD".
         /// </summary>
-        public InputAction @Movement => m_Wrapper.m_OnGround_Movement;
+        public InputAction @WASD => m_Wrapper.m_OnGround_WASD;
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Run".
+        /// Provides access to the underlying input action "OnGround/LShift".
         /// </summary>
-        public InputAction @Run => m_Wrapper.m_OnGround_Run;
+        public InputAction @LShift => m_Wrapper.m_OnGround_LShift;
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Shoot".
+        /// Provides access to the underlying input action "OnGround/LMB".
         /// </summary>
-        public InputAction @Shoot => m_Wrapper.m_OnGround_Shoot;
+        public InputAction @LMB => m_Wrapper.m_OnGround_LMB;
         /// <summary>
-        /// Provides access to the underlying input action "OnGround/Use".
+        /// Provides access to the underlying input action "OnGround/E".
         /// </summary>
-        public InputAction @Use => m_Wrapper.m_OnGround_Use;
+        public InputAction @E => m_Wrapper.m_OnGround_E;
         /// <summary>
         /// Provides access to the underlying input action "OnGround/_3".
         /// </summary>
@@ -417,21 +417,21 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_OnGroundActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_OnGroundActionsCallbackInterfaces.Add(instance);
-            @Rotation.started += instance.OnRotation;
-            @Rotation.performed += instance.OnRotation;
-            @Rotation.canceled += instance.OnRotation;
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
-            @Shoot.started += instance.OnShoot;
-            @Shoot.performed += instance.OnShoot;
-            @Shoot.canceled += instance.OnShoot;
-            @Use.started += instance.OnUse;
-            @Use.performed += instance.OnUse;
-            @Use.canceled += instance.OnUse;
+            @Mouse.started += instance.OnMouse;
+            @Mouse.performed += instance.OnMouse;
+            @Mouse.canceled += instance.OnMouse;
+            @WASD.started += instance.OnWASD;
+            @WASD.performed += instance.OnWASD;
+            @WASD.canceled += instance.OnWASD;
+            @LShift.started += instance.OnLShift;
+            @LShift.performed += instance.OnLShift;
+            @LShift.canceled += instance.OnLShift;
+            @LMB.started += instance.OnLMB;
+            @LMB.performed += instance.OnLMB;
+            @LMB.canceled += instance.OnLMB;
+            @E.started += instance.OnE;
+            @E.performed += instance.OnE;
+            @E.canceled += instance.OnE;
             @_3.started += instance.On_3;
             @_3.performed += instance.On_3;
             @_3.canceled += instance.On_3;
@@ -446,21 +446,21 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="OnGroundActions" />
         private void UnregisterCallbacks(IOnGroundActions instance)
         {
-            @Rotation.started -= instance.OnRotation;
-            @Rotation.performed -= instance.OnRotation;
-            @Rotation.canceled -= instance.OnRotation;
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
-            @Shoot.started -= instance.OnShoot;
-            @Shoot.performed -= instance.OnShoot;
-            @Shoot.canceled -= instance.OnShoot;
-            @Use.started -= instance.OnUse;
-            @Use.performed -= instance.OnUse;
-            @Use.canceled -= instance.OnUse;
+            @Mouse.started -= instance.OnMouse;
+            @Mouse.performed -= instance.OnMouse;
+            @Mouse.canceled -= instance.OnMouse;
+            @WASD.started -= instance.OnWASD;
+            @WASD.performed -= instance.OnWASD;
+            @WASD.canceled -= instance.OnWASD;
+            @LShift.started -= instance.OnLShift;
+            @LShift.performed -= instance.OnLShift;
+            @LShift.canceled -= instance.OnLShift;
+            @LMB.started -= instance.OnLMB;
+            @LMB.performed -= instance.OnLMB;
+            @LMB.canceled -= instance.OnLMB;
+            @E.started -= instance.OnE;
+            @E.performed -= instance.OnE;
+            @E.canceled -= instance.OnE;
             @_3.started -= instance.On_3;
             @_3.performed -= instance.On_3;
             @_3.canceled -= instance.On_3;
@@ -505,42 +505,42 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     public interface IOnGroundActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Rotation" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Mouse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRotation(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Movement" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "WASD" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMovement(InputAction.CallbackContext context);
+        void OnWASD(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Run" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "LShift" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRun(InputAction.CallbackContext context);
+        void OnLShift(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Shoot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "LMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnShoot(InputAction.CallbackContext context);
+        void OnLMB(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Use" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "E" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUse(InputAction.CallbackContext context);
+        void OnE(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "_3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
