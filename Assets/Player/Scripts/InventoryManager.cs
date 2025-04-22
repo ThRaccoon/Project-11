@@ -41,7 +41,11 @@ public class Note
 
 public class InventoryManager : MonoBehaviour
 {
- 
+    [SerializeField] private AudioClip _pickUpNoteSound;
+    [Range(0f, 1f)] [SerializeField] private float _pickUpNoteVolume = 0.5f;
+    [SerializeField] private AudioClip _journalSound;
+    [Range(0f, 1f)][SerializeField] private float _journalVolume = 0.5f;
+
     ///////////////////////////
 
     private WeaponData _defaultWeaponData;
@@ -49,18 +53,14 @@ public class InventoryManager : MonoBehaviour
     private int _noteIndex;
     private GameObject _item3DViwer;
     private CursorController _cursor;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _note = Utility.FindSceneObjectByTag("Note");
         _item3DViwer = Utility.FindSceneObjectByTag("Item3DViwer");
-        var player = Utility.FindSceneObjectByTag("Player");
-
-        if(player != null )
-        {
-            _cursor = player.GetComponent<CursorController>();
-        }
-       
+        _cursor = GetComponent<CursorController>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     [SerializeField] private WeaponData[] _Weapons;
@@ -108,6 +108,7 @@ public class InventoryManager : MonoBehaviour
     {
         Note note = new Note(description);
        _Notes.Add(note);
+        PlayPickUpNote();
     }
 
     public void OpenJournal()
@@ -119,35 +120,38 @@ public class InventoryManager : MonoBehaviour
             {
                 _cursor.EnableCursor();
                 _noteIndex = _Notes.Count - 1;
-                SetNotText();
+                SetNoteText();
             }
             else
             {
                 _cursor.DisableCursor();
             }
+            PlayJournalSound();
         }
     }
 
     public void NextNote()
     {
-        if(_Notes.Count > 0)
+        if(_Notes.Count > 1)
         {
             _noteIndex = (_noteIndex + 1) % _Notes.Count;
-            SetNotText();
+            SetNoteText();
+            PlayJournalSound();
         }
         
     } 
     
     public void PrevNote()
     {
-        if (_Notes.Count > 0)
+        if (_Notes.Count > 1)
         {
             _noteIndex = (_noteIndex + 1) % _Notes.Count;
-            SetNotText();
+            SetNoteText();
+            PlayJournalSound();
         }
     }
 
-    private void SetNotText()
+    private void SetNoteText()
     {
         var noteText = _note.GetComponentInChildren<TextMeshProUGUI>(true);
         if (noteText != null) 
@@ -162,10 +166,27 @@ public class InventoryManager : MonoBehaviour
             }
         }
        
-        
-       
     }
 
+    private void PlayJournalSound()
+    {
+        if (_audioSource != null && _pickUpNoteSound)
+        {
+            _audioSource.clip = _journalSound;
+            _audioSource.volume = _journalVolume;
+            _audioSource.Play();
+        }
+    }
+
+    private void PlayPickUpNote()
+    {
+        if (_audioSource != null && _pickUpNoteSound)
+        {
+            _audioSource.clip = _pickUpNoteSound;
+            _audioSource.volume = _pickUpNoteVolume;
+            _audioSource.Play();
+        }
+    }
 
 
 }

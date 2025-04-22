@@ -94,12 +94,10 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
                 if (_currentState == DoorState.Opening)
                 {
-                    PlaySound(_openingSound);
                     _currentState = DoorState.Opened;
                 }
                 else
                 {
-                    PlaySound(_closingSound);
                     _currentState = DoorState.Closed;
                 }
             }
@@ -114,8 +112,8 @@ public class InteractDoor : MonoBehaviour, IInteractable
             if (_isInitiallyLocked)
             {
                 // if the player have the key
-                _isInitiallyLocked = false;
-                PlaySound(_unlockingSound);
+               // _isInitiallyLocked = false;
+              //PlaySound(_unlockingSound);
 
                 // if the player don't have the key
                 PlaySound(_lockedSound);
@@ -125,11 +123,13 @@ public class InteractDoor : MonoBehaviour, IInteractable
             {
                 if (_currentState == DoorState.Closed)
                 {
+                    PlaySound(_openingSound);
                     Rotate(Quaternion.Euler(_initialX, _openAngle, _initialZ));
                     _currentState = DoorState.Opening;
                 }
                 else if (_currentState == DoorState.Opened)
                 {
+                    PlaySound(_closingSound);
                     Rotate(Quaternion.Euler(_initialX, _closedAngle, _initialZ));
                     _currentState = DoorState.Closing;
                 }
