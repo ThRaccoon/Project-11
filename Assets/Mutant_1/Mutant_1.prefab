@@ -1671,8 +1671,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.32, y: 1.8, z: 0.26}
-  m_Center: {x: -0.004, y: 0.9, z: -0.007}
+  m_Size: {x: 0.32, y: 1.8, z: 0.23}
+  m_Center: {x: 0, y: 0.9, z: 0.028}
 --- !u!195 &8987688986052912409
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1683,7 +1683,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 1.85
+  m_Speed: 2
   m_Acceleration: 1000
   avoidancePriority: 50
   m_AngularSpeed: 1000
@@ -1750,11 +1750,14 @@ MonoBehaviour:
   _animator: {fileID: 7559756301377982634}
   _rig: {fileID: 6315879650984573829}
   <chaseRange>k__BackingField: 12
-  <attackRange>k__BackingField: 0.4
+  <attackRange>k__BackingField: 0.5
   transformYOffset: 1.5
   <collisionLayersToIgnore>k__BackingField:
     serializedVersion: 2
     m_Bits: 2147483648
+  <waitTime>k__BackingField: 0
+  <navPointA>k__BackingField: {fileID: 0}
+  <navPointB>k__BackingField: {fileID: 0}
   idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}
   attackSTemplate: {fileID: 11400000, guid: 2baa2bc409ac9fe4db3b57b315b2156b, type: 2}

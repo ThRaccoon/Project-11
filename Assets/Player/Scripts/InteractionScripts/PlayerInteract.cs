@@ -30,13 +30,13 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        _playerCamera = Camera.main;        
+        _playerCamera = Camera.main;
     }
 
     private void Update()
     {
-        if (_playerInput != null && _playerInput.UseInput)
-        {   
+        if (NullChecker.Check(_playerInput) && _playerInput.UseInput)
+        {
             _shouldCastRay = true;
             _didCastRay = false;
         }
@@ -46,13 +46,13 @@ public class PlayerInteract : MonoBehaviour
     {
         if (_shouldCastRay && !_didCastRay)
         {
-            if (_playerCamera != null)
+            if (NullChecker.Check(_playerCamera))
             {
                 Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward * _interactionRange);
-                
+
                 if (Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange))
                 {
-                    TryToInteract(); 
+                    TryToInteract();
                 }
             }
             _shouldCastRay = false;
@@ -63,11 +63,11 @@ public class PlayerInteract : MonoBehaviour
 
     private void TryToInteract()
     {
-        if (_hitInfo.collider != null)
+        if (NullChecker.Check(_hitInfo.collider))
         {
             IInteractable interactable = _hitInfo.collider.GetComponent<IInteractable>();
 
-            if (interactable != null)
+            if (NullChecker.Check(interactable))
             {
                 interactable.Interact();
             }

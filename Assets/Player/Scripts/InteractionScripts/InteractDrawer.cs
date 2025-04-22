@@ -124,7 +124,7 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 
     private void PlaySound(AudioClip clip)
     {
-        if (_audioSource != null && clip != null)
+        if (NullChecker.Check(_audioSource) && NullChecker.Check(clip))
         {
             _audioSource.PlayOneShot(clip);
         }

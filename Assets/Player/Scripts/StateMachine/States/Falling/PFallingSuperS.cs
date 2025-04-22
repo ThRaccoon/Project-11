@@ -26,7 +26,7 @@ public class PFallingSuperS : PlayerBaseState
         // --- State Transitions ---
         if (_player.IsGrounded && _didPhysicsUpdateRan)
         {
-            stateManager.ChangeState(_player.landedS);
+            _stateManager.ChangeState(_player.landedS);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }

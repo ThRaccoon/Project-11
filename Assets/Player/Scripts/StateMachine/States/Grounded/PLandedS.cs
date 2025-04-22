@@ -24,7 +24,7 @@ public class PLandedS : PGroundedSuperS
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
-        stateManager.ChangeState(_player.groundedWalkS);
+        _stateManager.ChangeState(_player.groundedWalkS);
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 

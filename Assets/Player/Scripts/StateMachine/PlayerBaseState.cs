@@ -7,8 +7,7 @@ public class PlayerBaseState
     protected Rigidbody _rigidbody = null;
     protected Transform _cameraRotation = null;
     protected PlayerInput _playerInput = null;
-
-    public PlayerStateManager stateManager = null;
+    protected PlayerStateManager _stateManager = null;
 
 
     // --- variables ---
@@ -29,8 +28,7 @@ public class PlayerBaseState
         _rigidbody = rigidbody;
         _cameraRotation = cameraRotation;
         _playerInput = playerInput;
-
-        this.stateManager = stateManager;
+        _stateManager = stateManager;
     }
 
 
@@ -45,8 +43,11 @@ public class PlayerBaseState
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---
-        _movementInput = _playerInput.MovementInput;
-        _runInput = _playerInput.RunInput;
+        if (NullChecker.Check(_playerInput))
+        {
+            _movementInput = _playerInput.MovementInput;
+            _runInput = _playerInput.RunInput;
+        }
 
         if (_runInput)
         {
@@ -71,17 +72,16 @@ public class PlayerBaseState
     {
         Vector3 movementVector = new Vector3(movementInput.x * movementSpeed, 0.0f, movementInput.y * movementSpeed);
 
-        if (_cameraRotation != null)
+        if (NullChecker.Check(_cameraRotation))
         {
             movementVector = _cameraRotation.rotation * movementVector;
         }
-
         return movementVector;
     }
 
     protected void ApplyMovementForce(Vector3 movementVector)
     {
-        if (_rigidbody != null)
+        if (NullChecker.Check(_rigidbody))
         {
             _rigidbody.AddForce(movementVector, ForceMode.Acceleration);
         }

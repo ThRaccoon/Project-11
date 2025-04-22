@@ -27,15 +27,41 @@ public class PlayerCamera : MonoBehaviour
     
     private void Update()
     {
+
         if (_isRotationEnable)
-        {
-            if (_playerInput != null)
+        { 
+            if (NullChecker.Check(_playerInput))
+
             {
-                _rotationX -= _playerInput.RotationInput.y * _mouseSensitivity * Time.deltaTime;
+                if (_playerInput != null)
+                {
+                    _rotationX -= _playerInput.RotationInput.y * _mouseSensitivity * Time.deltaTime;
+                }
+                _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
+
+                if (_playerInput != null)
+                {
+                    _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
+                }
+
+                Quaternion xRotation = Quaternion.AngleAxis(_rotationX, Vector3.right);
+                Quaternion yRotation = Quaternion.AngleAxis(_rotationY, Vector3.up);
+
+                transform.rotation = yRotation * xRotation;
+
+          
+
+                if (_cameraRotation != null && _isRotationEnable)
+                {
+                    _cameraRotation.transform.rotation = yRotation;
+                }
             }
+
+
+        
             _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
 
-            if (_playerInput != null)
+            if (NullChecker.Check(_playerInput))
             {
                 _rotationY += _playerInput.RotationInput.x * _mouseSensitivity * Time.deltaTime;
             }
@@ -45,18 +71,16 @@ public class PlayerCamera : MonoBehaviour
 
             transform.rotation = yRotation * xRotation;
 
-          
-
-            if (_cameraRotation != null && _isRotationEnable)
+            if (NullChecker.Check(_cameraRotation))
             {
                 _cameraRotation.transform.rotation = yRotation;
             }
         }
-
-        if (_cameraHolder != null)
+        if (NullChecker.Check(_cameraHolder))
         {
             transform.position = _cameraHolder.position;
         }
+
 
     }
 
@@ -69,4 +93,6 @@ public class PlayerCamera : MonoBehaviour
     {
         _isRotationEnable = false;
     }
+        
+    
 }
