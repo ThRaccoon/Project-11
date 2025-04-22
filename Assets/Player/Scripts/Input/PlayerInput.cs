@@ -1,91 +1,89 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    private PlayerInputManager _PlayerInputManager;
+    private PlayerInputManager _playerInputManager;
+
     private GameObject _player;
 
-    public Vector2 RotationInput { get; private set; } = Vector2.zero;
+    public Vector2 rotationInput { get; private set; }
 
-    public Vector2 MovementInput { get; private set; } = Vector2.zero;
+    public Vector2 movementInput { get; private set; }
 
-    public bool RunInput { get; private set; } = false;
+    public bool runInput { get; private set; }
 
-    public bool ShootInput { get; private set; } = false;
+    public bool shootInput { get; private set; }
 
-
+    
     private void Awake()
     {
-        _PlayerInputManager = new PlayerInputManager();
+        _playerInputManager = new PlayerInputManager();
+
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnEnable()
     {
-        _PlayerInputManager.Enable();
+        _playerInputManager.Enable();
 
-        _PlayerInputManager.OnGround.Rotation.performed += GetRotationInput;
-        _PlayerInputManager.OnGround.Rotation.canceled += GetRotationInput;
+        _playerInputManager.OnGround.Mouse.performed += GetRotationInput;
+        _playerInputManager.OnGround.Mouse.canceled += GetRotationInput;
 
-        _PlayerInputManager.OnGround.Movement.performed += GetMovementInput;
-        _PlayerInputManager.OnGround.Movement.canceled += GetMovementInput;
+        _playerInputManager.OnGround.WASD.performed += GetMovementInput;
+        _playerInputManager.OnGround.WASD.canceled += GetMovementInput;
 
-        _PlayerInputManager.OnGround.Run.performed += GetRunInput;
-        _PlayerInputManager.OnGround.Run.canceled += GetRunInput;
+        _playerInputManager.OnGround.LShift.performed += GetRunInput;
+        _playerInputManager.OnGround.LShift.canceled += GetRunInput;
 
-        _PlayerInputManager.OnGround.Shoot.performed += GetShootInput;
-        _PlayerInputManager.OnGround.Shoot.canceled += GetShootInput;
+        _playerInputManager.OnGround.LMB.performed += GetShootInput;
 
-        _PlayerInputManager.OnGround.E.performed += GetUseInput;
+        _playerInputManager.OnGround.E.performed += GetUseInput;
 
-        _PlayerInputManager.OnGround._3.started += GetUseInput3;
-        _PlayerInputManager.OnGround._3.canceled += GetUseInput3;
+        _playerInputManager.OnGround._3.started += GetUseInput3;
+        _playerInputManager.OnGround._3.canceled += GetUseInput3;
     }
 
     private void OnDisable()
     {
-        _PlayerInputManager.OnGround.Rotation.performed -= GetRotationInput;
-        _PlayerInputManager.OnGround.Rotation.canceled -= GetRotationInput;
+        _playerInputManager.OnGround.Mouse.performed -= GetRotationInput;
+        _playerInputManager.OnGround.Mouse.canceled -= GetRotationInput;
 
-        _PlayerInputManager.OnGround.Movement.performed -= GetMovementInput;
-        _PlayerInputManager.OnGround.Movement.canceled -= GetMovementInput;
+        _playerInputManager.OnGround.WASD.performed -= GetMovementInput;
+        _playerInputManager.OnGround.WASD.canceled -= GetMovementInput;
 
-        _PlayerInputManager.OnGround.Run.performed -= GetRunInput;
-        _PlayerInputManager.OnGround.Run.canceled -= GetRunInput;
+        _playerInputManager.OnGround.LShift.performed -= GetRunInput;
+        _playerInputManager.OnGround.LShift.canceled -= GetRunInput;
 
-        _PlayerInputManager.OnGround.Shoot.performed -= GetShootInput;
-        _PlayerInputManager.OnGround.Shoot.canceled -= GetShootInput;
+        _playerInputManager.OnGround.LMB.performed -= GetShootInput;
 
-        _PlayerInputManager.OnGround.E.performed -= GetUseInput;
+        _playerInputManager.OnGround.E.performed -= GetUseInput;
 
-        _PlayerInputManager.OnGround._3.started -= GetUseInput3;
-        _PlayerInputManager.OnGround._3.canceled -= GetUseInput3;
+        _playerInputManager.OnGround._3.started -= GetUseInput3;
+        _playerInputManager.OnGround._3.canceled -= GetUseInput3;
 
-        _PlayerInputManager.Disable();
+        _playerInputManager.Disable();
     }
 
 
     private void GetRotationInput(InputAction.CallbackContext ctx)
     {
-        RotationInput = ctx.ReadValue<Vector2>();
+        rotationInput = ctx.ReadValue<Vector2>();
     }
 
     private void GetMovementInput(InputAction.CallbackContext ctx)
     {
-        MovementInput = ctx.ReadValue<Vector2>();
+        movementInput = ctx.ReadValue<Vector2>();
     }
 
     private void GetRunInput(InputAction.CallbackContext ctx)
     {
-        RunInput = ctx.ReadValueAsButton();
+        runInput = ctx.ReadValueAsButton();
     }
 
     private void GetShootInput(InputAction.CallbackContext ctx)
     {
-        ShootInput = ctx.ReadValueAsButton();
+        // Shoot function
     }
 
     private void GetUseInput(InputAction.CallbackContext ctx)
@@ -106,7 +104,7 @@ public class PlayerInput : MonoBehaviour
         if (NullChecker.Check(_player))
         {
             var inventoryManager = _player.GetComponent<InventoryManager>();
-            
+
             if (NullChecker.Check(inventoryManager))
             {
                 inventoryManager.OpenJournal();

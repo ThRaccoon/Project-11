@@ -45,8 +45,8 @@ public class PlayerBaseState
         // --- Logic ---
         if (NullChecker.Check(_playerInput))
         {
-            _movementInput = _playerInput.MovementInput;
-            _runInput = _playerInput.RunInput;
+            _movementInput = _playerInput.movementInput;
+            _runInput = _playerInput.runInput;
         }
 
         if (_runInput)

@@ -4,8 +4,7 @@ public class PlaySound : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
-    [Header("Auto Assigned")]
-    [SerializeField] private AudioSource _AudioSource = null;
+    [SerializeField] private AudioSource _AudioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -17,7 +16,7 @@ public class PlaySound : MonoBehaviour
 
     public void playSound()
     {
-        if (_AudioSource != null)
+        if (NullChecker.Check(_AudioSource))
         {
             _AudioSource.Play();
         }

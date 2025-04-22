@@ -38,7 +38,7 @@ public class WeaponBob : MonoBehaviour
 
     private void Update()
     {
-        if (_PlayerInput.MovementInput != null && _PlayerInput.MovementInput != Vector2.zero)
+        if (_PlayerInput.movementInput != null && _PlayerInput.movementInput != Vector2.zero)
         {
             _sineTime += _bobSpeed * Time.deltaTime;
             _sineResult = Mathf.Sin(_sineTime);

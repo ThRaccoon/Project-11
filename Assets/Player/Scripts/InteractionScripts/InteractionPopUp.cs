@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class InteractionPopUp : MonoBehaviour
 {
     [Header("Components")]
-    [Header("Auto Assigned")]
     private Camera _mainCamera;
     [SerializeField] private float _activationRange = 0;
     private TextMeshPro _textMeshPro;
