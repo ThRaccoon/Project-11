@@ -980,6 +980,7 @@ GameObject:
   - component: {fileID: 979826200356040864}
   - component: {fileID: 7294408962871607442}
   - component: {fileID: 7472751482465881988}
+  - component: {fileID: 1466578597251824717}
   - component: {fileID: 6416706177314904015}
   m_Layer: 0
   m_Name: Mutant_3
@@ -1025,8 +1026,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.33, y: 1.8, z: 0.3}
-  m_Center: {x: 0, y: 0.9, z: 0.027}
+  m_Size: {x: 0.32, y: 1.8, z: 0.3}
+  m_Center: {x: 0, y: 0.9, z: 0.03}
 --- !u!195 &979826200356040864
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1087,6 +1088,35 @@ MonoBehaviour:
   - m_Rig: {fileID: 5015366622273018004}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &1466578597251824717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4076054762732044370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926d369b212f9144e8f769908885d84f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boxCollider: {fileID: 0}
+  _navMeshAgent: {fileID: 0}
+  _animator: {fileID: 0}
+  _rig: {fileID: 0}
+  <activationRange>k__BackingField: 0
+  <chaseRange>k__BackingField: 0.5
+  <attackRange>k__BackingField: 0.5
+  transformYOffset: 1.5
+  <collisionLayersToIgnore>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 2147483648
+  <waitTime>k__BackingField: 5
+  <navPointA>k__BackingField: {fileID: 0}
+  <navPointB>k__BackingField: {fileID: 0}
+  idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
+  chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}
+  attackSTemplate: {fileID: 11400000, guid: 2baa2bc409ac9fe4db3b57b315b2156b, type: 2}
 --- !u!114 &6416706177314904015
 MonoBehaviour:
   m_ObjectHideFlags: 0

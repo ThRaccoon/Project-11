@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2669927917485654406}
   - component: {fileID: 6415431401645481369}
   - component: {fileID: 4710428799474780693}
+  - component: {fileID: 4192703831588525243}
   - component: {fileID: 6656474756059781445}
   m_Layer: 0
   m_Name: Player
@@ -32,13 +33,13 @@ Transform:
   m_GameObject: {fileID: 5785065308060052077}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.329, y: 1, z: 2.714}
+  m_LocalPosition: {x: -42.993, y: 5.163, z: 53.96}
   m_LocalScale: {x: 0.75, y: 0.9, z: 0.75}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8528998212320821072}
-  - {fileID: 8568536737820498547}
   - {fileID: 4422014677258673265}
+  - {fileID: 8568536737820498547}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &8666110050069885387
@@ -133,13 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b42d03e4cb58e4997bca098ba1a278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Weapons:
-  - weaponPrefab: {fileID: 6566352483557960042, guid: ecfa718f1da45804186b1877a576593f, type: 3}
-    weaponType: 1
-    acquired: 0
-    ammoOnFound: 0
-    ammo: 100
-    maxAmmo: 100
+  _pickUpNoteSound: {fileID: 8300000, guid: 0729503847eaf94429686622db4f33a4, type: 3}
+  _pickUpNoteVolume: 0.75
+  _journalSound: {fileID: 8300000, guid: 8936ebd732f30b2439a6a0dcd0117490, type: 3}
+  _journalVolume: 0.5
+  _Weapons: []
 --- !u!114 &6415431401645481369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,30 +151,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d49a8ab9cc1c7640bc5beec6ce3fd79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CapsuleCollider: {fileID: 8666110050069885387}
-  _Rigidbody: {fileID: 2430832040300796052}
-  _CameraRotation: {fileID: 8568536737820498547}
-  PlayerInput: {fileID: 0}
-  _defaultPullDownForce: 0
-  _minPullDownForce: -65
-  _maxPullDownForce: -120
-  _pullDownForceIncrement: -4
-  _forceIncrementTimeInterval: 0.2
-  _currentPullDownForce: 0
+  _capsuleCollider: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  _cameraRotation: {fileID: 8568536737820498547}
+  _playerInput: {fileID: 0}
   <walkSpeed>k__BackingField: 8
-  <crouchSpeed>k__BackingField: 3
-  _stoppingForce: 0.5
-  <standingGroundCheckLength>k__BackingField: 0.015
-  <crouchingGroundCheckLength>k__BackingField: 0.015
-  <crouchingCeilingCheckLength>k__BackingField: 0.5
-  _ceilingCheckRaycastOffset: 0.1
-  <isGrounded>k__BackingField: 0
-  <canStandUp>k__BackingField: 0
-  <slopeAngle>k__BackingField: 0
-  _crouchedYScale: 0.35
-  currentPlayerScale: 0
-  previousPlayerScale: 0
-  wasPreviousStateFalling: 0
+  <stoppingForce>k__BackingField: 0.5
+  <runSpeed>k__BackingField: 12
+  <maxStamina>k__BackingField: 100
+  <regenRate>k__BackingField: 20
+  <depleteRate>k__BackingField: 10
+  <staminaRegenDelay>k__BackingField: 3
+  _currentStamina: 0
+  <defaultPullDownForce>k__BackingField: 0
+  <minPullDownForce>k__BackingField: -65
+  <maxPullDownForce>k__BackingField: -120
+  <pullDownForceIncrement>k__BackingField: -4
+  <forceIncrementDelay>k__BackingField: 0.2
+  _currentPullDownForce: 0
+  <standingGroundCheckLength>k__BackingField: 0.125
 --- !u!114 &4710428799474780693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,9 +182,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8497c16cced494a830f3510c9c7cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _PlayerInput: {fileID: 0}
-  _PlayerCamera: {fileID: 0}
-  _interactionRange: 1
+  _interactionRange: 1.75
+--- !u!114 &4192703831588525243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5785065308060052077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c427c8959b845d45b49be1a6f7a8632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cursorTexture: {fileID: 2800000, guid: 3cc924bfac9693744964f4a1a36e38e2, type: 3}
+  _cursorPointTexture: {fileID: 2800000, guid: 6714d3fb00e650d45b8a40512609902f, type: 3}
 --- !u!82 &6656474756059781445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -201,21 +207,21 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ceac4cff19fdd5348b69b4533b631181, type: 3}
-  m_Resource: {fileID: 8300000, guid: ceac4cff19fdd5348b69b4533b631181, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.723
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 1.01
+  MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -385,7 +391,7 @@ GameObject:
   - component: {fileID: 8568536737820498547}
   m_Layer: 0
   m_Name: CameraRotation
-  m_TagString: Untagged
+  m_TagString: CameraRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -416,7 +422,7 @@ GameObject:
   - component: {fileID: 4422014677258673265}
   m_Layer: 0
   m_Name: CameraHolder
-  m_TagString: Untagged
+  m_TagString: CameraHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -430,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 7803846074618822481}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.63, z: 0}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

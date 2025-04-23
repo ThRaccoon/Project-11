@@ -1633,7 +1633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4470256494899235536
 Transform:
   m_ObjectHideFlags: 0
@@ -1671,8 +1671,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.32, y: 1.8, z: 0.23}
-  m_Center: {x: 0, y: 0.9, z: 0.028}
+  m_Size: {x: 0.35, y: 1.8, z: 0.25}
+  m_Center: {x: 0, y: 0.9, z: 0.025}
 --- !u!195 &8987688986052912409
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1749,6 +1749,7 @@ MonoBehaviour:
   _navMeshAgent: {fileID: 8987688986052912409}
   _animator: {fileID: 7559756301377982634}
   _rig: {fileID: 6315879650984573829}
+  <activationRange>k__BackingField: 0
   <chaseRange>k__BackingField: 12
   <attackRange>k__BackingField: 0.5
   transformYOffset: 1.5
