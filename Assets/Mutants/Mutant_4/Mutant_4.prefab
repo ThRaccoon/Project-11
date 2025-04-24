@@ -179,7 +179,7 @@ Animator:
   m_GameObject: {fileID: 290358656019001544}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fd9b523719ddaa549a8c850fb0885ec6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5dd721f58467b2e40b79089efa7086ee, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3031,11 +3031,11 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -40
+    limit: -2.361983
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 25
+    limit: 69.99811
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
