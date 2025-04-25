@@ -5,15 +5,15 @@ using UnityEngine.Animations.Rigging;
 public class EnemyBaseSuperState : ScriptableObject
 {
     // --- Components ---
-    protected Enemy _enemy = null;
-    protected Transform _enemyTransform = null;
-    protected NavMeshAgent _navMeshAgent = null;
-    protected Animator _animator = null;
-    protected Rig _rig = null;
+    protected Enemy _enemy;
+    protected Transform _enemyTransform;
+    protected NavMeshAgent _navMeshAgent;
+    protected Animator _animator;
+    protected Rig _rig;
 
-    protected Transform _playerTransform = null;
+    protected Transform _playerTransform;
 
-    protected EnemyStateManager _stateManager = null;
+    protected EnemyStateManager _stateManager;
 
     // --- variables ---
     protected bool _didPhysicsUpdateRan = false;

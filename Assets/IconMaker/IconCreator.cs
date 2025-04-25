@@ -6,13 +6,14 @@ public class IconCreator : MonoBehaviour
     public Camera renderCamera;
     public RenderTexture renderTexture;
     public string savePath = "Assets/IconMaker/Icons/";
-    private string defaultPath;
+    private string _defaultPath;
     public string iconName = "icon";
     int counter = 0;
 
+
     public void CaptureIcon()
     {
-        defaultPath = savePath + iconName+counter.ToString()+ ".png";
+        _defaultPath = savePath + iconName+counter.ToString()+ ".png";
         RenderTexture currentRT = RenderTexture.active;
         RenderTexture.active = renderTexture;
 
@@ -24,14 +25,14 @@ public class IconCreator : MonoBehaviour
         tex.Apply();
 
         byte[] bytes = tex.EncodeToPNG();
-        File.WriteAllBytes(defaultPath, bytes);
+        File.WriteAllBytes(_defaultPath, bytes);
 
-        // Cleanup
+        // Clean up
         renderCamera.targetTexture = null;
         RenderTexture.active = currentRT;
         Destroy(tex);
 
-        Debug.Log("Icon saved to: " + defaultPath);
+        Debug.Log("Icon saved to: " + _defaultPath);
         counter++;
     }
 }

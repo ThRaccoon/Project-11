@@ -1,61 +1,69 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    [Header("Components")]
+    private PlayerCamera _playerCamera;
     [SerializeField] private Texture2D _cursorTexture;
     [SerializeField] private Texture2D _cursorPointTexture;
-    private PlayerCamera _playerCamera;
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+
     private void Awake()
     {
-        DisableCursor();
+        var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-        var camera = GameObject.FindGameObjectWithTag("MainCamera");
-        if(camera != null )
+        if (Util.IsNotNull(mainCamera))
         {
-            _playerCamera = camera.GetComponent<PlayerCamera>();
+            _playerCamera = mainCamera.GetComponent<PlayerCamera>();
         }
+
+        DisableCursor();
     }
 
 
     public void EnableCursor()
     {
-        if (_cursorTexture != null) 
+        if (Util.IsNotNull(_cursorTexture))
         {
-
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-            if (_cursorTexture != null)
-            {
-                Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
-            }
+
+            Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
         }
-        
-        _playerCamera?.DisableRotate();
+
+        if (Util.IsNotNull(_playerCamera))
+        {
+            _playerCamera.DisableRotation();
+        }
     }
 
     public void DisableCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        _playerCamera?.EnableRotate();
+
+        if (Util.IsNotNull(_playerCamera))
+        {
+            _playerCamera.EnableRotation();
+        }
     }
+
 
     public void EventEnter()
     {
-        if(_cursorPointTexture != null)
+        if (Util.IsNotNull(_cursorPointTexture))
         {
             Cursor.SetCursor(_cursorPointTexture, Vector2.zero, CursorMode.Auto);
         }
-        
     }
 
     public void EventExit()
     {
-        if (_cursorPointTexture != null)
+        if (Util.IsNotNull(_cursorPointTexture))
         {
             Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
         }
     }
-
 }

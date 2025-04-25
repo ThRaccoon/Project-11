@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class WeaponProperties : MonoBehaviour
 {
-    [SerializeField] private Animator[] _animators = null;
-    [SerializeField] private AudioClip _audioClip = null;
+    [SerializeField] private Animator[] _animators;
+    [SerializeField] private AudioClip _audioClip;
     
     [Tooltip("Maximum distance the bullet can travel.")]
     [SerializeField] private float _shootingDistance = 100f;

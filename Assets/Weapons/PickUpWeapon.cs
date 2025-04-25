@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PickUpWeapon : MonoBehaviour
 {
+    // ----------------------------------------------------------------------------------------------------------------------------------
+    [Header("Components")]
     [SerializeField] private EWeaponType _EWeaponType = 0;
+    // ----------------------------------------------------------------------------------------------------------------------------------
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) 
         {
             InventoryManager inventoryManager = other.GetComponent<InventoryManager>();
-            if (inventoryManager != null)
+            
+            if (Util.IsNotNull(inventoryManager))
             {
                 inventoryManager.OnWeaponFound(_EWeaponType);
                 Destroy(gameObject); 

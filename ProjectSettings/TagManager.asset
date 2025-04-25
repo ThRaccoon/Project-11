@@ -11,6 +11,10 @@ TagManager:
   - Item3DViwer
   - CameraHolder
   - CameraRotation
+  - Head
+  - Body
+  - Arms
+  - Legs
   layers:
   - Default
   - TransparentFX

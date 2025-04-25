@@ -6,8 +6,8 @@ using UnityEngine.Animations.Rigging;
 public class EnemyIdlePatrolS : EIdleSuperS
 {
     private bool _stopPatrolling = false;
-    private Transform _currentNavPoint = null;
-    private Transform _nextNavPoint = null;
+    private Transform _currentNavPoint;
+    private Transform _nextNavPoint;
     private GlobalTimer _timer;
 
 

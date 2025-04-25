@@ -1,41 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using System.Linq;
-using System.ComponentModel.Design;
 
 public class ShootingController : MonoBehaviour
 {
-    // --- Components ---
+    // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
-    [SerializeField] private Transform _WeaponCamera = null;
-    [SerializeField] private PlayerInput _PlayerInput = null;
-    [SerializeField] private AudioSource _AudioSource = null;
-    [SerializeField] private GameObject _BulletHole = null;
-    [SerializeField] private AudioClip _EmptyMagazineSound = null;
+    [SerializeField] private Transform _weaponCamera;
+    [SerializeField] private GameObject _bulletHole;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _emptyMagazineSound;
+    [SerializeField] private PlayerInput _playerInput;
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
 
     // --- Private Variables ---
-    private int _animationIndex = 0;
-    private float _shootCooldownTimer = 0.0f;
-    private bool _shootInput = false;
-    private bool _canShoot = false;
+    private bool _shootInput;
+    private bool _canShoot;
+    private bool _shotFired;
+    private int _damage;
+    private int _animationIndex;
+    private float _shootingDistance; // Maximum distance the bullet can travel.
+    private float _shootCooldownTime; // Time delay between shots.
+    private float _shootCooldownTimer;
+
+    private InventoryManager _inventoryManager;
+    private GameObject _equipedWeapon;
+    private WeaponData _weaponData;
+    private AudioClip _shootingSound;
+    private Animator[] _animators;
     private RaycastHit[] _hits;
-    private AudioClip _ShootingSound = null;
-    private Animator[] _Animators = null;
-    private float _shootingDistance = 100f; // Maximum distance the bullet can travel.
-    private float _shootCooldownTime = 0.5f;// Time delay between shots.
-    private int _damage = 25;
-    private bool _shootFired = false;
-    private InventoryManager _InventoryManager = null;
-    private GameObject _EquipedWeapon;
-    private WeaponData _WeaponData = null;
-    
-    
-    
+
+
     private void Awake()
     {
-        _InventoryManager = gameObject.GetComponent<InventoryManager>();
+        _inventoryManager = gameObject.GetComponent<InventoryManager>();
         _shootCooldownTimer = _shootCooldownTime;
     }
 
@@ -44,13 +42,13 @@ public class ShootingController : MonoBehaviour
         _shootInput = GetShootInput();
         HandleShootingCooldown();
 
-        if (_shootInput && _shootFired && _EquipedWeapon != null)
+        if (_shootInput && _shotFired && _equipedWeapon != null)
         {
             PlayShootingAnimation();
 
-            if (_WeaponData.ammo > 0) 
+            if (_weaponData.ammo > 0)
             {
-                _WeaponData.ammo--;
+                _weaponData.ammo--;
                 PlayShootingSound();
                 HandleHits();
             }
@@ -59,7 +57,7 @@ public class ShootingController : MonoBehaviour
                 PlayEmptyMagazineSound();
             }
 
-            _shootFired = false;
+            _shotFired = false;
 
         }
 
@@ -67,20 +65,21 @@ public class ShootingController : MonoBehaviour
         {
             EquipWeapon(EWeaponType.Pistol);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            EquipWeapon(EWeaponType.MP5);
-        }
-
     }
 
     private void FixedUpdate()
     {
         HandleShooting();
     }
+
+
     private bool GetShootInput()
     {
-        return _PlayerInput.shootInput;
+        if (Util.IsNotNull(_playerInput))
+        {
+            return _playerInput.shootInput;
+        }
+        return false;
     }
 
     private void HandleShootingCooldown()
@@ -97,46 +96,49 @@ public class ShootingController : MonoBehaviour
 
         }
     }
+
+
     private void PlayShootingSound()
     {
-        if (_ShootingSound != null)
+        if (Util.IsNotNull(_shootingSound))
         {
-            _AudioSource.PlayOneShot(_ShootingSound);
+            _audioSource.PlayOneShot(_shootingSound);
         }
     }
 
     private void PlayEmptyMagazineSound()
     {
-        if (_EmptyMagazineSound != null)
+        if (Util.IsNotNull(_emptyMagazineSound))
         {
-            _AudioSource.PlayOneShot(_EmptyMagazineSound);
+            _audioSource.PlayOneShot(_emptyMagazineSound);
         }
     }
 
-
     private void PlayShootingAnimation()
     {
-        if (_Animators.Length > 0)
+        if (_animators.Length > 0)
         {
-            _Animators[_animationIndex].CrossFadeInFixedTime("Shot", 0.1f);
+            _animators[_animationIndex].CrossFadeInFixedTime("Shot", 0.1f);
             _animationIndex++;
         }
 
-        if (_animationIndex >= _Animators.Length)
+        if (_animationIndex >= _animators.Length)
         {
             _animationIndex = 0;
         }
     }
+
     private void HandleShooting()
     {
-        if (_shootInput && _canShoot && _EquipedWeapon != null && _WeaponData.ammo>0)
+        if (Util.IsNotNull(_equipedWeapon) && _shootInput && _canShoot && _weaponData.ammo > 0)
         {
             _canShoot = false;
-            _hits = Physics.RaycastAll(_WeaponCamera.transform.position, _WeaponCamera.transform.forward, _shootingDistance);
+            _hits = Physics.RaycastAll(_weaponCamera.transform.position, _weaponCamera.transform.forward, _shootingDistance);
             _hits = _hits.OrderBy(hit => hit.distance).ToArray();
-            _shootFired = true;
+            _shotFired = true;
         }
     }
+
     private void HandleHits()
     {
         for (int i = 0; i < _hits.Length; i++)
@@ -164,11 +166,11 @@ public class ShootingController : MonoBehaviour
 
             if (_hits[i].collider.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
-                if (_BulletHole != null)
+                if (Util.IsNotNull(_bulletHole))
                 {
-                    Vector3 vec = ((_WeaponCamera.transform.position - _hits[i].point).normalized) * 0.001f; // points thowards weponCamera
+                    Vector3 vec = ((_weaponCamera.transform.position - _hits[i].point).normalized) * 0.001f; // points thowards weponCamera
 
-                    Instantiate(_BulletHole, _hits[i].point + vec, Quaternion.FromToRotation(Vector3.up, _hits[i].normal));
+                    Instantiate(_bulletHole, _hits[i].point + vec, Quaternion.FromToRotation(Vector3.up, _hits[i].normal));
                     break;
                 }
 
@@ -179,37 +181,37 @@ public class ShootingController : MonoBehaviour
 
     private void DestroyEquipedWeapon()
     {
-        if (_EquipedWeapon != null)
+        if (Util.IsNotNull(_equipedWeapon))
         {
-            Destroy(_EquipedWeapon);
+            Destroy(_equipedWeapon);
         }
     }
 
     private void EquipWeapon(EWeaponType weapon)
     {
-        if (_InventoryManager == null)
+        if (_inventoryManager == null)
         {
             return;
         }
 
-        if (_WeaponData != null && _WeaponData.weaponType ==  weapon)
+        if (Util.IsNotNull(_weaponData) && _weaponData.weaponType == weapon)
         {
             return;
         }
 
-        WeaponData weaponData = _InventoryManager.GetWeapon(weapon);
+        WeaponData weaponData = _inventoryManager.GetWeapon(weapon);
 
-        if (!weapon.Equals(default(WeaponData)) && weaponData.weaponPrefab != null &&  weaponData.acquired)
+        if (!weapon.Equals(default(WeaponData)) && weaponData.weaponPrefab != null && weaponData.acquired)
         {
             DestroyEquipedWeapon();
 
-            _WeaponData = weaponData;
-            _EquipedWeapon = Instantiate(weaponData.weaponPrefab, _WeaponCamera.transform);
-            var wepProperties = _EquipedWeapon.GetComponent<WeaponProperties>();
+            _weaponData = weaponData;
+            _equipedWeapon = Instantiate(weaponData.weaponPrefab, _weaponCamera.transform);
+            var wepProperties = _equipedWeapon.GetComponent<WeaponProperties>();
             if (wepProperties != null)
             {
-                _ShootingSound = wepProperties.GetAudioClip();
-                _Animators = wepProperties.GetAnimators();
+                _shootingSound = wepProperties.GetAudioClip();
+                _animators = wepProperties.GetAnimators();
                 _shootingDistance = wepProperties.GetShootDistance();
                 _shootCooldownTime = wepProperties.GetShootCooldownTime();
                 _damage = wepProperties.GetDamage();
