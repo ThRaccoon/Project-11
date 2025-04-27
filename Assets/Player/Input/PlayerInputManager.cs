@@ -137,6 +137,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""_2"",
+                    ""type"": ""Button"",
+                    ""id"": ""29b0c883-4530-4bb7-ba3c-c446b9c2fae5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""_3"",
                     ""type"": ""Button"",
                     ""id"": ""25cb1f06-71cc-4553-9600-8e481575b519"",
@@ -256,6 +265,17 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""action"": ""_3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e83a214-caee-400b-b33d-cff42b6d8868"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround_LShift = m_OnGround.FindAction("LShift", throwIfNotFound: true);
         m_OnGround_LMB = m_OnGround.FindAction("LMB", throwIfNotFound: true);
         m_OnGround_E = m_OnGround.FindAction("E", throwIfNotFound: true);
+        m_OnGround__2 = m_OnGround.FindAction("_2", throwIfNotFound: true);
         m_OnGround__3 = m_OnGround.FindAction("_3", throwIfNotFound: true);
     }
 
@@ -355,6 +376,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnGround_LShift;
     private readonly InputAction m_OnGround_LMB;
     private readonly InputAction m_OnGround_E;
+    private readonly InputAction m_OnGround__2;
     private readonly InputAction m_OnGround__3;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
@@ -387,6 +409,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnGround/E".
         /// </summary>
         public InputAction @E => m_Wrapper.m_OnGround_E;
+        /// <summary>
+        /// Provides access to the underlying input action "OnGround/_2".
+        /// </summary>
+        public InputAction @_2 => m_Wrapper.m_OnGround__2;
         /// <summary>
         /// Provides access to the underlying input action "OnGround/_3".
         /// </summary>
@@ -432,6 +458,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @E.started += instance.OnE;
             @E.performed += instance.OnE;
             @E.canceled += instance.OnE;
+            @_2.started += instance.On_2;
+            @_2.performed += instance.On_2;
+            @_2.canceled += instance.On_2;
             @_3.started += instance.On_3;
             @_3.performed += instance.On_3;
             @_3.canceled += instance.On_3;
@@ -461,6 +490,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @E.started -= instance.OnE;
             @E.performed -= instance.OnE;
             @E.canceled -= instance.OnE;
+            @_2.started -= instance.On_2;
+            @_2.performed -= instance.On_2;
+            @_2.canceled -= instance.On_2;
             @_3.started -= instance.On_3;
             @_3.performed -= instance.On_3;
             @_3.canceled -= instance.On_3;
@@ -539,6 +571,13 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnE(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "_2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On_2(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "_3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

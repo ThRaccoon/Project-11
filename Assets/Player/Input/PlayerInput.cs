@@ -40,7 +40,10 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.E.performed += GetUseInput;
 
+        _playerInputManager.OnGround._2.performed += GetUseInput2;
+
         _playerInputManager.OnGround._3.performed += GetUseInput3;
+
     }
 
     private void OnDisable()
@@ -57,6 +60,8 @@ public class PlayerInput : MonoBehaviour
         _playerInputManager.OnGround.LMB.performed -= GetShootInput;
 
         _playerInputManager.OnGround.E.performed -= GetUseInput;
+
+        _playerInputManager.OnGround._2.performed -= GetUseInput2;
 
         _playerInputManager.OnGround._3.performed -= GetUseInput3;
 
@@ -93,6 +98,19 @@ public class PlayerInput : MonoBehaviour
             if (Util.IsNotNull(playerInteract))
             {
                 playerInteract.PerformInteraction();
+            }
+        }
+    }
+
+    private void GetUseInput2(InputAction.CallbackContext ctx)
+    {
+        if (Util.IsNotNull(_player))
+        {
+            var inventoryManager = _player.GetComponent<InventoryManager>();
+
+            if (Util.IsNotNull(inventoryManager))
+            {
+                inventoryManager.EquipFlashlight();
             }
         }
     }

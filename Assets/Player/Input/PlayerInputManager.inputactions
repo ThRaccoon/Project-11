@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "_2",
+                    "type": "Button",
+                    "id": "29b0c883-4530-4bb7-ba3c-c446b9c2fae5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "_3",
                     "type": "Button",
                     "id": "25cb1f06-71cc-4553-9600-8e481575b519",
@@ -168,6 +177,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "_3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e83a214-caee-400b-b33d-cff42b6d8868",
+                    "path": "<Keyboard>/2",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "_2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
