@@ -1,3 +1,4 @@
+using UnityEditor.Playables;
 using UnityEngine;
 
 public interface IInteractable
@@ -21,11 +22,33 @@ public class PlayerInteract : MonoBehaviour
 
     // --- Private Variables ---
     private RaycastHit _hitInfo;
+    private GameObject _interactIcon;
 
 
     private void Awake()
     {
         _playerCamera = Camera.main;
+        _interactIcon = Util.FindSceneObjectByTag("InteractIcon");
+    }
+
+    private void FixedUpdate()
+    {
+        if(Util.IsNotNull(_interactIcon))
+        {
+            if (Util.IsNotNull(_playerCamera))
+            {
+                Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange);
+                
+                 if (IsInteractable())
+                 {
+                    _interactIcon.SetActive(true);
+                 }
+                 else
+                 {
+                    _interactIcon.SetActive(false);
+                 }
+            }
+        }
     }
 
 
@@ -55,4 +78,15 @@ public class PlayerInteract : MonoBehaviour
             }
         }
     }
+
+    private bool IsInteractable()
+    {
+        if(_hitInfo.collider != null && _hitInfo.collider.GetComponent<IInteractable>() != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

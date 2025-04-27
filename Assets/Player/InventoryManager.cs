@@ -54,6 +54,8 @@ public class InventoryManager : MonoBehaviour
 
     // --- Note ---
     private GameObject _note;
+    private GameObject _noteNext;
+    private GameObject _notePrev;
     private int _noteIndex;
 
     // --- Weapon ---
@@ -68,6 +70,9 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         _note = Util.FindSceneObjectByTag("Note");
+        _noteNext = Util.FindSceneObjectByTag("NoteNext");
+        _notePrev = Util.FindSceneObjectByTag("NotePrev");
+
         _item3DViwer = Util.FindSceneObjectByTag("Item3DViwer");
         _cursor = GetComponent<CursorController>();
         _audioSource = GetComponent<AudioSource>();
@@ -112,7 +117,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
+ //Journal & Notes start
     public void OpenJournal()
     {
         if (Util.IsNotNull(_note) && Util.IsNotNull(_cursor))
@@ -132,29 +137,67 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
     public void AddNote(string description)
     {
         Note note = new Note(description);
         _notes.Add(note);
         PlayPickUpNoteSound();
+        UpdateJournal();
+    }
+
+    private void UpdateJournal()
+    {
+        if(Util.IsNotNull(_note) && _note.activeSelf)
+        {
+
+            if (_notes.Count <= 1)
+            {
+                SetNotesArrows(false);
+            }
+            else
+            {
+                SetNotesArrows(true);
+            }
+
+            if(_notes.Count == 1)
+            {
+                _noteIndex = 0;
+                SetNoteText();
+            }
+        }
     }
 
     private void SetNoteText()
     {
-        var noteText = _note.GetComponentInChildren<TextMeshProUGUI>(true);
-
-        if (Util.IsNotNull(noteText))
+        if (Util.IsNotNull(_note))
         {
-            if (_notes.Count > 0 && _noteIndex >= 0)
+            var noteText = _note.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (Util.IsNotNull(noteText))
             {
-                noteText.SetText(_notes[_noteIndex]._description);
+               
+                if (_notes.Count > 0 && _noteIndex >= 0)
+                {
+                    noteText.SetText(_notes[_noteIndex]._description);
+
+                    if(_notes.Count <= 1)
+                    {
+                        SetNotesArrows(false);
+                    }
+                    else
+                    {
+                        SetNotesArrows(true);
+                    }
+
+                }
+                else
+                {
+                    noteText.SetText("EMPTY");
+                    SetNotesArrows(false);
+
+                }
             }
-            else
-            {
-                noteText.SetText("EMPTY");
-            }
-        }
+        }       
     }
 
     public void NextNote()
@@ -177,7 +220,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
     private void PlayJournalSound()
     {
         if (Util.IsNotNull(_audioSource) && Util.IsNotNull(_pickUpNoteSound))
@@ -197,4 +239,12 @@ public class InventoryManager : MonoBehaviour
             _audioSource.Play();
         }
     }
+
+    private void SetNotesArrows(bool state)
+    {
+        if(Util.IsNotNull(_noteNext) && Util.IsNotNull(_notePrev))
+        _noteNext.SetActive(state);
+        _notePrev.SetActive(state);
+    }
+// Journal & Notes End
 }
