@@ -36,7 +36,7 @@ public class PlayerInput : MonoBehaviour
         _playerInputManager.OnGround.LShift.performed += GetRunInput;
         _playerInputManager.OnGround.LShift.canceled += GetRunInput;
 
-        _playerInputManager.OnGround.LMB.performed += GetShootInput;
+        _playerInputManager.OnGround.LMB.performed += GetLMBInput;
 
         _playerInputManager.OnGround.E.performed += GetUseInput;
 
@@ -57,7 +57,7 @@ public class PlayerInput : MonoBehaviour
         _playerInputManager.OnGround.LShift.performed -= GetRunInput;
         _playerInputManager.OnGround.LShift.canceled -= GetRunInput;
 
-        _playerInputManager.OnGround.LMB.performed -= GetShootInput;
+        _playerInputManager.OnGround.LMB.performed -= GetLMBInput;
 
         _playerInputManager.OnGround.E.performed -= GetUseInput;
 
@@ -84,10 +84,6 @@ public class PlayerInput : MonoBehaviour
         runInput = ctx.ReadValueAsButton();
     }
 
-    private void GetShootInput(InputAction.CallbackContext ctx)
-    {
-        // Shoot function
-    }
 
     private void GetUseInput(InputAction.CallbackContext ctx)
     {
@@ -98,6 +94,19 @@ public class PlayerInput : MonoBehaviour
             if (Util.IsNotNull(playerInteract))
             {
                 playerInteract.PerformInteraction();
+            }
+        }
+    }
+
+    private void GetLMBInput(InputAction.CallbackContext ctx)
+    {
+        if (Util.IsNotNull(_player))
+        {
+            var inventoryManager = _player.GetComponent<InventoryManager>();
+
+            if (Util.IsNotNull(inventoryManager))
+            {
+                inventoryManager.LMB();
             }
         }
     }

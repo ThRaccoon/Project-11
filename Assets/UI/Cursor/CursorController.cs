@@ -66,4 +66,9 @@ public class CursorController : MonoBehaviour
             Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
         }
     }
+
+   public bool IsVisiable()
+    {
+        return Cursor.visible;
+    }
 }

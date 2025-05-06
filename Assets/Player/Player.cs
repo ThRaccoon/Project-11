@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private Image stamina;
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [SerializeField] private CapsuleCollider _capsuleCollider;
@@ -185,6 +187,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        stamina.fillAmount = CurrentStamina / maxStamina;
+
         stateManager.currentState.LogicUpdate();
     }
 

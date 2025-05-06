@@ -46,6 +46,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float _pickUpNoteVolume;
     [SerializeField] private AudioClip _journalSound;
     [SerializeField, Range(0f, 1f)] private float _journalVolume;
+    [SerializeField] private AudioClip _flashlightToggleSound;
+    [SerializeField, Range(0f, 1f)] private float _flashlightToggleVolume;
     [SerializeField] private Color _highlight;
     [SerializeField] private Color _unhighlight;
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -78,9 +80,11 @@ public class InventoryManager : MonoBehaviour
 
     // ---Flashlight---
     private bool _hasFlashlight = true;
-    private bool _isOn = false;
     private GameObject _flashlight;
     private GameObject _flashlightLight;
+
+    //--LastEquiped--
+    private GameObject _lastEquiped = null;
 
 
     private void Awake()
@@ -99,7 +103,7 @@ public class InventoryManager : MonoBehaviour
         _slot4 = Util.FindSceneObjectByTag("Slot4");
 
         _flashlight = Util.FindSceneObjectByTag("Flashlight");
-        Light light = GetComponentInChildren<Light>();
+        Light light = _flashlight.GetComponentInChildren<Light>();
         if(light != null)
         {
             _flashlightLight = light.gameObject;
@@ -153,10 +157,12 @@ public class InventoryManager : MonoBehaviour
         {
             if (Util.ObjectToggle(_note))
             {
+                UnEquip(_note);
                 HiglightSlot(_slot3);
                 _cursor.EnableCursor();
                 _noteIndex = _notes.Count - 1;
                 SetNoteText();
+               
             }
             else
             {
@@ -313,6 +319,17 @@ public class InventoryManager : MonoBehaviour
 // Slot End
 
 // Flashlight
+
+    private void PlayToggleFlashlightSound()
+    {
+       if (Util.IsNotNull(_audioSource) && Util.IsNotNull(_flashlightToggleSound))
+       {
+           _audioSource.clip = _flashlightToggleSound;
+           _audioSource.volume = _flashlightToggleVolume;
+           _audioSource.Play();
+       }
+        
+    }
     public void SetHasFlashlight(bool state)
     {
         _hasFlashlight = state;
@@ -326,7 +343,13 @@ public class InventoryManager : MonoBehaviour
             {
                if(Util.ObjectToggle(_flashlight))
                {
+                    UnEquip(_flashlight);
                     HiglightSlot(_slot2);
+                    if(Util.IsNotNull(_flashlightLight))
+                    {
+                        _flashlightLight.SetActive(false);
+                    }
+
                }
                else
                {
@@ -339,5 +362,35 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-// Flashlight End
+    // Flashlight End
+
+
+   private void UnEquip(GameObject newEquip)
+    {
+        if (_lastEquiped != null && _lastEquiped != newEquip)
+        {
+            _lastEquiped.SetActive(false);
+
+            if(_cursor.IsVisiable())
+            {
+                _cursor.DisableCursor();
+            }
+        }
+
+        _lastEquiped = newEquip;
+
+    }
+
+
+    public void LMB()
+    {
+        if(_flashlight.activeInHierarchy)
+        {
+            if(_flashlightLight != null)
+            {
+                Util.ObjectToggle(_flashlightLight);
+                PlayToggleFlashlightSound();
+            }
+        }
+    }
 }

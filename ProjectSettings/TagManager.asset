@@ -23,6 +23,7 @@ TagManager:
   - Slot3
   - Slot4
   - Flashlight
+  - Pistol
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Hands
   - 
   - 
   - 
