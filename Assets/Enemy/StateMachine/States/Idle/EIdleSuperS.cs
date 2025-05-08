@@ -4,19 +4,23 @@ using UnityEngine.Animations.Rigging;
 
 public class EIdleSuperS : EnemyBaseSuperState
 {
-    protected bool _shouldAttack = false;
+    protected bool _shouldReturnToSpawn = false;
+    protected GlobalTimer _returnToSpawnTimer;
 
-
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, playerTransform, stateManager);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
+
+        _returnToSpawnTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.returnToSpawnDuration.x),
+                                                           Mathf.RoundToInt(_enemy.returnToSpawnDuration.y) + 1));
     }
 
     public override void DoOnEnter()
     {
         base.DoOnEnter();
 
-        _shouldAttack = false;
+        _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
+        _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
     }
 
     public override void DoLogicUpdate()
@@ -24,15 +28,36 @@ public class EIdleSuperS : EnemyBaseSuperState
         base.DoLogicUpdate();
 
         // --- Timers ---
+        if (_shouldReturnToSpawn)
+        {
+            _returnToSpawnTimer.CountDownTimer();
+        }
+        else
+        {
+            _returnToSpawnTimer.Reset();
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---
+        if (_returnToSpawnTimer.Flag)
+        {
+            _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
+            _returnToSpawnTimer.Reset();
+
+            _didLogicUpdateRan = true;
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
-        if (_shouldAttack && _didPhysicsUpdateRan)
+        if ((_shouldAttack || _enemy.PlayerAttacked) && _pathToPlayer.status == NavMeshPathStatus.PathComplete && _didPhysicsUpdateRan)
         {
             _stateManager.ChangeState(_enemy.chaseStateController);
+        }
+
+        if (!IsPositionReached(_enemyTransform.position, _enemy.spawnPos) && _pathToSpawn.status == NavMeshPathStatus.PathComplete
+            && _shouldReturnToSpawn && _didLogicUpdateRan && _didPhysicsUpdateRan)
+        {
+            _stateManager.ChangeState(_enemy.returnStateController);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
@@ -41,10 +66,12 @@ public class EIdleSuperS : EnemyBaseSuperState
     {
         base.DoPhysicsUpdate();
 
-        if (CheckIfPlayerInRange())
+        if (IsPlayerInRange(_enemy.chaseRange))
         {
-            if (CheckIfPlayerInLOS())
+            if (IsPlayerInLOS())
             {
+                _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
+
                 _shouldAttack = true;
             }
         }
@@ -55,33 +82,7 @@ public class EIdleSuperS : EnemyBaseSuperState
     public override void DoOnExit()
     {
         base.DoOnExit();
-    }
 
-
-    protected bool CheckIfPlayerInRange()
-    {
-        float _distanceToPlayer = Vector3.Distance(_enemyTransform.position, _playerTransform.position);
-
-        if (_distanceToPlayer < _enemy.chaseRange)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    protected bool CheckIfPlayerInLOS()
-    {
-        Vector3 start = new Vector3(_enemyTransform.position.x,
-                                    _enemyTransform.position.y + _enemy.transformYOffset,
-                                    _enemyTransform.position.z);
-        Vector3 end = _playerTransform.position;
-        RaycastHit hit;
-
-        Physics.Linecast(start, end, out hit, ~_enemy.collisionLayersToIgnore);
-        if (hit.collider.CompareTag("Player"))
-        {
-            return true;
-        }
-        return false;
+        _returnToSpawnTimer.Reset();
     }
 }

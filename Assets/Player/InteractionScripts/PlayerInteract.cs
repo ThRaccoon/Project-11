@@ -1,4 +1,3 @@
-using UnityEditor.Playables;
 using UnityEngine;
 
 public interface IInteractable
@@ -20,9 +19,10 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float _interactionRange;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
+
     // --- Private Variables ---
-    private RaycastHit _hitInfo;
     private GameObject _interactIcon;
+    private RaycastHit _hitInfo;
 
 
     private void Awake()
@@ -33,20 +33,21 @@ public class PlayerInteract : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Util.IsNotNull(_interactIcon))
+        // Do not use Util.IsNotNull here to prevent console spamming
+        if (_interactIcon != null)
         {
             if (Util.IsNotNull(_playerCamera))
             {
                 Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange);
-                
-                 if (IsInteractable())
-                 {
+
+                if (IsInteractable())
+                {
                     _interactIcon.SetActive(true);
-                 }
-                 else
-                 {
+                }
+                else
+                {
                     _interactIcon.SetActive(false);
-                 }
+                }
             }
         }
     }
@@ -71,7 +72,7 @@ public class PlayerInteract : MonoBehaviour
         {
             IInteractable interactable = _hitInfo.collider.GetComponent<IInteractable>();
 
-            // Do not use NullChecker here to prevent console spamming everytime you press E
+            // Do not use Util.IsNotNull here to prevent console spamming
             if (interactable != null)
             {
                 interactable.Interact();
@@ -81,7 +82,7 @@ public class PlayerInteract : MonoBehaviour
 
     private bool IsInteractable()
     {
-        if(_hitInfo.collider != null && _hitInfo.collider.GetComponent<IInteractable>() != null)
+        if (_hitInfo.collider != null && _hitInfo.collider.GetComponent<IInteractable>() != null)
         {
             return true;
         }

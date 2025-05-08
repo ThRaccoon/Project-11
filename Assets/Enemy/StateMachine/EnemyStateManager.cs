@@ -2,7 +2,6 @@ public class EnemyStateManager
 {
     public EnemyBaseStateController currentState { get; private set; }
 
-
     public void Initialize(EnemyBaseStateController startingState)
     {
         currentState = startingState;

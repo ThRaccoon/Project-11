@@ -104,7 +104,7 @@ public class PlayerInput : MonoBehaviour
         {
             var inventoryManager = _player.GetComponent<InventoryManager>();
 
-            if (Util.IsNotNull(inventoryManager))
+            if (inventoryManager != null)
             {
                 inventoryManager.LMB();
             }

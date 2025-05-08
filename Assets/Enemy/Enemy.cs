@@ -15,10 +15,23 @@ public class Enemy : MonoBehaviour
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
-    [field: Header("Settings")]
-    [field: SerializeField] public float activationRange { get; private set; }
+    [field: Header("Ranges")]
     [field: SerializeField] public float chaseRange { get; private set; }
     [field: SerializeField] public float attackRange { get; private set; }
+
+    [field: Space(10)]
+    [field: Header("Speeds")]
+    [field: SerializeField] public float walkSpeed { get; private set; }
+    [field: SerializeField] public float chaseSpeed { get; private set; }
+
+    [field: Space(10)]
+    [field: Header("Timers")]
+    [field: SerializeField] public float avoidancePriorityDuration { get; private set; }
+    [field: SerializeField] public float recalculatePathDuration { get; private set; }
+    [field: SerializeField] public Vector2 returnToSpawnDuration { get; private set; }
+
+    [field: Space(10)]
+    [field: Header("Other")]
     [field: SerializeField] public float transformYOffset;
     [field: SerializeField] public LayerMask collisionLayersToIgnore { get; private set; }
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -27,14 +40,29 @@ public class Enemy : MonoBehaviour
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
     [field: Header("Patrol Settings")]
-    [field: SerializeField] public float waitTime { get; private set; }
-    [field: SerializeField] public Transform navPointA { get; private set; }
-    [field: SerializeField] public Transform navPointB { get; private set; }
+    [field: SerializeField] public float waitOnPatrolPointDuration { get; private set; }
+    [field: SerializeField] public Transform patrolPointA { get; private set; }
+    [field: SerializeField] public Transform patrolPointB { get; private set; }
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
+    // --- Public Variables ---
+    [field: Space(30)]
+    [field: Header("Debug")]
+    [field: SerializeField] public Vector3 spawnPos { get; private set; } // Debug
+
     // --- Private Variables ---
     private Transform _playerTransform;
+
+    [HideInInspector] private bool _playerAttacked;
+    #region Getters / Setters
+
+    public bool PlayerAttacked
+    {
+        get => _playerAttacked;
+        set => _playerAttacked = value;
+    }
+    #endregion
 
 
     #region State Machine
@@ -44,12 +72,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EIdleSuperS idleSTemplate;
     [SerializeField] private EChaseSuperS chaseSTemplate;
     [SerializeField] private EAttackSuperS attackSTemplate;
+    [SerializeField] private EReturnS returnSTemplate;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     // --- Scriptable Object State Instances ---
     public EIdleSuperS idleSInstance { get; private set; }
     public EChaseSuperS chaseSInstance { get; private set; }
     public EAttackSuperS attackSInstance { get; private set; }
+    public EReturnSuperS returnSInstance { get; private set; }
 
     // --- State Manager --- 
     public EnemyStateManager stateManager { get; private set; }
@@ -59,6 +89,7 @@ public class Enemy : MonoBehaviour
     public EIdleSController idleStateController { get; private set; }
     public EChaseSController chaseStateController { get; private set; }
     public EAttackSController attackStateController { get; private set; }
+    public EReturnSController returnStateController { get; private set; }
     #endregion
 
 
@@ -75,11 +106,11 @@ public class Enemy : MonoBehaviour
         // --- Assigned On Start ---
         attackRange += _navMeshAgent.stoppingDistance;
 
-
         // --- Instantiate State Instances ---
         idleSInstance = Instantiate(idleSTemplate);
         chaseSInstance = Instantiate(chaseSTemplate);
         attackSInstance = Instantiate(attackSTemplate);
+        returnSInstance = Instantiate(returnSTemplate);
 
         // --- State Machine --- 
         stateManager = new EnemyStateManager();
@@ -89,15 +120,19 @@ public class Enemy : MonoBehaviour
         idleStateController = new EIdleSController(this);
         chaseStateController = new EChaseSController(this);
         attackStateController = new EAttackSController(this);
+        returnStateController = new EReturnSController(this);
     }
 
     private void Start()
     {
+        spawnPos = transform.position;
+
         if (Util.IsNotNull(_navMeshAgent) && Util.IsNotNull(_animator) && Util.IsNotNull(_rig))
         {
-            idleSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
-            chaseSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
-            attackSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, _playerTransform, stateManager);
+            idleSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
+            chaseSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
+            attackSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
+            returnSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
         }
 
         stateManager.Initialize(idleStateController);
@@ -105,8 +140,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _navMeshAgent.avoidancePriority = Random.Range(0, 100);
-
         stateManager.currentState.LogicUpdate();
     }
 
@@ -118,13 +151,10 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(transform.position, activationRange);
+        // Gizmos.color = Color.yellow;
+        // Gizmos.DrawWireSphere(transform.position, chaseRange);
 
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, chaseRange);
-
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, attackRange);
+        // Gizmos.color = Color.red;
+        // Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

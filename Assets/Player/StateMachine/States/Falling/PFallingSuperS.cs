@@ -55,7 +55,7 @@ public class PFallingSuperS : PlayerBaseState
 
         _player.forceIncrementTimer.CountDownTimer();
 
-        if (_player.forceIncrementTimer.flag)
+        if (_player.forceIncrementTimer.Flag)
         {
             _player.AccumulatedForceValue += _player.pullDownForceIncrement;
             _player.forceIncrementTimer.Reset();

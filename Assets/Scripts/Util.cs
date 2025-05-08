@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -36,13 +37,15 @@ public static class Util
         }
     }
 
- 
-    public static bool IsNotNull<T>
-        (T obj,
-        [CallerFilePath] string file = "",
-        [CallerLineNumber] int line = 0)
 
-        where T : class
+    private static readonly HashSet<string> _loggedLocations = new HashSet<string>();
+
+    public static bool IsNotNull<T>
+    (T obj,
+    [CallerFilePath] string file = "",
+    [CallerLineNumber] int line = 0)
+
+    where T : class
     {
         if (obj == null)
         {

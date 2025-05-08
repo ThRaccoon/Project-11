@@ -3,7 +3,6 @@ public class EnemyBaseStateController
     // --- Components ---
     protected Enemy _enemy = null;
 
-
     public EnemyBaseStateController(Enemy enemy)
     {
         _enemy = enemy;

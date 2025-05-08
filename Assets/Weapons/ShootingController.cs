@@ -151,10 +151,11 @@ public class ShootingController : MonoBehaviour
             if (_hits[i].collider.gameObject.transform.root.CompareTag("Enemy"))
             {
                 Debug.Log("Hit");
-                var hpScrip = _hits[i].collider.gameObject.GetComponentInParent<Health>();
+                var hpScrip = _hits[i].collider.gameObject.GetComponentInParent<EnemyHealthManager>();
                 if (hpScrip != null)
                 {
-                    hpScrip.TakeDamage(_damage, gameObject);
+                    // You have to pass the weapon dmg, the tag of the body part you hit by tag and the gameobject with the damage came from.
+                    // hpScrip.TakeDamage(_damage, gameObject);
                 }
                 else
                 {

@@ -4,19 +4,23 @@ using UnityEngine.Animations.Rigging;
 
 public class EChaseSuperS : EnemyBaseSuperState
 {
-    protected NavMeshPath _navMeshPath;
+    private GlobalTimer _avoidancePriorityTimer;
 
-
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, playerTransform, stateManager);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
 
-        _navMeshPath = new NavMeshPath();
+        _avoidancePriorityTimer = new GlobalTimer(_enemy.avoidancePriorityDuration);
     }
 
     public override void DoOnEnter()
     {
         base.DoOnEnter();
+
+        _navMeshAgent.speed = _enemy.chaseSpeed;
+
+        _navMeshAgent.SetDestination(_playerTransform.position);
+        _navMeshAgent.CalculatePath(_playerTransform.transform.position, _pathToPlayer);
     }
 
     public override void DoLogicUpdate()
@@ -24,23 +28,38 @@ public class EChaseSuperS : EnemyBaseSuperState
         base.DoLogicUpdate();
 
         // --- Timers ---
+        _avoidancePriorityTimer.CountDownTimer();
+        _recalculatePathTimer.CountDownTimer();
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---
-        if (Util.IsNotNull(_navMeshAgent))
+        if (_avoidancePriorityTimer.Flag)
         {
-            _navMeshAgent.SetDestination(_playerTransform.position);
-            _navMeshAgent.CalculatePath(_playerTransform.transform.position, _navMeshPath);
+            _navMeshAgent.avoidancePriority = Random.Range(0, 100);
+            _avoidancePriorityTimer.Reset();
+        }
+
+        if (_recalculatePathTimer.Flag)
+        {
+            _navMeshAgent.CalculatePath(_playerTransform.transform.position, _pathToPlayer);
+
+            if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
+            {
+                _navMeshAgent.SetDestination(_playerTransform.position);
+            }
+
+            _recalculatePathTimer.Reset();
+            _didLogicUpdateRan = true;
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
-        if (IsPlayerInAttackRange() && _navMeshPath.status == NavMeshPathStatus.PathComplete)
-        {
-            _stateManager.ChangeState(_enemy.attackStateController);
-        }
+        //if (IsPlayerInRange(_enemy.attackRange) && IsPlayerInLOS())
+        //{
+        //    _stateManager.ChangeState(_enemy.attackStateController);
+        //}
 
-        if (_navMeshPath.status == NavMeshPathStatus.PathPartial)
+        if (_pathToPlayer.status != NavMeshPathStatus.PathComplete && _didLogicUpdateRan)
         {
             _stateManager.ChangeState(_enemy.idleStateController);
         }
@@ -56,21 +75,9 @@ public class EChaseSuperS : EnemyBaseSuperState
     {
         base.DoOnExit();
 
-        if (Util.IsNotNull(_navMeshAgent))
-        {
-            _navMeshAgent.ResetPath();
-        }
-    }
+        _navMeshAgent.ResetPath();
 
-
-    protected bool IsPlayerInAttackRange()
-    {
-        float _distanceToPlayer = Vector3.Distance(_enemyTransform.position, _playerTransform.position);
-
-        if (_distanceToPlayer <= _enemy.attackRange)
-        {
-            return true;
-        }
-        return false;
+        _avoidancePriorityTimer.Reset();
+        _recalculatePathTimer.Reset();
     }
 }

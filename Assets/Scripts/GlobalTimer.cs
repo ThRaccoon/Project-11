@@ -2,11 +2,32 @@ using UnityEngine;
 
 public class GlobalTimer
 {
-    private float _duration = 0.0f;
-    private float _elapsedTime = 0.0f;
-    
-    public bool flag { get; private set; } = false;
+    private bool _flag = false;
+    #region Getter / Setter
+    public bool Flag
+    {
+        get => _flag;
+        private set => _flag = value;
+    }
+    #endregion
 
+    private float _duration = 0f;
+    #region Getter / Setter
+    public float Duration
+    {
+        get => _duration;
+        private set => _duration = value;
+    }
+    #endregion
+
+    private float _elapsedTime = 0f;
+    #region Getter / Setter
+    public float ElapsedTime
+    {
+        get => _elapsedTime;
+        private set => _elapsedTime = value;
+    }
+    #endregion
 
     public GlobalTimer(float duration, bool flag = false)
     {
@@ -16,59 +37,47 @@ public class GlobalTimer
 
     public bool CountDownTimer()
     {
-        if (flag) 
+        if (_flag)
         {
-            return flag;
+            return _flag;
         }
-        
+
         _elapsedTime -= Time.deltaTime;
 
         if (_elapsedTime <= 0)
         {
-            flag = true;
-            return flag;
+            _flag = true;
+            return _flag;
         }
-        return flag;
+        return _flag;
     }
 
     public bool ReversedCountDownTimer()
     {
-        if (!flag) 
+        if (!_flag)
         {
-            return flag;
+            return _flag;
         }
-        
+
         _elapsedTime -= Time.deltaTime;
 
         if (_elapsedTime <= 0)
         {
-            flag = false;
-            return flag;
+            _flag = false;
+            return _flag;
         }
-        return flag;
+        return _flag;
     }
 
     public void Reset()
     {
         _elapsedTime = _duration;
-        flag = false;
+        _flag = false;
     }
 
-    public void ReversedReset() 
+    public void ReversedReset()
     {
         _elapsedTime = _duration;
-        flag = true;
-    }
-
-
-    // Getters / Setters:
-    public void SetDuration(float duration)
-    {
-        _duration = duration;
-    }
-
-    public void SetFlag(bool newFlag)
-    {
-        flag = newFlag;
+        _flag = true;
     }
 }

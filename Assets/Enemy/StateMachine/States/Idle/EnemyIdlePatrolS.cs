@@ -5,29 +5,37 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Idle Patrol", menuName = "Enemy States/Idle/Patrol")]
 public class EnemyIdlePatrolS : EIdleSuperS
 {
-    private bool _stopPatrolling = false;
-    private Transform _currentNavPoint;
-    private Transform _nextNavPoint;
-    private GlobalTimer _timer;
+    private bool _didIdleAnimWasPlayed = false;
+    private bool _didWalkAnimWasPlayed = false;
+    private Transform _currentPatrolPoint;
+    private Transform _nextPatrolPoint;
+    private NavMeshPath _patrolPath;
+    private GlobalTimer _waitOnPatrolPointTimer;
 
-
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, playerTransform, stateManager);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
 
-        _currentNavPoint = _enemy.navPointA;
-        _nextNavPoint = _enemy.navPointB;
-        _timer = new GlobalTimer(_enemy.waitTime);
+        _currentPatrolPoint = _enemy.patrolPointA;
+        _nextPatrolPoint = _enemy.patrolPointB;
+
+        _patrolPath = new NavMeshPath();
+
+        _waitOnPatrolPointTimer = new GlobalTimer(_enemy.waitOnPatrolPointDuration);
     }
 
     public override void DoOnEnter()
     {
         base.DoOnEnter();
 
-        PlayAnimation("Chase");
-        ToggleRigWeight(false);
-
         Debug.Log("Enemy Idle Patrol State");
+
+        _shouldReturnToSpawn = false;
+
+        _navMeshAgent.speed = _enemy.walkSpeed;
+
+        ToggleRigWeight(false);
+        PlayAnimation("Idle");
     }
 
     public override void DoLogicUpdate()
@@ -35,33 +43,49 @@ public class EnemyIdlePatrolS : EIdleSuperS
         base.DoLogicUpdate();
 
         // --- Timers ---
+        _recalculatePathTimer.CountDownTimer();
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---
-        if (!_stopPatrolling)
+        if (!IsPositionReached(_enemyTransform.position, _currentPatrolPoint.position))
         {
-            _navMeshAgent.SetDestination(_currentNavPoint.position);
-
-            if (IsNavPointReached())
+            if (_recalculatePathTimer.Flag)
             {
-                PlayAnimation("Idle");
-                _timer.CountDownTimer();
+                _navMeshAgent.CalculatePath(_currentPatrolPoint.position, _patrolPath);
 
-                if (_timer.flag)
+                if (_patrolPath.status == NavMeshPathStatus.PathComplete)
                 {
-                    // Should be walk
-                    PlayAnimation("Chase");
-                    SwapNavPoints();
-                    _timer.Reset();
+                    _navMeshAgent.SetDestination(_currentPatrolPoint.position);
+
+                    PlayWalkAnimIfNeeded();
+
+                    _shouldReturnToSpawn = false;
                 }
+                else
+                {
+                    _navMeshAgent.ResetPath();
+
+                    PlayIdleAnimIfNeeded();
+
+                    _shouldReturnToSpawn = true;
+                }
+
+                _recalculatePathTimer.Reset();
             }
         }
-        else 
+        else
         {
-            PlayAnimation("Idle");
-            ToggleRigWeight(true);
-        }
+            _waitOnPatrolPointTimer.CountDownTimer();
 
+            if (_waitOnPatrolPointTimer.Flag)
+            {
+                SwapPatrolPoints();
+
+                _waitOnPatrolPointTimer.Reset();
+            }
+
+            PlayIdleAnimIfNeeded();
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- State Transitions ---
@@ -77,25 +101,37 @@ public class EnemyIdlePatrolS : EIdleSuperS
     {
         base.DoOnExit();
 
-        _stopPatrolling = true;
+        _waitOnPatrolPointTimer.Reset();
+        _recalculatePathTimer.Reset();
     }
 
 
-    private bool IsNavPointReached()
+    private void SwapPatrolPoints()
     {
-        float distance = Vector3.Distance(_enemyTransform.position, _currentNavPoint.position);
-
-        if (distance < 1.0f)
-        {
-            return true;
-        }
-        return false;
+        Transform tempNavPoint = _currentPatrolPoint;
+        _currentPatrolPoint = _nextPatrolPoint;
+        _nextPatrolPoint = tempNavPoint;
     }
 
-    private void SwapNavPoints()
+    private void PlayIdleAnimIfNeeded()
     {
-        Transform tempNavPoint = _currentNavPoint;
-        _currentNavPoint = _nextNavPoint;
-        _nextNavPoint = tempNavPoint;
+        if (_didIdleAnimWasPlayed)
+            return;
+
+        _didIdleAnimWasPlayed = true;
+        _didWalkAnimWasPlayed = false;
+
+        PlayAnimation("Idle");
+    }
+
+    private void PlayWalkAnimIfNeeded()
+    {
+        if (_didWalkAnimWasPlayed)
+            return;
+
+        _didIdleAnimWasPlayed = false;
+        _didWalkAnimWasPlayed = true;
+
+        PlayAnimation("Walk");
     }
 }

@@ -5,19 +5,21 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Idle Stationery", menuName = "Enemy States/Idle/Stationery")]
 public class EIdleStationeryS : EIdleSuperS
 {
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, Transform playerTransform, EnemyStateManager stateManager)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, playerTransform, stateManager);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
     }
 
     public override void DoOnEnter()
     {
         base.DoOnEnter();
 
-        PlayAnimation("Idle");
-        ToggleRigWeight(true);
-
         Debug.Log("Enemy Idle Stationery State");
+
+        _shouldReturnToSpawn = true;
+
+        ToggleRigWeight(true);
+        PlayAnimation("Idle");
     }
 
     public override void DoLogicUpdate()
@@ -27,8 +29,10 @@ public class EIdleStationeryS : EIdleSuperS
         // --- Timers ---
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+
         // --- Logic ---
         // ----------------------------------------------------------------------------------------------------------------------------------
+
 
         // --- State Transitions ---
         // ----------------------------------------------------------------------------------------------------------------------------------

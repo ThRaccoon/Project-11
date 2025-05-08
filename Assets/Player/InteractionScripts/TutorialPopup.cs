@@ -25,7 +25,7 @@ public class TutorialPopup : MonoBehaviour
             _timer.CountDownTimer();
         }
 
-        if (_timer.flag)
+        if (_timer.Flag)
         {
             _textMeshPro.text = "";
             Destroy(this.gameObject);
