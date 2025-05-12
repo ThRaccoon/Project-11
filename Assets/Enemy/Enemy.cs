@@ -20,15 +20,10 @@ public class Enemy : MonoBehaviour
     [field: SerializeField] public float attackRange { get; private set; }
 
     [field: Space(10)]
-    [field: Header("Speeds")]
-    [field: SerializeField] public float walkSpeed { get; private set; }
-    [field: SerializeField] public float chaseSpeed { get; private set; }
-
-    [field: Space(10)]
     [field: Header("Timers")]
     [field: SerializeField] public float avoidancePriorityDuration { get; private set; }
     [field: SerializeField] public float recalculatePathDuration { get; private set; }
-    [field: SerializeField] public Vector2 returnToSpawnDuration { get; private set; }
+    [field: SerializeField] public Vector2 waitBeforeDuration { get; private set; }
 
     [field: Space(10)]
     [field: Header("Other")]
@@ -52,15 +47,16 @@ public class Enemy : MonoBehaviour
     [field: SerializeField] public Vector3 spawnPos { get; private set; } // Debug
 
     // --- Private Variables ---
+    private AnimationManager _animationManager;
     private Transform _playerTransform;
 
-    [HideInInspector] private bool _playerAttacked;
+    [SerializeField] private bool _shouldAttack; // Debug
     #region Getters / Setters
 
-    public bool PlayerAttacked
+    public bool ShouldAttack
     {
-        get => _playerAttacked;
-        set => _playerAttacked = value;
+        get => _shouldAttack;
+        set => _shouldAttack = value;
     }
     #endregion
 
@@ -99,6 +95,7 @@ public class Enemy : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        _animationManager = new AnimationManager(_animator);
         _rig = GetComponentInChildren<Rig>();
 
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -127,12 +124,15 @@ public class Enemy : MonoBehaviour
     {
         spawnPos = transform.position;
 
+        _animator.applyRootMotion = true;
+        _navMeshAgent.updatePosition = false;
+
         if (Util.IsNotNull(_navMeshAgent) && Util.IsNotNull(_animator) && Util.IsNotNull(_rig))
         {
-            idleSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
-            chaseSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
-            attackSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
-            returnSInstance.Initialize(this, transform, _navMeshAgent, _animator, _rig, stateManager, _playerTransform);
+            idleSInstance.Initialize(this, transform, _navMeshAgent, _animator, _animationManager, _rig, stateManager, _playerTransform);
+            chaseSInstance.Initialize(this, transform, _navMeshAgent, _animator, _animationManager, _rig, stateManager, _playerTransform);
+            attackSInstance.Initialize(this, transform, _navMeshAgent, _animator, _animationManager, _rig, stateManager, _playerTransform);
+            returnSInstance.Initialize(this, transform, _navMeshAgent, _animator, _animationManager, _rig, stateManager, _playerTransform);
         }
 
         stateManager.Initialize(idleStateController);

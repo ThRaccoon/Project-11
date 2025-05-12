@@ -5,23 +5,25 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Idle Patrol", menuName = "Enemy States/Idle/Patrol")]
 public class EnemyIdlePatrolS : EIdleSuperS
 {
-    private bool _didIdleAnimWasPlayed = false;
-    private bool _didWalkAnimWasPlayed = false;
     private Transform _currentPatrolPoint;
     private Transform _nextPatrolPoint;
-    private NavMeshPath _patrolPath;
+    private NavMeshPath _pathToPatrolPoint;
     private GlobalTimer _waitOnPatrolPointTimer;
+    protected GlobalTimer _waitBeforeReturnToSpawnTimer;
 
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
+        Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
 
         _currentPatrolPoint = _enemy.patrolPointA;
         _nextPatrolPoint = _enemy.patrolPointB;
 
-        _patrolPath = new NavMeshPath();
+        _pathToPatrolPoint = new NavMeshPath();
 
         _waitOnPatrolPointTimer = new GlobalTimer(_enemy.waitOnPatrolPointDuration);
+        _waitBeforeReturnToSpawnTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.waitBeforeDuration.x),
+                                                                     Mathf.RoundToInt(_enemy.waitBeforeDuration.y) + 1));
     }
 
     public override void DoOnEnter()
@@ -30,12 +32,9 @@ public class EnemyIdlePatrolS : EIdleSuperS
 
         Debug.Log("Enemy Idle Patrol State");
 
-        _shouldReturnToSpawn = false;
-
-        _navMeshAgent.speed = _enemy.walkSpeed;
+        _navMeshAgent.CalculatePath(_currentPatrolPoint.position, _pathToPatrolPoint);
 
         ToggleRigWeight(false);
-        PlayAnimation("Idle");
     }
 
     public override void DoLogicUpdate()
@@ -44,37 +43,23 @@ public class EnemyIdlePatrolS : EIdleSuperS
 
         // --- Timers ---
         _recalculatePathTimer.CountDownTimer();
+
+        if (_recalculatePathTimer.Flag)
+        {
+            _navMeshAgent.CalculatePath(_currentPatrolPoint.position, _pathToPatrolPoint);
+
+            _recalculatePathTimer.Reset();
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+
         // --- Logic ---
-        if (!IsPositionReached(_enemyTransform.position, _currentPatrolPoint.position))
+        if (IsOnPosition(_enemyTransform.position, _currentPatrolPoint.position))
         {
-            if (_recalculatePathTimer.Flag)
-            {
-                _navMeshAgent.CalculatePath(_currentPatrolPoint.position, _patrolPath);
+            _animationManager.PlayAnim("Idle");
+            _navMeshAgent.ResetPath();
 
-                if (_patrolPath.status == NavMeshPathStatus.PathComplete)
-                {
-                    _navMeshAgent.SetDestination(_currentPatrolPoint.position);
 
-                    PlayWalkAnimIfNeeded();
-
-                    _shouldReturnToSpawn = false;
-                }
-                else
-                {
-                    _navMeshAgent.ResetPath();
-
-                    PlayIdleAnimIfNeeded();
-
-                    _shouldReturnToSpawn = true;
-                }
-
-                _recalculatePathTimer.Reset();
-            }
-        }
-        else
-        {
             _waitOnPatrolPointTimer.CountDownTimer();
 
             if (_waitOnPatrolPointTimer.Flag)
@@ -83,12 +68,36 @@ public class EnemyIdlePatrolS : EIdleSuperS
 
                 _waitOnPatrolPointTimer.Reset();
             }
-
-            PlayIdleAnimIfNeeded();
         }
+        else
+        {
+            if (_pathToPatrolPoint.status == NavMeshPathStatus.PathComplete)
+            {
+                _navMeshAgent.SetDestination(_currentPatrolPoint.position);
+                _animationManager.PlayAnim("Walk");
+
+
+                _waitBeforeReturnToSpawnTimer.Reset();
+            }
+            else
+            {
+                _animationManager.PlayAnim("Idle");
+                _navMeshAgent.ResetPath();
+
+
+                _waitBeforeReturnToSpawnTimer.CountDownTimer();
+            }
+        }
+
+        OnAnimatorMove();
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+
         // --- State Transitions ---
+        if (!IsOnPosition(_enemyTransform.position, _enemy.spawnPos) && _waitBeforeReturnToSpawnTimer.Flag && _didPhysicsUpdateRan)
+        {
+            _stateManager.ChangeState(_enemy.returnStateController);
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
@@ -101,8 +110,14 @@ public class EnemyIdlePatrolS : EIdleSuperS
     {
         base.DoOnExit();
 
-        _waitOnPatrolPointTimer.Reset();
         _recalculatePathTimer.Reset();
+        _waitOnPatrolPointTimer.Reset();
+
+        _waitBeforeReturnToSpawnTimer.Duration = Random.Range(Mathf.RoundToInt(_enemy.waitBeforeDuration.x),
+                                                              Mathf.RoundToInt(_enemy.waitBeforeDuration.y) + 1);
+        _waitBeforeReturnToSpawnTimer.Reset();
+
+        _navMeshAgent.ResetPath();
     }
 
 
@@ -111,27 +126,5 @@ public class EnemyIdlePatrolS : EIdleSuperS
         Transform tempNavPoint = _currentPatrolPoint;
         _currentPatrolPoint = _nextPatrolPoint;
         _nextPatrolPoint = tempNavPoint;
-    }
-
-    private void PlayIdleAnimIfNeeded()
-    {
-        if (_didIdleAnimWasPlayed)
-            return;
-
-        _didIdleAnimWasPlayed = true;
-        _didWalkAnimWasPlayed = false;
-
-        PlayAnimation("Idle");
-    }
-
-    private void PlayWalkAnimIfNeeded()
-    {
-        if (_didWalkAnimWasPlayed)
-            return;
-
-        _didIdleAnimWasPlayed = false;
-        _didWalkAnimWasPlayed = true;
-
-        PlayAnimation("Walk");
     }
 }

@@ -5,9 +5,10 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Return", menuName = "Enemy States/Return/Return")]
 public class EReturnS : EReturnSuperS
 {
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
+        Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
     }
 
     public override void DoOnEnter()
@@ -16,8 +17,9 @@ public class EReturnS : EReturnSuperS
 
         Debug.Log("Enemy Return State");
 
+        _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
+
         ToggleRigWeight(false);
-        PlayAnimation("Chase");
     }
 
     public override void DoLogicUpdate()
@@ -25,12 +27,39 @@ public class EReturnS : EReturnSuperS
         base.DoLogicUpdate();
 
         // --- Timers ---
+        _recalculatePathTimer.CountDownTimer();
+
+        if (_recalculatePathTimer.Flag)
+        {
+            _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
+
+            _recalculatePathTimer.Reset();
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
+
 
         // --- Logic ---
+        if (_pathToSpawn.status == NavMeshPathStatus.PathComplete)
+        {
+            _navMeshAgent.SetDestination(_enemy.spawnPos);
+            _animationManager.PlayAnim("Walk");
+
+
+            OnAnimatorMove();
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
+
         // --- State Transitions ---
+        if (IsOnPosition(_enemyTransform.position, _enemy.spawnPos) && _didPhysicsUpdateRan)
+        {
+            _stateManager.ChangeState(_enemy.idleStateController);
+        }
+
+        if (_pathToSpawn.status != NavMeshPathStatus.PathComplete && _didPhysicsUpdateRan)
+        {
+            _stateManager.ChangeState(_enemy.idleStateController);
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
@@ -42,5 +71,9 @@ public class EReturnS : EReturnSuperS
     public override void DoOnExit()
     {
         base.DoOnExit();
+
+        _recalculatePathTimer.Reset();
+
+        _navMeshAgent.ResetPath();
     }
 }

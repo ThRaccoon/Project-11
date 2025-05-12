@@ -7,7 +7,7 @@ public class GlobalTimer
     public bool Flag
     {
         get => _flag;
-        private set => _flag = value;
+        set => _flag = value;
     }
     #endregion
 
@@ -16,7 +16,7 @@ public class GlobalTimer
     public float Duration
     {
         get => _duration;
-        private set => _duration = value;
+        set => _duration = value;
     }
     #endregion
 
@@ -25,7 +25,7 @@ public class GlobalTimer
     public float ElapsedTime
     {
         get => _elapsedTime;
-        private set => _elapsedTime = value;
+        set => _elapsedTime = value;
     }
     #endregion
 

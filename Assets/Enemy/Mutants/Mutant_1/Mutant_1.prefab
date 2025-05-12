@@ -3307,7 +3307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6597659768022583787
 Transform:
   m_ObjectHideFlags: 0
@@ -3357,13 +3357,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 2
+  m_Speed: 1000
   m_Acceleration: 1000
   avoidancePriority: 93
   m_AngularSpeed: 1000
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1.8
   m_BaseOffset: 0
@@ -3382,7 +3382,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 443decbc678952640b29c20124d0b238, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -3423,25 +3423,24 @@ MonoBehaviour:
   _navMeshAgent: {fileID: 4930464095454564239}
   _animator: {fileID: 6819547563865075367}
   _rig: {fileID: 4835877960321439737}
-  <activationRange>k__BackingField: 0
   <chaseRange>k__BackingField: 5
-  <attackRange>k__BackingField: 1.5
+  <attackRange>k__BackingField: 1.25
+  <avoidancePriorityDuration>k__BackingField: 0.5
+  <recalculatePathDuration>k__BackingField: 0.5
+  <waitBeforeDuration>k__BackingField: {x: 3, y: 6}
   transformYOffset: 1.5
   <collisionLayersToIgnore>k__BackingField:
     serializedVersion: 2
     m_Bits: 2147483648
-  <waitTime>k__BackingField: 1
-  <navPointA>k__BackingField: {fileID: 0}
-  <navPointB>k__BackingField: {fileID: 0}
-  _playerAttacked: 0
-  <startPosition>k__BackingField: {x: 0, y: 0, z: 0}
-  <startRotation>k__BackingField: {x: 0, y: 0, z: 0, w: 0}
+  <waitOnPatrolPointDuration>k__BackingField: 0
+  <patrolPointA>k__BackingField: {fileID: 0}
+  <patrolPointB>k__BackingField: {fileID: 0}
+  <spawnPos>k__BackingField: {x: 0, y: 0, z: 0}
+  _shouldAttack: 0
   idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}
   attackSTemplate: {fileID: 11400000, guid: 2baa2bc409ac9fe4db3b57b315b2156b, type: 2}
   returnSTemplate: {fileID: 11400000, guid: 2059d14cbcfda614b80c325e1b382702, type: 2}
-  didGetStartPos: 0
-  a: 1
 --- !u!114 &7183002291772818418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3457,7 +3456,7 @@ MonoBehaviour:
   _boxCollider: {fileID: 7348774207884400986}
   _navMeshAgent: {fileID: 4930464095454564239}
   _animator: {fileID: 6819547563865075367}
-  _enemy: {fileID: 1979580791437216803}
+  _enemy: {fileID: 0}
   _health: 100
   _maxHealth: 100
   _headMultiplier: 2

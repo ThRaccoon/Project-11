@@ -5,9 +5,10 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Attack", menuName = "Enemy States/Attack/Attack")]
 public class EAttackS : EAttackSuperS
 {
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
+        Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
     }
 
     public override void DoOnEnter()
@@ -16,8 +17,10 @@ public class EAttackS : EAttackSuperS
 
         Debug.Log("Enemy Attack State");
 
+        _animationManager.PlayAnim("Attack");
+        OnAnimatorMove();
+
         ToggleRigWeight(true);
-        PlayAnimation("Attack");
     }
 
     public override void DoLogicUpdate()

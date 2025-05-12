@@ -4,23 +4,15 @@ using UnityEngine.Animations.Rigging;
 
 public class EIdleSuperS : EnemyBaseSuperState
 {
-    protected bool _shouldReturnToSpawn = false;
-    protected GlobalTimer _returnToSpawnTimer;
-
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
+        Transform playerTransform)
     {
-        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, rig, stateManager, playerTransform);
-
-        _returnToSpawnTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.returnToSpawnDuration.x),
-                                                           Mathf.RoundToInt(_enemy.returnToSpawnDuration.y) + 1));
+        base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
     }
 
     public override void DoOnEnter()
     {
         base.DoOnEnter();
-
-        _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
-        _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
     }
 
     public override void DoLogicUpdate()
@@ -28,36 +20,26 @@ public class EIdleSuperS : EnemyBaseSuperState
         base.DoLogicUpdate();
 
         // --- Timers ---
-        if (_shouldReturnToSpawn)
-        {
-            _returnToSpawnTimer.CountDownTimer();
-        }
-        else
-        {
-            _returnToSpawnTimer.Reset();
-        }
         // ----------------------------------------------------------------------------------------------------------------------------------
+
 
         // --- Logic ---
-        if (_returnToSpawnTimer.Flag)
-        {
-            _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
-            _returnToSpawnTimer.Reset();
-
-            _didLogicUpdateRan = true;
-        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
-        // --- State Transitions ---
-        if ((_shouldAttack || _enemy.PlayerAttacked) && _pathToPlayer.status == NavMeshPathStatus.PathComplete && _didPhysicsUpdateRan)
-        {
-            _stateManager.ChangeState(_enemy.chaseStateController);
-        }
 
-        if (!IsPositionReached(_enemyTransform.position, _enemy.spawnPos) && _pathToSpawn.status == NavMeshPathStatus.PathComplete
-            && _shouldReturnToSpawn && _didLogicUpdateRan && _didPhysicsUpdateRan)
+        // --- State Transitions ---
+        if (_enemy.ShouldAttack && _didPhysicsUpdateRan)
         {
-            _stateManager.ChangeState(_enemy.returnStateController);
+            _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
+
+            if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
+            {
+                _stateManager.ChangeState(_enemy.chaseStateController);
+            }
+            else
+            {
+                _enemy.ShouldAttack = false;
+            }
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }
@@ -70,9 +52,7 @@ public class EIdleSuperS : EnemyBaseSuperState
         {
             if (IsPlayerInLOS())
             {
-                _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
-
-                _shouldAttack = true;
+                _enemy.ShouldAttack = true;
             }
         }
 
@@ -82,7 +62,5 @@ public class EIdleSuperS : EnemyBaseSuperState
     public override void DoOnExit()
     {
         base.DoOnExit();
-
-        _returnToSpawnTimer.Reset();
     }
 }

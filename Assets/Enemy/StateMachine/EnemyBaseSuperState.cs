@@ -4,35 +4,39 @@ using UnityEngine.Animations.Rigging;
 
 public class EnemyBaseSuperState : ScriptableObject
 {
-    // --- Components ---
+    // --- Blackboard ---
     protected Enemy _enemy;
     protected Transform _enemyTransform;
     protected NavMeshAgent _navMeshAgent;
     protected Animator _animator;
+    protected AnimationManager _animationManager;
     protected Rig _rig;
     protected EnemyStateManager _stateManager;
 
     protected Transform _playerTransform;
 
-    // --- variables ---
-    protected bool _didLogicUpdateRan = false;
+    // --- Other ---
     protected bool _didPhysicsUpdateRan = false;
-    protected bool _shouldAttack = false;
     protected NavMeshPath _pathToPlayer;
     protected NavMeshPath _pathToSpawn;
     protected GlobalTimer _recalculatePathTimer;
 
-    public virtual void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, Rig rig, EnemyStateManager stateManager, Transform playerTransform)
+
+    public virtual void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
+        Transform playerTransform)
     {
+        // --- Blackboard ---
         _enemy = enemy;
         _enemyTransform = enemyTransform;
         _navMeshAgent = navMeshAgent;
         _animator = animator;
+        _animationManager = animationManager;
         _rig = rig;
         _stateManager = stateManager;
 
         _playerTransform = playerTransform;
 
+        // --- Other ---
         _pathToPlayer = new NavMeshPath();
         _pathToSpawn = new NavMeshPath();
 
@@ -47,24 +51,11 @@ public class EnemyBaseSuperState : ScriptableObject
 
     public virtual void DoOnExit()
     {
-        _didLogicUpdateRan = false;
         _didPhysicsUpdateRan = false;
 
-        _shouldAttack = false;
-        _enemy.PlayerAttacked = false;
+        _enemy.ShouldAttack = false;
     }
 
-
-    protected bool IsPositionReached(Vector3 current, Vector3 end)
-    {
-        float distance = Vector3.Distance(current, end);
-
-        if (distance < 1.0f)
-        {
-            return true;
-        }
-        return false;
-    }
 
     protected bool IsPlayerInRange(float range)
     {
@@ -93,16 +84,28 @@ public class EnemyBaseSuperState : ScriptableObject
         return false;
     }
 
+    protected bool IsOnPosition(Vector3 current, Vector3 end)
+    {
+        float distance = Vector3.Distance(current, end);
+
+        if (distance < 0.5f)
+        {
+            return true;
+        }
+        return false;
+    }
+
     protected void ToggleRigWeight(bool isActive)
     {
         _rig.weight = isActive ? 1 : 0;
     }
 
-    protected void PlayAnimation(string animationName, float blendValue = 0.2f)
+    protected void OnAnimatorMove()
     {
-        if (Util.IsNotNull(_animator))
-        {
-            _animator.CrossFade(animationName, blendValue);
-        }
+        Vector3 adjustedRootPosition = _animator.rootPosition;
+        adjustedRootPosition.y = _navMeshAgent.nextPosition.y;
+        
+        _enemyTransform.position = adjustedRootPosition;
+        _navMeshAgent.nextPosition = adjustedRootPosition;
     }
 }

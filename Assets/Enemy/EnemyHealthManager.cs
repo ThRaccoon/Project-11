@@ -39,7 +39,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         if (_kill == true && _killed == false)
         {
-            TakeDamage(100, "Head", gameObject);
+            TakeDamage(1, "Head", gameObject);
             _killed = true;
         }
     }
@@ -72,7 +72,7 @@ public class EnemyHealthManager : MonoBehaviour
         {
             if (attacker.CompareTag("Player"))
             {
-                _enemy.PlayerAttacked = true;
+                _enemy.ShouldAttack = true;
             }
         }
 
