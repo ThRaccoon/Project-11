@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Rig _rig;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
     [field: Header("Ranges")]
@@ -20,17 +19,21 @@ public class Enemy : MonoBehaviour
     [field: SerializeField] public float attackRange { get; private set; }
 
     [field: Space(10)]
+    [field: Header("Speed")]
+    [field: SerializeField] public float walkSpeed { get; private set; }
+    [field: SerializeField] public float chaseSpeed { get; private set; }
+
+    [field: Space(10)]
     [field: Header("Timers")]
     [field: SerializeField] public float avoidancePriorityDuration { get; private set; }
-    [field: SerializeField] public float recalculatePathDuration { get; private set; }
-    [field: SerializeField] public Vector2 waitBeforeDuration { get; private set; }
+    [field: SerializeField] public float recalcPathDuration { get; private set; }
+    [field: SerializeField] public Vector2 waitBeforeGiveUpDuration { get; private set; }
 
     [field: Space(10)]
     [field: Header("Other")]
     [field: SerializeField] public float transformYOffset;
     [field: SerializeField] public LayerMask collisionLayersToIgnore { get; private set; }
     // ----------------------------------------------------------------------------------------------------------------------------------
-
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
@@ -44,13 +47,23 @@ public class Enemy : MonoBehaviour
     // --- Public Variables ---
     [field: Space(30)]
     [field: Header("Debug")]
-    [field: SerializeField] public Vector3 spawnPos { get; private set; } // Debug
+    [field: SerializeField] public Vector3 spawnPos { get; private set; }
 
     // --- Private Variables ---
     private AnimationManager _animationManager;
     private Transform _playerTransform;
 
-    [SerializeField] private bool _shouldAttack; // Debug
+    private bool _shouldChase;
+    #region Getters / Setters
+
+    public bool ShouldChase
+    {
+        get => _shouldChase;
+        set => _shouldChase = value;
+    }
+    #endregion
+
+    private bool _shouldAttack;
     #region Getters / Setters
 
     public bool ShouldAttack
@@ -88,7 +101,6 @@ public class Enemy : MonoBehaviour
     public EReturnSController returnStateController { get; private set; }
     #endregion
 
-
     private void Awake()
     {
         // --- Components ---
@@ -123,9 +135,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         spawnPos = transform.position;
-
-        _animator.applyRootMotion = true;
-        _navMeshAgent.updatePosition = false;
 
         if (Util.IsNotNull(_navMeshAgent) && Util.IsNotNull(_animator) && Util.IsNotNull(_rig))
         {

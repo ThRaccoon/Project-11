@@ -3,7 +3,12 @@ guid: de58ee7b8070069418b4a20b95432436
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FilmProjector
+    second: {fileID: 2100000, guid: f9bd0c30cf58b474d80109ac95c91774, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

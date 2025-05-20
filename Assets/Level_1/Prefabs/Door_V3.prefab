@@ -138,8 +138,8 @@ Transform:
   m_LocalScale: {x: 1.0000002, y: 1.0275, z: 1.0000002}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4500330490572770}
   - {fileID: 4012057851299598}
+  - {fileID: 4500330490572770}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1725113251181548
@@ -276,10 +276,10 @@ MonoBehaviour:
   _isOpenDirectionReversed: 1
   _initialX: 0
   _initialZ: 0
-  _lockedSound: {fileID: 0}
+  _lockedSound: {fileID: 8300000, guid: 93d23e787225d5c42883f0b479786620, type: 3}
   _unlockingSound: {fileID: 0}
-  _openingSound: {fileID: 0}
-  _closingSound: {fileID: 0}
+  _openingSound: {fileID: 8300000, guid: 2c1fc39438ffdd044b3688fc5fb3c845, type: 3}
+  _closingSound: {fileID: 8300000, guid: d9fae95f2a832234dad903ecf8f47983, type: 3}
 --- !u!82 &8782005706881359640
 AudioSource:
   m_ObjectHideFlags: 0
@@ -293,7 +293,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -302,9 +302,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1.01
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -387,9 +387,9 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.528, y: 1.049, z: 0.079}
+  m_Extents: {x: 0.528, y: 1.049, z: 0.00001}
   m_MoveThreshold: 0.1
   m_Carve: 1
-  m_CarveOnlyStationary: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: -0.527, y: -0.90900004, z: 0.028}
   m_TimeToStationary: 0.5

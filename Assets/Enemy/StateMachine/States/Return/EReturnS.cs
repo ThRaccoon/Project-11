@@ -5,10 +5,14 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Return", menuName = "Enemy States/Return/Return")]
 public class EReturnS : EReturnSuperS
 {
+    private GlobalTimer _recalcPathToSpawnTimer;
+
     public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
         Transform playerTransform)
     {
         base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
+
+        _recalcPathToSpawnTimer = new GlobalTimer(_enemy.recalcPathDuration);
     }
 
     public override void DoOnEnter()
@@ -27,13 +31,13 @@ public class EReturnS : EReturnSuperS
         base.DoLogicUpdate();
 
         // --- Timers ---
-        _recalculatePathTimer.CountDownTimer();
+        _recalcPathToSpawnTimer.Tick();
 
-        if (_recalculatePathTimer.Flag)
+        if (_recalcPathToSpawnTimer.Flag)
         {
             _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
 
-            _recalculatePathTimer.Reset();
+            _recalcPathToSpawnTimer.Reset();
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -42,10 +46,9 @@ public class EReturnS : EReturnSuperS
         if (_pathToSpawn.status == NavMeshPathStatus.PathComplete)
         {
             _navMeshAgent.SetDestination(_enemy.spawnPos);
-            _animationManager.PlayAnim("Walk");
 
-
-            OnAnimatorMove();
+            SetAgentSpeed(_enemy.walkSpeed);
+            _animationManager.PlayCrossFadeAnimation("Walk");
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -72,7 +75,7 @@ public class EReturnS : EReturnSuperS
     {
         base.DoOnExit();
 
-        _recalculatePathTimer.Reset();
+        _recalcPathToSpawnTimer.Reset();
 
         _navMeshAgent.ResetPath();
     }

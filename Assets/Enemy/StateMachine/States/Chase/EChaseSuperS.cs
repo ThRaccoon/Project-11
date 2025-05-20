@@ -6,7 +6,7 @@ public class EChaseSuperS : EnemyBaseSuperState
 {
     protected GlobalTimer _avoidancePriorityTimer;
 
-    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager, 
+    public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
         Transform playerTransform)
     {
         base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
@@ -24,7 +24,7 @@ public class EChaseSuperS : EnemyBaseSuperState
         base.DoLogicUpdate();
 
         // --- Timers ---
-        _avoidancePriorityTimer.CountDownTimer();
+        _avoidancePriorityTimer.Tick();
 
         if (_avoidancePriorityTimer.Flag)
         {

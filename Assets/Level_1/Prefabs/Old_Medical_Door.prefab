@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 932342549237656038}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 99.94729, y: 133.58081, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,10 +244,10 @@ MonoBehaviour:
   _isOpenDirectionReversed: 0
   _initialX: -90
   _initialZ: 0
-  _lockedSound: {fileID: 0}
+  _lockedSound: {fileID: 8300000, guid: 93d23e787225d5c42883f0b479786620, type: 3}
   _unlockingSound: {fileID: 0}
-  _openingSound: {fileID: 0}
-  _closingSound: {fileID: 0}
+  _openingSound: {fileID: 8300000, guid: 2c1fc39438ffdd044b3688fc5fb3c845, type: 3}
+  _closingSound: {fileID: 8300000, guid: d9fae95f2a832234dad903ecf8f47983, type: 3}
 --- !u!82 &1337716475023412883
 AudioSource:
   m_ObjectHideFlags: 0
@@ -261,7 +261,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -270,9 +270,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1.01
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -355,10 +355,10 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.009000001, y: 0.002, z: 0.017}
+  m_Extents: {x: 0.009000001, y: 0.00001, z: 0.017}
   m_MoveThreshold: 0.1
   m_Carve: 1
-  m_CarveOnlyStationary: 1
+  m_CarveOnlyStationary: 0
   m_Center: {x: 0.009000001, y: 0, z: 0}
   m_TimeToStationary: 0.5
 --- !u!1 &6115974994100780766
@@ -390,8 +390,8 @@ Transform:
   m_LocalScale: {x: 0.6100004, y: 0.65999997, z: 0.6300003}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4381085013627921696}
   - {fileID: 8603858029150381220}
+  - {fileID: 4381085013627921696}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &6410990028064228079
@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 1846806059062226817}
   - component: {fileID: 7550851820772271902}
   - component: {fileID: 2590883539495939056}
+  - component: {fileID: 2327035923636734884}
   m_Layer: 0
   m_Name: Glass_NS
   m_TagString: Untagged
@@ -503,3 +504,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7980434691162617461, guid: 46124056933b94b46aed8e9f3c9a5abb, type: 3}
+--- !u!114 &2327035923636734884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410990028064228079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

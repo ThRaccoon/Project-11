@@ -17,17 +17,38 @@ public class EAttackS : EAttackSuperS
 
         Debug.Log("Enemy Attack State");
 
-        _animationManager.PlayAnim("Attack");
-        OnAnimatorMove();
+        _enemyTransform.LookAt(new Vector3(_playerTransform.position.x,
+                                           _enemyTransform.position.y,
+                                           _playerTransform.position.z));
+
+
+        //SetAgentSpeed(0f);
+
+        //_navMeshAgent.ResetPath();
+        //_navMeshAgent.speed = 0f;
+        //_navMeshAgent.velocity = Vector3.zero;
+        //_navMeshAgent.isStopped = true;
+
+        _animationManager.PlayCrossFadeAnimation("Attack");
+
+
 
         ToggleRigWeight(true);
     }
+
+    protected float a = 0.1f;
 
     public override void DoLogicUpdate()
     {
         base.DoLogicUpdate();
 
         // --- Timers ---
+        a -= Time.deltaTime;
+        if (a <= 0f)
+        {
+            _navMeshAgent.speed = 0f;
+        }
+
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---

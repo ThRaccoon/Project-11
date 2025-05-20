@@ -5,6 +5,7 @@ using UnityEngine.Animations.Rigging;
 [CreateAssetMenu(fileName = "Chase", menuName = "Enemy States/Chase/Chase")]
 public class EChaseS : EChaseSuperS
 {
+    private GlobalTimer _recalcPathToPlayerTimer;
     private GlobalTimer _waitBeforeGiveUpTimer;
 
     public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
@@ -12,8 +13,9 @@ public class EChaseS : EChaseSuperS
     {
         base.Initialize(enemy, enemyTransform, navMeshAgent, animator, animationManager, rig, stateManager, playerTransform);
 
-        _waitBeforeGiveUpTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.waitBeforeDuration.x),
-                                                              Mathf.RoundToInt(_enemy.waitBeforeDuration.y) + 1));
+        _recalcPathToPlayerTimer = new GlobalTimer(_enemy.recalcPathDuration);
+        _waitBeforeGiveUpTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.x),
+                                                              Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.y) + 1));
     }
 
     public override void DoOnEnter()
@@ -32,13 +34,13 @@ public class EChaseS : EChaseSuperS
         base.DoLogicUpdate();
 
         // --- Timers ---
-        _recalculatePathTimer.CountDownTimer();
+        _recalcPathToPlayerTimer.Tick();
 
-        if (_recalculatePathTimer.Flag)
+        if (_recalcPathToPlayerTimer.Flag)
         {
             _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
 
-            _recalculatePathTimer.Reset();
+            _recalcPathToPlayerTimer.Reset();
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -47,21 +49,19 @@ public class EChaseS : EChaseSuperS
         if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
         {
             _navMeshAgent.SetDestination(_playerTransform.position);
-            _animationManager.PlayAnim("Chase");
 
+            SetAgentSpeed(_enemy.chaseSpeed);
+            _animationManager.PlayCrossFadeAnimation("Chase");
 
             _waitBeforeGiveUpTimer.Reset();
         }
         else
         {
-            _animationManager.PlayAnim("Idle");
-            _navMeshAgent.ResetPath();
+            SetAgentSpeed(0f);
+            _animationManager.PlayCrossFadeAnimation("Idle");
 
-
-            _waitBeforeGiveUpTimer.CountDownTimer();
+            _waitBeforeGiveUpTimer.Tick();
         }
-
-        OnAnimatorMove();
         // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -82,9 +82,7 @@ public class EChaseS : EChaseSuperS
     {
         base.DoOnExit();
 
+        _recalcPathToPlayerTimer.Reset();
         _waitBeforeGiveUpTimer.Reset();
-        _recalculatePathTimer.Reset();
-
-        _navMeshAgent.ResetPath();
     }
 }

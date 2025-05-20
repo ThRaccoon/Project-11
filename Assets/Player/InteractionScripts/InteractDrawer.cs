@@ -8,7 +8,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
     [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Settings")]
@@ -22,7 +21,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
     [SerializeField] private float _slideSpeed;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Audio Clips")]
@@ -32,12 +30,10 @@ public class InteractDrawer : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip _closingSound;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // --- Private Variables ---
     private float _lerpProgress;
     private Vector3 _startPosition;
     private Vector3 _targetPosition;
-
 
     private enum DrawerState
     {
@@ -46,11 +42,15 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 
     private DrawerState _currentState = DrawerState.Closed;
 
-
     private void Awake()
     {
         // --- Components ---
         _audioSource = GetComponent<AudioSource>();
+        
+        if (Util.IsNotNull(_audioSource))
+        {
+            _audioSource = GetComponentInParent<AudioSource>();
+        }
 
         // --- Bools ---
         _currentState = _isInitiallyOpened ? DrawerState.Opened : DrawerState.Closed;
@@ -79,7 +79,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
             }
         }
     }
-
 
     public void Interact()
     {
@@ -111,7 +110,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
         }
     }
 
-
     private void Slide(Vector3 targetPosition)
     {
         _lerpProgress = 0.0f;
@@ -120,7 +118,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 
         _targetPosition = targetPosition;
     }
-
 
     private void PlaySound(AudioClip clip)
     {

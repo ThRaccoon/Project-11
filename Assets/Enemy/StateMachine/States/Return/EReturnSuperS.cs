@@ -30,15 +30,20 @@ public class EReturnSuperS : EnemyBaseSuperState
         // --- State Transitions ---
         if (_enemy.ShouldAttack && _didPhysicsUpdateRan)
         {
+            _stateManager.ChangeState(_enemy.attackStateController);
+        }
+
+        if (_enemy.ShouldChase && _didPhysicsUpdateRan)
+        {
             _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
 
             if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
             {
                 _stateManager.ChangeState(_enemy.chaseStateController);
             }
-            else 
+            else
             {
-                _enemy.ShouldAttack = false;
+                _enemy.ShouldChase = false;
             }
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
@@ -48,13 +53,22 @@ public class EReturnSuperS : EnemyBaseSuperState
     {
         base.DoPhysicsUpdate();
 
-        if (IsPlayerInRange(_enemy.chaseRange))
+        if (IsPlayerInRange(_enemy.attackRange))
         {
             if (IsPlayerInLOS())
             {
                 _enemy.ShouldAttack = true;
             }
         }
+
+        if (IsPlayerInRange(_enemy.chaseRange))
+        {
+            if (IsPlayerInLOS())
+            {
+                _enemy.ShouldChase = true;
+            }
+        }
+
         _didPhysicsUpdateRan = true;
     }
 

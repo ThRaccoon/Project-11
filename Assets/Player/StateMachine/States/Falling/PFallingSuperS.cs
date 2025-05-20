@@ -53,7 +53,7 @@ public class PFallingSuperS : PlayerBaseState
             return _player.maxPullDownForce;
         }
 
-        _player.forceIncrementTimer.CountDownTimer();
+        _player.forceIncrementTimer.Tick();
 
         if (_player.forceIncrementTimer.Flag)
         {

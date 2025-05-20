@@ -8,8 +8,9 @@ public class EnemyIdlePatrolS : EIdleSuperS
     private Transform _currentPatrolPoint;
     private Transform _nextPatrolPoint;
     private NavMeshPath _pathToPatrolPoint;
+    private GlobalTimer _recalcPathToPatrolPointTimer;
     private GlobalTimer _waitOnPatrolPointTimer;
-    protected GlobalTimer _waitBeforeReturnToSpawnTimer;
+    private GlobalTimer _waitBeforeReturnToSpawnTimer;
 
     public override void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
         Transform playerTransform)
@@ -21,9 +22,10 @@ public class EnemyIdlePatrolS : EIdleSuperS
 
         _pathToPatrolPoint = new NavMeshPath();
 
+        _recalcPathToPatrolPointTimer = new GlobalTimer(_enemy.recalcPathDuration);
         _waitOnPatrolPointTimer = new GlobalTimer(_enemy.waitOnPatrolPointDuration);
-        _waitBeforeReturnToSpawnTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.waitBeforeDuration.x),
-                                                                     Mathf.RoundToInt(_enemy.waitBeforeDuration.y) + 1));
+        _waitBeforeReturnToSpawnTimer = new GlobalTimer(Random.Range(Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.x),
+                                                                     Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.y) + 1));
     }
 
     public override void DoOnEnter()
@@ -42,13 +44,13 @@ public class EnemyIdlePatrolS : EIdleSuperS
         base.DoLogicUpdate();
 
         // --- Timers ---
-        _recalculatePathTimer.CountDownTimer();
+        _recalcPathToPatrolPointTimer.Tick();
 
-        if (_recalculatePathTimer.Flag)
+        if (_recalcPathToPatrolPointTimer.Flag)
         {
             _navMeshAgent.CalculatePath(_currentPatrolPoint.position, _pathToPatrolPoint);
 
-            _recalculatePathTimer.Reset();
+            _recalcPathToPatrolPointTimer.Reset();
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -56,11 +58,13 @@ public class EnemyIdlePatrolS : EIdleSuperS
         // --- Logic ---
         if (IsOnPosition(_enemyTransform.position, _currentPatrolPoint.position))
         {
-            _animationManager.PlayAnim("Idle");
             _navMeshAgent.ResetPath();
 
+            SetAgentSpeed(0f);
+            _animationManager.PlayCrossFadeAnimation("Idle");
 
-            _waitOnPatrolPointTimer.CountDownTimer();
+
+            _waitOnPatrolPointTimer.Tick();
 
             if (_waitOnPatrolPointTimer.Flag)
             {
@@ -74,22 +78,24 @@ public class EnemyIdlePatrolS : EIdleSuperS
             if (_pathToPatrolPoint.status == NavMeshPathStatus.PathComplete)
             {
                 _navMeshAgent.SetDestination(_currentPatrolPoint.position);
-                _animationManager.PlayAnim("Walk");
 
+                SetAgentSpeed(_enemy.walkSpeed);
+                _animationManager.PlayCrossFadeAnimation("Walk");
 
                 _waitBeforeReturnToSpawnTimer.Reset();
             }
             else
             {
-                _animationManager.PlayAnim("Idle");
                 _navMeshAgent.ResetPath();
 
+                SetAgentSpeed(0f);
+                _animationManager.PlayCrossFadeAnimation("Idle");
 
-                _waitBeforeReturnToSpawnTimer.CountDownTimer();
+                _waitBeforeReturnToSpawnTimer.Tick();
             }
-        }
 
-        OnAnimatorMove();
+            _waitOnPatrolPointTimer.Reset();
+        }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -110,11 +116,11 @@ public class EnemyIdlePatrolS : EIdleSuperS
     {
         base.DoOnExit();
 
-        _recalculatePathTimer.Reset();
+        _recalcPathToPatrolPointTimer.Reset();
         _waitOnPatrolPointTimer.Reset();
 
-        _waitBeforeReturnToSpawnTimer.Duration = Random.Range(Mathf.RoundToInt(_enemy.waitBeforeDuration.x),
-                                                              Mathf.RoundToInt(_enemy.waitBeforeDuration.y) + 1);
+        _waitBeforeReturnToSpawnTimer.Duration = Random.Range(Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.x),
+                                                              Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.y) + 1);
         _waitBeforeReturnToSpawnTimer.Reset();
 
         _navMeshAgent.ResetPath();

@@ -53,7 +53,7 @@ public class PlayerBaseState
         {
             _player.staminaRegenTimer.Reset();
         }
-        else if (_player.staminaRegenTimer.CountDownTimer())
+        else if (_player.staminaRegenTimer.Tick())
         {
             RegenStamina();
         }

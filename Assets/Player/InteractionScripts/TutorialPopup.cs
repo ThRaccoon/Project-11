@@ -22,7 +22,7 @@ public class TutorialPopup : MonoBehaviour
         if (_shouldShowPopup)
         {
             _textMeshPro.text = _text;
-            _timer.CountDownTimer();
+            _timer.Tick();
         }
 
         if (_timer.Flag)

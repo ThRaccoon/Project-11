@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InteractDoor : MonoBehaviour, IInteractable
 {
@@ -45,7 +46,6 @@ public class InteractDoor : MonoBehaviour, IInteractable
     private Quaternion _targetRotationPoint;
     private MeshCollider[] _MeshColliders;
 
-
     private enum DoorState
     {
         Opened, Opening, Closed, Closing, Locked
@@ -53,13 +53,17 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private DoorState _currentState = DoorState.Closed;
 
-
     private void Awake()
     {
         // --- Components ---
         _meshCollider = GetComponent<MeshCollider>();
         _MeshColliders = GetComponentsInChildren<MeshCollider>();
         _audioSource = GetComponent<AudioSource>();
+
+        if (Util.IsNotNull(_audioSource))
+        {
+            _audioSource = GetComponentInParent<AudioSource>();
+        }
 
         // --- Bools ---
         _currentState = _isInitiallyOpened ? DoorState.Opened : DoorState.Closed;
@@ -136,7 +140,6 @@ public class InteractDoor : MonoBehaviour, IInteractable
         }
     }
 
-
     private void Rotate(Quaternion targetRotation)
     {
         if (Util.IsNotNull(_meshCollider))
@@ -155,7 +158,6 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
         _targetRotationPoint = targetRotation;
     }
-
 
     private void PlaySound(AudioClip clip)
     {

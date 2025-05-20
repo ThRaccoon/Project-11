@@ -3307,7 +3307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6597659768022583787
 Transform:
   m_ObjectHideFlags: 0
@@ -3419,15 +3419,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926d369b212f9144e8f769908885d84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boxCollider: {fileID: 7348774207884400986}
-  _navMeshAgent: {fileID: 4930464095454564239}
-  _animator: {fileID: 6819547563865075367}
-  _rig: {fileID: 4835877960321439737}
+  _boxCollider: {fileID: 0}
+  _navMeshAgent: {fileID: 0}
+  _animator: {fileID: 0}
+  _rig: {fileID: 0}
   <chaseRange>k__BackingField: 5
-  <attackRange>k__BackingField: 1.25
+  <attackRange>k__BackingField: 1.5
+  <walkSpeed>k__BackingField: 0
+  <chaseSpeed>k__BackingField: 0
   <avoidancePriorityDuration>k__BackingField: 0.5
-  <recalculatePathDuration>k__BackingField: 0.5
-  <waitBeforeDuration>k__BackingField: {x: 3, y: 6}
+  <recalcPathDuration>k__BackingField: 0
+  <waitBeforeGiveUpDuration>k__BackingField: {x: 0, y: 0}
   transformYOffset: 1.5
   <collisionLayersToIgnore>k__BackingField:
     serializedVersion: 2
@@ -3436,7 +3438,6 @@ MonoBehaviour:
   <patrolPointA>k__BackingField: {fileID: 0}
   <patrolPointB>k__BackingField: {fileID: 0}
   <spawnPos>k__BackingField: {x: 0, y: 0, z: 0}
-  _shouldAttack: 0
   idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}
   attackSTemplate: {fileID: 11400000, guid: 2baa2bc409ac9fe4db3b57b315b2156b, type: 2}

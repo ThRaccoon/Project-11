@@ -32,40 +32,23 @@ public class GlobalTimer
     public GlobalTimer(float duration, bool flag = false)
     {
         _duration = duration;
-        _elapsedTime = duration;
+        _flag = flag;
+
+        _elapsedTime = _duration;
     }
 
-    public bool CountDownTimer()
+    public bool Tick()
     {
-        if (_flag)
-        {
-            return _flag;
-        }
+        if (_flag) return _flag;
 
         _elapsedTime -= Time.deltaTime;
 
         if (_elapsedTime <= 0)
         {
             _flag = true;
-            return _flag;
-        }
-        return _flag;
-    }
-
-    public bool ReversedCountDownTimer()
-    {
-        if (!_flag)
-        {
-            return _flag;
+            _elapsedTime = 0f;
         }
 
-        _elapsedTime -= Time.deltaTime;
-
-        if (_elapsedTime <= 0)
-        {
-            _flag = false;
-            return _flag;
-        }
         return _flag;
     }
 
@@ -75,7 +58,22 @@ public class GlobalTimer
         _flag = false;
     }
 
-    public void ReversedReset()
+    public bool TickReversed()
+    {
+        if (!_flag) return _flag;
+
+        _elapsedTime -= Time.deltaTime;
+
+        if (_elapsedTime <= 0)
+        {
+            _flag = false;
+            _elapsedTime = 0f;
+        }
+
+        return _flag;
+    }
+
+    public void ResetReversed()
     {
         _elapsedTime = _duration;
         _flag = true;

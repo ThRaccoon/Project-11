@@ -19,8 +19,6 @@ public class EnemyBaseSuperState : ScriptableObject
     protected bool _didPhysicsUpdateRan = false;
     protected NavMeshPath _pathToPlayer;
     protected NavMeshPath _pathToSpawn;
-    protected GlobalTimer _recalculatePathTimer;
-
 
     public virtual void Initialize(Enemy enemy, Transform enemyTransform, NavMeshAgent navMeshAgent, Animator animator, AnimationManager animationManager, Rig rig, EnemyStateManager stateManager,
         Transform playerTransform)
@@ -39,8 +37,6 @@ public class EnemyBaseSuperState : ScriptableObject
         // --- Other ---
         _pathToPlayer = new NavMeshPath();
         _pathToSpawn = new NavMeshPath();
-
-        _recalculatePathTimer = new GlobalTimer(_enemy.recalculatePathDuration);
     }
 
     public virtual void DoOnEnter() { }
@@ -53,6 +49,7 @@ public class EnemyBaseSuperState : ScriptableObject
     {
         _didPhysicsUpdateRan = false;
 
+        _enemy.ShouldChase = false;
         _enemy.ShouldAttack = false;
     }
 
@@ -88,7 +85,7 @@ public class EnemyBaseSuperState : ScriptableObject
     {
         float distance = Vector3.Distance(current, end);
 
-        if (distance < 0.5f)
+        if (distance < 1f)
         {
             return true;
         }
@@ -100,12 +97,19 @@ public class EnemyBaseSuperState : ScriptableObject
         _rig.weight = isActive ? 1 : 0;
     }
 
-    protected void OnAnimatorMove()
+    protected void SetAgentSpeed(float speed)
     {
-        Vector3 adjustedRootPosition = _animator.rootPosition;
-        adjustedRootPosition.y = _navMeshAgent.nextPosition.y;
-        
-        _enemyTransform.position = adjustedRootPosition;
-        _navMeshAgent.nextPosition = adjustedRootPosition;
+        _navMeshAgent.speed = speed;
+
+        if (speed == 0f)
+        {
+            _navMeshAgent.ResetPath();
+            _navMeshAgent.velocity = Vector3.zero;
+            _navMeshAgent.isStopped = true;
+        }
+        else
+        {
+            _navMeshAgent.isStopped = false;
+        }
     }
 }

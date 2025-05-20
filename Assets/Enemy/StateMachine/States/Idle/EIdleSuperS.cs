@@ -30,6 +30,11 @@ public class EIdleSuperS : EnemyBaseSuperState
         // --- State Transitions ---
         if (_enemy.ShouldAttack && _didPhysicsUpdateRan)
         {
+            _stateManager.ChangeState(_enemy.attackStateController);
+        }
+
+        if (_enemy.ShouldChase && _didPhysicsUpdateRan)
+        {
             _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
 
             if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
@@ -38,7 +43,7 @@ public class EIdleSuperS : EnemyBaseSuperState
             }
             else
             {
-                _enemy.ShouldAttack = false;
+                _enemy.ShouldChase = false;
             }
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
@@ -48,11 +53,19 @@ public class EIdleSuperS : EnemyBaseSuperState
     {
         base.DoPhysicsUpdate();
 
-        if (IsPlayerInRange(_enemy.chaseRange))
+        if (IsPlayerInRange(_enemy.attackRange))
         {
             if (IsPlayerInLOS())
             {
                 _enemy.ShouldAttack = true;
+            }
+        }
+
+        if (IsPlayerInRange(_enemy.chaseRange))
+        {
+            if (IsPlayerInLOS())
+            {
+                _enemy.ShouldChase = true;
             }
         }
 

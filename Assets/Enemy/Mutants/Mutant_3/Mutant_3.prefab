@@ -1339,7 +1339,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 8004541711491251555, guid: 000f313c9ddf08b4a8bd3cf3b4ffdbf3, type: 3}
   m_Bones:
@@ -1524,7 +1524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1262379653715517006
 Transform:
   m_ObjectHideFlags: 0
@@ -1636,23 +1636,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926d369b212f9144e8f769908885d84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boxCollider: {fileID: 5183342446312195052}
-  _navMeshAgent: {fileID: 4245766093376111225}
-  _animator: {fileID: 7185857673343737603}
-  _rig: {fileID: 4881246629900399166}
-  <chaseRange>k__BackingField: 2
-  <attackRange>k__BackingField: 1.25
+  _boxCollider: {fileID: 0}
+  _navMeshAgent: {fileID: 0}
+  _animator: {fileID: 0}
+  _rig: {fileID: 0}
+  <chaseRange>k__BackingField: 2.5
+  <attackRange>k__BackingField: 1.5
   <avoidancePriorityDuration>k__BackingField: 0.5
   <recalculatePathDuration>k__BackingField: 0.5
-  <waitBeforeDuration>k__BackingField: {x: 3, y: 6}
+  <waitBeforeDuration>k__BackingField: {x: 5, y: 8}
   transformYOffset: 1.5
   <collisionLayersToIgnore>k__BackingField:
     serializedVersion: 2
     m_Bits: 2147483648
-  <waitOnPatrolPointDuration>k__BackingField: 3
+  <waitOnPatrolPointDuration>k__BackingField: 8
   <patrolPointA>k__BackingField: {fileID: 0}
   <patrolPointB>k__BackingField: {fileID: 0}
   <spawnPos>k__BackingField: {x: 0, y: 0, z: 0}
+  _shouldChase: 0
   _shouldAttack: 0
   idleSTemplate: {fileID: 11400000, guid: 9e9e87a53b0042a46941b74b85b13202, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}

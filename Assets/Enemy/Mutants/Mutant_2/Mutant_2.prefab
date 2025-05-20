@@ -281,7 +281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &979682053382001465
 Transform:
   m_ObjectHideFlags: 0
@@ -398,10 +398,10 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _rig: {fileID: 0}
   <chaseRange>k__BackingField: 5
-  <attackRange>k__BackingField: 1.25
+  <attackRange>k__BackingField: 1.5
   <avoidancePriorityDuration>k__BackingField: 0.5
   <recalculatePathDuration>k__BackingField: 0.5
-  <waitBeforeDuration>k__BackingField: {x: 3, y: 6}
+  <waitBeforeDuration>k__BackingField: {x: 5, y: 8}
   transformYOffset: 1.5
   <collisionLayersToIgnore>k__BackingField:
     serializedVersion: 2
@@ -410,6 +410,7 @@ MonoBehaviour:
   <patrolPointA>k__BackingField: {fileID: 0}
   <patrolPointB>k__BackingField: {fileID: 0}
   <spawnPos>k__BackingField: {x: 0, y: 0, z: 0}
+  _shouldChase: 0
   _shouldAttack: 0
   idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}

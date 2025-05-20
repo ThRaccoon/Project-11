@@ -1750,20 +1750,25 @@ MonoBehaviour:
   _navMeshAgent: {fileID: 8987688986052912409}
   _animator: {fileID: 7559756301377982634}
   _rig: {fileID: 6315879650984573829}
-  <activationRange>k__BackingField: 0
   <chaseRange>k__BackingField: 12
   <attackRange>k__BackingField: 0.5
+  <walkSpeed>k__BackingField: 0
+  <chaseSpeed>k__BackingField: 0
+  <avoidancePriorityDuration>k__BackingField: 0
+  <recalcPathDuration>k__BackingField: 0
+  <waitBeforeGiveUpDuration>k__BackingField: {x: 0, y: 0}
   transformYOffset: 1.5
   <collisionLayersToIgnore>k__BackingField:
     serializedVersion: 2
     m_Bits: 2147483648
-  <waitTime>k__BackingField: 0
-  <navPointA>k__BackingField: {fileID: 0}
-  <navPointB>k__BackingField: {fileID: 0}
-  _playerAttacked: 0
+  <waitOnPatrolPointDuration>k__BackingField: 0
+  <patrolPointA>k__BackingField: {fileID: 0}
+  <patrolPointB>k__BackingField: {fileID: 0}
+  <spawnPos>k__BackingField: {x: 0, y: 0, z: 0}
   idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}
   attackSTemplate: {fileID: 11400000, guid: 2baa2bc409ac9fe4db3b57b315b2156b, type: 2}
+  returnSTemplate: {fileID: 0}
 --- !u!114 &686367528775865455
 MonoBehaviour:
   m_ObjectHideFlags: 0
