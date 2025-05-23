@@ -191,7 +191,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // staminaImage.fillAmount = CurrentStamina / maxStamina;
+        if(Util.IsNotNull(staminaImage))
+        {
+            staminaImage.fillAmount = CurrentStamina / maxStamina;
+        }
+        
 
         stateManager.currentState.LogicUpdate();
     }

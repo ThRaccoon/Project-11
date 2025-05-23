@@ -17,18 +17,18 @@ public class PlayerInteract : MonoBehaviour
     [Space(30)]
     [Header("Settings")]
     [SerializeField] private float _interactionRange;
+    [Header("InteractIcon From Camera -> Canvas")]
+    [SerializeField] private GameObject _interactIcon;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
     // --- Private Variables ---
-    private GameObject _interactIcon;
     private RaycastHit _hitInfo;
 
 
     private void Awake()
     {
         _playerCamera = Camera.main;
-        _interactIcon = Util.FindSceneObjectByTag("InteractIcon");
     }
 
     private void FixedUpdate()

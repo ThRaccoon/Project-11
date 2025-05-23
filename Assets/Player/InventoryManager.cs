@@ -41,47 +41,57 @@ public class Note
 public class InventoryManager : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
-    [Header("Components")]
+    [Header("Sounds")]
     [SerializeField] private AudioClip _pickUpNoteSound;
     [SerializeField, Range(0f, 1f)] private float _pickUpNoteVolume;
     [SerializeField] private AudioClip _journalSound;
     [SerializeField, Range(0f, 1f)] private float _journalVolume;
     [SerializeField] private AudioClip _flashlightToggleSound;
     [SerializeField, Range(0f, 1f)] private float _flashlightToggleVolume;
+    [Header("Highlight Colors")]
     [SerializeField] private Color _highlight;
     [SerializeField] private Color _unhighlight;
+    [Header("Note From Camera -> Canvas")]
+    [SerializeField] private GameObject _note;
+    [SerializeField] private GameObject _noteNext;
+    [SerializeField] private GameObject _notePrev;
+    [Header("Flashlight From Camera")]
+    [SerializeField] private GameObject _flashlight;
+    [SerializeField] private GameObject _flashlightLight;
+    [Header("Slot From Camera -> Canvas")]
+    [SerializeField] private GameObject _slot2;
+    [SerializeField] private GameObject _slot3;
+    [Header("Cursor Script From Player")]
+    [SerializeField] private CursorController _cursor;
+    [Header("Audio Source From Player")]
+    [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
     // --- Arrays ---
-    [SerializeField] private WeaponData[] _weapons;
-    [field: SerializeField] private List<Note> _notes = new List<Note>();
+   [SerializeField] private WeaponData[] _weapons;
+    
 
     // --- Note ---
-    private GameObject _note;
-    private GameObject _noteNext;
-    private GameObject _notePrev;
     private int _noteIndex;
+    [field: SerializeField] private List<Note> _notes = new List<Note>();
 
     // --- Weapon ---
     private WeaponData _defaultWeaponData; // If not needed remove
 
     // --- Util --- 
     private GameObject _item3DViwer; // If not needed remove
-    private CursorController _cursor;
-    private AudioSource _audioSource;
+    
 
     // ---Slots---
     private GameObject _slot1;
-    private GameObject _slot2;
-    private GameObject _slot3;
+    
     private GameObject _slot4;
     private GameObject _lastSlotUsed = null;
 
     // ---Flashlight---
     private bool _hasFlashlight = true;
-    private GameObject _flashlight;
-    private GameObject _flashlightLight;
+    
 
     //--LastEquiped--
     private GameObject _lastEquiped = null;
@@ -89,25 +99,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        _note = Util.FindSceneObjectByTag("Note");
-        _noteNext = Util.FindSceneObjectByTag("NoteNext");
-        _notePrev = Util.FindSceneObjectByTag("NotePrev");
-
-        _item3DViwer = Util.FindSceneObjectByTag("Item3DViwer");
-        _cursor = GetComponent<CursorController>();
-        _audioSource = GetComponent<AudioSource>();
-
-        _slot1 = Util.FindSceneObjectByTag("Slot1");
-        _slot2 = Util.FindSceneObjectByTag("Slot2");
-        _slot3 = Util.FindSceneObjectByTag("Slot3");
-        _slot4 = Util.FindSceneObjectByTag("Slot4");
-
-        _flashlight = Util.FindSceneObjectByTag("Flashlight");
-        Light light = _flashlight.GetComponentInChildren<Light>();
-        if(light != null)
-        {
-            _flashlightLight = light.gameObject;
-        }
         
     }
 
