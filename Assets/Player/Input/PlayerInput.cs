@@ -39,9 +39,13 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.E.performed += GetUseInput;
 
+        _playerInputManager.OnGround._1.performed += GetUseInput1;
+
         _playerInputManager.OnGround._2.performed += GetUseInput2;
 
         _playerInputManager.OnGround._3.performed += GetUseInput3;
+
+        _playerInputManager.OnGround.Q.performed += GetUseInputQ;
 
     }
 
@@ -60,9 +64,13 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.E.performed -= GetUseInput;
 
+        _playerInputManager.OnGround._1.performed -= GetUseInput1;
+
         _playerInputManager.OnGround._2.performed -= GetUseInput2;
 
         _playerInputManager.OnGround._3.performed -= GetUseInput3;
+
+        _playerInputManager.OnGround.Q.performed -= GetUseInputQ;
 
         _playerInputManager.Disable();
     }
@@ -99,6 +107,14 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    private void GetUseInput1(InputAction.CallbackContext ctx)
+    {
+        if (_inventoryManager != null)
+        {
+            _inventoryManager.EquipWeapon();
+        }
+    }
+
     private void GetUseInput2(InputAction.CallbackContext ctx)
     {
         if (_inventoryManager != null)
@@ -112,6 +128,14 @@ public class PlayerInput : MonoBehaviour
         if (_inventoryManager != null)
         {
             _inventoryManager.OpenJournal();
+        }
+    }
+
+    private void GetUseInputQ(InputAction.CallbackContext ctx)
+    {
+        if (_inventoryManager != null)
+        {
+            _inventoryManager.EquipNextWeapon();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [System.Serializable]
@@ -68,8 +69,21 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private CursorController _cursor;
     [Header("Audio Source From Player")]
     [SerializeField] private AudioSource _audioSource;
+    [Header("Ammo Text From Canvas")]
+    [SerializeField] GameObject _ammoText;
     [Header("Pistol/ShotGun From Camera")]
     [SerializeField] private WeaponData[] _weapons;
+    [Header("Pistol From Camera->Canvas->Slot1")]
+    [SerializeField] private RawImage _pistolImage;
+    [Header("Pistol From UI folder")]
+    [SerializeField] private Texture _pistolTextureSelected;
+    [SerializeField] private Texture _pistolTextureUnselected;
+    [Header("ShotGun From Camera->Canvas->Slot1")]
+    [SerializeField] private RawImage _shotGunImage;
+    [Header("ShotGun From UI folder")]
+    [SerializeField] private Texture _shotGunTextureSelected;
+    [SerializeField] private Texture _shotGunTextureUnselected;
+
     // ----------------------------------------------------------------------------------------------------------------------------------    
 
     //--- Weapon ---
@@ -253,20 +267,6 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    private void UnhighlightSlot()
-    {
-        if (_lastSlotUsed != null)
-        {
-            var text = _lastSlotUsed.GetComponentInChildren<TextMeshProUGUI>();
-            if (text != null)
-            {
-                text.color = _unhighlight;
-            }
-
-        }
-    }
-
-
     // Slot Higlight End
 
     // Flashlight
@@ -315,7 +315,34 @@ public class InventoryManager : MonoBehaviour
 
     // Flashlight End
 
+
+    // Slot Higlight
+
+
+    private void UnhighlightSlot()
+    {
+        if (_lastSlotUsed != null)
+        {
+            var text = _lastSlotUsed.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.color = _unhighlight;
+            }
+
+        }
+
+        //Ammo text
+        if (_ammoText != null)
+        {
+            _ammoText.SetActive(false);
+        }
+    }
+
+
+    // Slot Higlight End
+
     // Weapon
+
     public WeaponData GetWeapon(EWeaponType weapon)
     {
         WeaponData foundWeapon = Array.Find(_weapons, w => w.weaponType == weapon);
@@ -353,6 +380,8 @@ public class InventoryManager : MonoBehaviour
             foundWeapon.ammo = Math.Clamp(foundWeapon.ammo + amountAmmo, 0, foundWeapon.maxAmmo);
         }
     }
+
+
     public void EquipWeapon()
     {
         if (_lastUsedWeaponIndex == -1)
@@ -372,18 +401,91 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
+
+
         if (_weapons[_lastUsedWeaponIndex].weaponPrefab != null)
         {
             if (Util.ObjectToggle(_weapons[_lastUsedWeaponIndex].weaponPrefab))
             {
                 UnEquip(_weapons[_lastUsedWeaponIndex].weaponPrefab);
                 HiglightSlot(_slot1);
+
+                switch (_weapons[_lastUsedWeaponIndex].weaponType)
+                {
+                    case EWeaponType.Pistol:
+                        {
+                            if (_pistolImage != null)
+                            {
+                                _pistolImage.texture = _pistolTextureSelected;
+                            }
+
+                            if (_shotGunImage != null)
+                            {
+                                _shotGunImage.texture = _shotGunTextureUnselected;
+                            }
+                        }
+                        break;
+                    case EWeaponType.ShotGun:
+                        {
+                            if (_shotGunImage != null)
+                            {
+                                _shotGunImage.texture = _shotGunTextureSelected;
+                            }
+
+                            if (_pistolImage != null)
+                            {
+                                _pistolImage.texture = _pistolTextureUnselected;
+                            }
+                        }
+                        break;
+                }
+
+
+                //Ammo text
+                if (_ammoText != null)
+                {
+                    _ammoText.SetActive(true);
+                    var text = _ammoText.GetComponentInChildren<TextMeshProUGUI>();
+                    if (text != null)
+                    {
+                        text.text = "Ammo " + _weapons[_lastUsedWeaponIndex].ammoInMagazine + " } " + _weapons[_lastUsedWeaponIndex].ammo;
+                    }
+                }
             }
             else
             {
                 UnhighlightSlot();
+
             }
         }
+    }
+
+    public void EquipNextWeapon()
+    {
+        if (_lastUsedWeaponIndex == -1)
+        {
+            return;
+        }
+        if (!_weapons[_lastUsedWeaponIndex].weaponPrefab.activeInHierarchy)
+        {
+            return;
+        }
+
+        int _nextWeaponIndex = (_lastUsedWeaponIndex + 1) % _weapons.Length;
+        while (!_weapons[_nextWeaponIndex].acquired)
+        {
+            _nextWeaponIndex = (_nextWeaponIndex + 1) % _weapons.Length;
+        }
+
+        if (_nextWeaponIndex == _lastUsedWeaponIndex)
+        {
+            return;
+        }
+
+        _lastUsedWeaponIndex = _nextWeaponIndex;
+
+        EquipWeapon();
+
     }
 
     // Weapon End
@@ -414,5 +516,13 @@ public class InventoryManager : MonoBehaviour
                 PlayToggleFlashlightSound();
             }
         }
+        else if (_lastUsedWeaponIndex >= 0 && _lastUsedWeaponIndex < _weapons.Length)
+        {
+            if (_weapons[_lastUsedWeaponIndex].weaponPrefab.activeInHierarchy)
+            {
+                return;
+            }
+        }
+
     }
 }

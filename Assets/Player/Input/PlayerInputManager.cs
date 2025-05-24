@@ -137,6 +137,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""_1"",
+                    ""type"": ""Button"",
+                    ""id"": ""14bbece2-e8f0-43ce-8ab8-273788d50ad5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""_2"",
                     ""type"": ""Button"",
                     ""id"": ""29b0c883-4530-4bb7-ba3c-c446b9c2fae5"",
@@ -149,6 +158,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""name"": ""_3"",
                     ""type"": ""Button"",
                     ""id"": ""25cb1f06-71cc-4553-9600-8e481575b519"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""094f88ed-4774-4349-9f96-7f73e3623db8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -268,12 +286,34 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""00321349-72a6-477b-be49-3ac132423d1e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4e83a214-caee-400b-b33d-cff42b6d8868"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""_2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40a1573f-fc12-47ab-831c-80342159db5b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""_1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -289,8 +329,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround_LShift = m_OnGround.FindAction("LShift", throwIfNotFound: true);
         m_OnGround_LMB = m_OnGround.FindAction("LMB", throwIfNotFound: true);
         m_OnGround_E = m_OnGround.FindAction("E", throwIfNotFound: true);
+        m_OnGround__1 = m_OnGround.FindAction("_1", throwIfNotFound: true);
         m_OnGround__2 = m_OnGround.FindAction("_2", throwIfNotFound: true);
         m_OnGround__3 = m_OnGround.FindAction("_3", throwIfNotFound: true);
+        m_OnGround_Q = m_OnGround.FindAction("Q", throwIfNotFound: true);
     }
 
     ~@PlayerInputManager()
@@ -376,8 +418,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnGround_LShift;
     private readonly InputAction m_OnGround_LMB;
     private readonly InputAction m_OnGround_E;
+    private readonly InputAction m_OnGround__1;
     private readonly InputAction m_OnGround__2;
     private readonly InputAction m_OnGround__3;
+    private readonly InputAction m_OnGround_Q;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
     /// </summary>
@@ -410,6 +454,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @E => m_Wrapper.m_OnGround_E;
         /// <summary>
+        /// Provides access to the underlying input action "OnGround/_1".
+        /// </summary>
+        public InputAction @_1 => m_Wrapper.m_OnGround__1;
+        /// <summary>
         /// Provides access to the underlying input action "OnGround/_2".
         /// </summary>
         public InputAction @_2 => m_Wrapper.m_OnGround__2;
@@ -417,6 +465,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnGround/_3".
         /// </summary>
         public InputAction @_3 => m_Wrapper.m_OnGround__3;
+        /// <summary>
+        /// Provides access to the underlying input action "OnGround/Q".
+        /// </summary>
+        public InputAction @Q => m_Wrapper.m_OnGround_Q;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -458,12 +510,18 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @E.started += instance.OnE;
             @E.performed += instance.OnE;
             @E.canceled += instance.OnE;
+            @_1.started += instance.On_1;
+            @_1.performed += instance.On_1;
+            @_1.canceled += instance.On_1;
             @_2.started += instance.On_2;
             @_2.performed += instance.On_2;
             @_2.canceled += instance.On_2;
             @_3.started += instance.On_3;
             @_3.performed += instance.On_3;
             @_3.canceled += instance.On_3;
+            @Q.started += instance.OnQ;
+            @Q.performed += instance.OnQ;
+            @Q.canceled += instance.OnQ;
         }
 
         /// <summary>
@@ -490,12 +548,18 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @E.started -= instance.OnE;
             @E.performed -= instance.OnE;
             @E.canceled -= instance.OnE;
+            @_1.started -= instance.On_1;
+            @_1.performed -= instance.On_1;
+            @_1.canceled -= instance.On_1;
             @_2.started -= instance.On_2;
             @_2.performed -= instance.On_2;
             @_2.canceled -= instance.On_2;
             @_3.started -= instance.On_3;
             @_3.performed -= instance.On_3;
             @_3.canceled -= instance.On_3;
+            @Q.started -= instance.OnQ;
+            @Q.performed -= instance.OnQ;
+            @Q.canceled -= instance.OnQ;
         }
 
         /// <summary>
@@ -572,6 +636,13 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnE(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "_1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void On_1(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "_2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -585,5 +656,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On_3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Q" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnQ(InputAction.CallbackContext context);
     }
 }
