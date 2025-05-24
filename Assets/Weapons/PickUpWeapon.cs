@@ -13,7 +13,7 @@ public class PickUpWeapon : MonoBehaviour
         {
             InventoryManager inventoryManager = other.GetComponent<InventoryManager>();
             
-            if (Util.IsNotNull(inventoryManager))
+            if (inventoryManager != null)
             {
                 inventoryManager.OnWeaponFound(_EWeaponType);
                 Destroy(gameObject); 

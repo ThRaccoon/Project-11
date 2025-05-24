@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -35,23 +34,5 @@ public static class Util
             obj.SetActive(true);
             return true;
         }
-    }
-
-
-    private static readonly HashSet<string> _loggedLocations = new HashSet<string>();
-
-    public static bool IsNotNull<T>
-    (T obj,
-    [CallerFilePath] string file = "",
-    [CallerLineNumber] int line = 0)
-
-    where T : class
-    {
-        if (obj == null)
-        {
-            Debug.LogWarning($"[NullChecker] Null reference in {System.IO.Path.GetFileName(file)} at line {line}");
-            return false;
-        }
-        return true;
     }
 }

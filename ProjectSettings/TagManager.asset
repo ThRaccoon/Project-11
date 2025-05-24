@@ -4,17 +4,16 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - PlayerInput
   - Canvas
-  - Note
-  - NoteText
-  - Item3DViwer
-  - CameraHolder
-  - CameraRotation
   - Head
   - Body
   - Arms
   - Legs
+  - Item3DViwer
+  - NoteText
+  - NotePrev
+  - NoteNext
+  - Flashlight
   layers:
   - Default
   - TransparentFX

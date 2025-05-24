@@ -17,8 +17,8 @@ public class PlayerInteract : MonoBehaviour
     [Space(30)]
     [Header("Settings")]
     [SerializeField] private float _interactionRange;
-    [Header("InteractIcon From Camera -> Canvas")]
-    [SerializeField] private GameObject _interactIcon;
+    [Header("From Camera -> Canvas")]
+    [SerializeField] private GameObject _interactionIcon;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -34,19 +34,19 @@ public class PlayerInteract : MonoBehaviour
     private void FixedUpdate()
     {
         // Do not use Util.IsNotNull here to prevent console spamming
-        if (_interactIcon != null)
+        if (_interactionIcon != null)
         {
-            if (Util.IsNotNull(_playerCamera))
+            if (_playerCamera != null)
             {
                 Physics.Raycast(_playerCamera.transform.position, _playerCamera.transform.forward, out _hitInfo, _interactionRange);
 
                 if (IsInteractable())
                 {
-                    _interactIcon.SetActive(true);
+                    _interactionIcon.SetActive(true);
                 }
                 else
                 {
-                    _interactIcon.SetActive(false);
+                    _interactionIcon.SetActive(false);
                 }
             }
         }
@@ -55,7 +55,7 @@ public class PlayerInteract : MonoBehaviour
 
     public void PerformInteraction()
     {
-        if (Util.IsNotNull(_playerCamera))
+        if (_playerCamera != null)
         {
             Debug.DrawRay(_playerCamera.transform.position, _playerCamera.transform.forward * _interactionRange);
 
@@ -68,11 +68,10 @@ public class PlayerInteract : MonoBehaviour
 
     private void TryToInteract()
     {
-        if (Util.IsNotNull(_hitInfo.collider))
+        if (_hitInfo.collider != null)
         {
             IInteractable interactable = _hitInfo.collider.GetComponent<IInteractable>();
 
-            // Do not use Util.IsNotNull here to prevent console spamming
             if (interactable != null)
             {
                 interactable.Interact();
@@ -89,5 +88,4 @@ public class PlayerInteract : MonoBehaviour
 
         return false;
     }
-
 }

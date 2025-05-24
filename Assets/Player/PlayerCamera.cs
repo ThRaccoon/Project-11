@@ -9,7 +9,6 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private PlayerInput _playerInput;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Settings")]
@@ -17,25 +16,16 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Vector2 _verticalCap;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // --- Private Variables ---
     private bool _isRotationEnable = true;
     private float _rotationX;
     private float _rotationY;
 
-
-    private void Awake()
-    {
-        _cameraHolder = GameObject.FindGameObjectWithTag("CameraHolder").transform;
-        _cameraRotation = GameObject.FindGameObjectWithTag("CameraRotation").transform;
-        _playerInput = GameObject.FindGameObjectWithTag("PlayerInput").GetComponent<PlayerInput>();
-    }
-
     private void Update()
     {
         if (_isRotationEnable)
         {
-            if (Util.IsNotNull(_playerInput))
+            if (_playerInput != null)
             {
                 _rotationX -= _playerInput.rotationInput.y * _mouseSensitivity * Time.deltaTime;
                 _rotationX = Mathf.Clamp(_rotationX, _verticalCap.x, _verticalCap.y);
@@ -49,14 +39,14 @@ public class PlayerCamera : MonoBehaviour
 
                 transform.rotation = yRotation * xRotation;
 
-                if (Util.IsNotNull(_cameraRotation))
+                if (_cameraRotation != null)
                 {
                     _cameraRotation.transform.rotation = yRotation;
                 }
             }
         }
-        
-        if (Util.IsNotNull(_cameraHolder))
+
+        if (_cameraHolder != null)
         {
             transform.position = _cameraHolder.position;
         }

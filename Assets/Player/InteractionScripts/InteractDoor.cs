@@ -60,7 +60,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
         _MeshColliders = GetComponentsInChildren<MeshCollider>();
         _audioSource = GetComponent<AudioSource>();
 
-        if (Util.IsNotNull(_audioSource))
+        if (_audioSource != null)
         {
             _audioSource = GetComponentInParent<AudioSource>();
         }
@@ -85,7 +85,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
             if (SlerpProgress >= 1.0f)
             {
-                if (Util.IsNotNull(_meshCollider))
+                if (_meshCollider != null)
                 {
                     _meshCollider.enabled = true;
                 }
@@ -142,7 +142,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void Rotate(Quaternion targetRotation)
     {
-        if (Util.IsNotNull(_meshCollider))
+        if (_meshCollider != null)
         {
             _meshCollider.enabled = false;
         }
@@ -161,7 +161,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void PlaySound(AudioClip clip)
     {
-        if (Util.IsNotNull(_audioSource) && Util.IsNotNull(clip))
+        if (_audioSource != null && clip != null)
         {
             _audioSource.clip = clip;
             _audioSource.Play();

@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("UI")]
-    [SerializeField] private Image staminaImage;
+    [Header("From Camera -> Canvas")]
+    [SerializeField] private Image _staminaBarFiller;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -137,13 +138,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        // --- Components ---
-        _capsuleCollider = GetComponent<CapsuleCollider>();
-        _rigidbody = GetComponent<Rigidbody>();
-
-        _cameraRotation = GameObject.FindGameObjectWithTag("CameraRotation").transform;
-        _playerInput = GameObject.FindGameObjectWithTag("PlayerInput").GetComponent<PlayerInput>();
-
         // --- Assigned On Start ---
         _currentStamina = maxStamina;
 
@@ -152,19 +146,19 @@ public class Player : MonoBehaviour
         staminaRegenTimer = new GlobalTimer(staminaRegenDelay);
 
         // --- Ray Casts ---
-        if (Util.IsNotNull(_capsuleCollider))
+        if (_capsuleCollider != null)
         {
             standingGroundCheckLength += _capsuleCollider.bounds.extents.y;
         }
 
         // --- Drags ---
-        if (Util.IsNotNull(_rigidbody))
+        if (_rigidbody != null)
         {
             _rigidbody.linearDamping = _playerDrag;
             _rigidbody.angularDamping = _playerAngularDrag;
         }
 
-        if (Util.IsNotNull(_rigidbody) && Util.IsNotNull(_playerInput) && Util.IsNotNull(_cameraRotation))
+        if (_rigidbody != null && _playerInput != null && _cameraRotation != null)
         {
             // --- State Machine / States --- 
             stateManager = new PlayerStateManager();
@@ -191,11 +185,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(Util.IsNotNull(staminaImage))
+        if(_staminaBarFiller != null)
         {
-            staminaImage.fillAmount = CurrentStamina / maxStamina;
+            _staminaBarFiller.fillAmount = CurrentStamina / maxStamina;
         }
-        
 
         stateManager.currentState.LogicUpdate();
     }

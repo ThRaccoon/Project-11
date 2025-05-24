@@ -47,7 +47,7 @@ public class InteractDrawer : MonoBehaviour, IInteractable
         // --- Components ---
         _audioSource = GetComponent<AudioSource>();
         
-        if (Util.IsNotNull(_audioSource))
+        if (_audioSource != null)
         {
             _audioSource = GetComponentInParent<AudioSource>();
         }
@@ -121,7 +121,7 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 
     private void PlaySound(AudioClip clip)
     {
-        if (Util.IsNotNull(_audioSource) && Util.IsNotNull(clip))
+        if (_audioSource != null && clip != null)
         {
             _audioSource.clip = clip;
             _audioSource.Play();

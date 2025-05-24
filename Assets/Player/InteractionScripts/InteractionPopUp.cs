@@ -16,7 +16,7 @@ public class InteractionPopUp : MonoBehaviour
         _mainCamera = Camera.main;
         _textMeshPro = GetComponent<TextMeshPro>();
 
-        if (Util.IsNotNull(_textMeshPro))
+        if (_textMeshPro != null)
         {
             Color color = _textMeshPro.color;
             color.a = 0f;

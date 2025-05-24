@@ -14,7 +14,7 @@ public class CursorController : MonoBehaviour
     {
         var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-        if (Util.IsNotNull(mainCamera))
+        if (mainCamera != null)
         {
             _playerCamera = mainCamera.GetComponent<PlayerCamera>();
         }
@@ -25,7 +25,7 @@ public class CursorController : MonoBehaviour
 
     public void EnableCursor()
     {
-        if (Util.IsNotNull(_cursorTexture))
+        if (_cursorTexture != null)
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
@@ -33,7 +33,7 @@ public class CursorController : MonoBehaviour
             Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
         }
 
-        if (Util.IsNotNull(_playerCamera))
+        if (_playerCamera != null)
         {
             _playerCamera.DisableRotation();
         }
@@ -44,16 +44,15 @@ public class CursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        if (Util.IsNotNull(_playerCamera))
+        if (_playerCamera != null)
         {
             _playerCamera.EnableRotation();
         }
     }
 
-
     public void EventEnter()
     {
-        if (Util.IsNotNull(_cursorPointTexture))
+        if (_cursorPointTexture != null)
         {
             Cursor.SetCursor(_cursorPointTexture, Vector2.zero, CursorMode.Auto);
         }
@@ -61,7 +60,7 @@ public class CursorController : MonoBehaviour
 
     public void EventExit()
     {
-        if (Util.IsNotNull(_cursorPointTexture))
+        if (_cursorPointTexture != null)
         {
             Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
         }

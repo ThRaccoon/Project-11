@@ -10,6 +10,7 @@ public enum EWeaponType
 {
     None = 0,
     Pistol = 1,
+    ShotGun = 2
 }
 
 [System.Serializable]
@@ -20,6 +21,7 @@ public class WeaponData
     public bool acquired;
     public int ammoOnFound;
     public int ammo;
+    public int ammoInMagazine;
     public int maxAmmo;
 }
 
@@ -59,39 +61,35 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject _flashlight;
     [SerializeField] private GameObject _flashlightLight;
     [Header("Slot From Camera -> Canvas")]
+    [SerializeField] private GameObject _slot1;
     [SerializeField] private GameObject _slot2;
     [SerializeField] private GameObject _slot3;
     [Header("Cursor Script From Player")]
     [SerializeField] private CursorController _cursor;
     [Header("Audio Source From Player")]
     [SerializeField] private AudioSource _audioSource;
-    // ----------------------------------------------------------------------------------------------------------------------------------
+    [Header("Pistol/ShotGun From Camera")]
+    [SerializeField] private WeaponData[] _weapons;
+    // ----------------------------------------------------------------------------------------------------------------------------------    
 
-
-    // --- Arrays ---
-   [SerializeField] private WeaponData[] _weapons;
-    
+    //--- Weapon ---
+    private int _lastUsedWeaponIndex = -1;
 
     // --- Note ---
     private int _noteIndex;
     [field: SerializeField] private List<Note> _notes = new List<Note>();
 
-    // --- Weapon ---
-    private WeaponData _defaultWeaponData; // If not needed remove
-
     // --- Util --- 
     private GameObject _item3DViwer; // If not needed remove
-    
 
-    // ---Slots---
-    private GameObject _slot1;
-    
+
+    // ---Slots---    
     private GameObject _slot4;
     private GameObject _lastSlotUsed = null;
 
     // ---Flashlight---
     private bool _hasFlashlight = true;
-    
+
 
     //--LastEquiped--
     private GameObject _lastEquiped = null;
@@ -99,10 +97,225 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
 
+    //Journal & Notes start
+    public void OpenJournal()
+    {
+        if (_note != null && _cursor != null)
+        {
+            if (Util.ObjectToggle(_note))
+            {
+                UnEquip(_note);
+                HiglightSlot(_slot3);
+                _cursor.EnableCursor();
+                _noteIndex = _notes.Count - 1;
+                SetNoteText();
+
+            }
+            else
+            {
+                UnhighlightSlot();
+                _cursor.DisableCursor();
+            }
+
+            PlayJournalSound();
+        }
+    }
+
+    public void AddNote(string description)
+    {
+        Note note = new Note(description);
+        _notes.Add(note);
+        PlayPickUpNoteSound();
+        UpdateJournal();
+    }
+
+    private void UpdateJournal()
+    {
+        if (_note != null && _note.activeSelf)
+        {
+
+            if (_notes.Count <= 1)
+            {
+                SetNotesArrows(false);
+            }
+            else
+            {
+                SetNotesArrows(true);
+            }
+
+            if (_notes.Count == 1)
+            {
+                _noteIndex = 0;
+                SetNoteText();
+            }
+        }
+    }
+
+    private void SetNoteText()
+    {
+        if (_note != null)
+        {
+            var noteText = _note.GetComponentInChildren<TextMeshProUGUI>(true);
+
+            if (noteText != null)
+            {
+
+                if (_notes.Count > 0 && _noteIndex >= 0)
+                {
+                    noteText.SetText(_notes[_noteIndex]._description);
+
+                    if (_notes.Count <= 1)
+                    {
+                        SetNotesArrows(false);
+                    }
+                    else
+                    {
+                        SetNotesArrows(true);
+                    }
+
+                }
+                else
+                {
+                    noteText.SetText("EMPTY");
+                    SetNotesArrows(false);
+
+                }
+            }
+        }
+    }
+
+    public void NextNote()
+    {
+        if (_notes.Count > 1)
+        {
+            _noteIndex = (_noteIndex + 1) % _notes.Count;
+            SetNoteText();
+            PlayJournalSound();
+        }
+    }
+
+    public void PreviousNote()
+    {
+        if (_notes.Count > 1)
+        {
+            _noteIndex = (_noteIndex - 1) < 0 ? _notes.Count - 1 : (_noteIndex - 1);
+            SetNoteText();
+            PlayJournalSound();
+        }
+    }
+
+    private void PlayJournalSound()
+    {
+        if (_audioSource != null && _pickUpNoteSound != null)
+        {
+            _audioSource.clip = _journalSound;
+            _audioSource.volume = _journalVolume;
+            _audioSource.Play();
+        }
+    }
+
+    private void PlayPickUpNoteSound()
+    {
+        if (_audioSource != null && _pickUpNoteSound != null)
+        {
+            _audioSource.clip = _pickUpNoteSound;
+            _audioSource.volume = _pickUpNoteVolume;
+            _audioSource.Play();
+        }
+    }
+
+    private void SetNotesArrows(bool state)
+    {
+        if (_noteNext != null && _notePrev != null)
+            _noteNext.SetActive(state);
+        _notePrev.SetActive(state);
+    }
+    // Journal & Notes End
+
+    // Slot Higlight
+
+    private void HiglightSlot(GameObject slot)
+    {
+        UnhighlightSlot();
+        if (slot != null)
+        {
+            var text = slot.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.color = _highlight;
+                _lastSlotUsed = slot;
+            }
+        }
+
+    }
+
+    private void UnhighlightSlot()
+    {
+        if (_lastSlotUsed != null)
+        {
+            var text = _lastSlotUsed.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.color = _unhighlight;
+            }
+
+        }
+    }
+
+
+    // Slot Higlight End
+
+    // Flashlight
+
+    private void PlayToggleFlashlightSound()
+    {
+        if (_audioSource != null && _flashlightToggleSound != null)
+        {
+            _audioSource.clip = _flashlightToggleSound;
+            _audioSource.volume = _flashlightToggleVolume;
+            _audioSource.Play();
+        }
+
+    }
+    public void SetHasFlashlight(bool state)
+    {
+        _hasFlashlight = state;
+    }
+
+    public void EquipFlashlight()
+    {
+        if (_hasFlashlight)
+        {
+            if (_flashlight != null)
+            {
+                if (Util.ObjectToggle(_flashlight))
+                {
+                    UnEquip(_flashlight);
+                    HiglightSlot(_slot2);
+                    if (_flashlightLight != null)
+                    {
+                        _flashlightLight.SetActive(false);
+                    }
+
+                }
+                else
+                {
+                    UnhighlightSlot();
+                }
+            }
+
+
+        }
+
+    }
+
+    // Flashlight End
+
+    // Weapon
     public WeaponData GetWeapon(EWeaponType weapon)
     {
         WeaponData foundWeapon = Array.Find(_weapons, w => w.weaponType == weapon);
@@ -140,229 +353,47 @@ public class InventoryManager : MonoBehaviour
             foundWeapon.ammo = Math.Clamp(foundWeapon.ammo + amountAmmo, 0, foundWeapon.maxAmmo);
         }
     }
-
- //Journal & Notes start
-    public void OpenJournal()
+    public void EquipWeapon()
     {
-        if (Util.IsNotNull(_note) && Util.IsNotNull(_cursor))
+        if (_lastUsedWeaponIndex == -1)
         {
-            if (Util.ObjectToggle(_note))
+            for (int i = 0; i < _weapons.Length; i++)
             {
-                UnEquip(_note);
-                HiglightSlot(_slot3);
-                _cursor.EnableCursor();
-                _noteIndex = _notes.Count - 1;
-                SetNoteText();
-               
+                if (_weapons[i].acquired)
+                {
+                    _lastUsedWeaponIndex = i;
+                    break;
+                }
+            }
+        }
+
+        if (_lastUsedWeaponIndex < 0 && _lastUsedWeaponIndex >= _weapons.Length)
+        {
+            return;
+        }
+
+        if (_weapons[_lastUsedWeaponIndex].weaponPrefab != null)
+        {
+            if (Util.ObjectToggle(_weapons[_lastUsedWeaponIndex].weaponPrefab))
+            {
+                UnEquip(_weapons[_lastUsedWeaponIndex].weaponPrefab);
+                HiglightSlot(_slot1);
             }
             else
             {
                 UnhighlightSlot();
-                _cursor.DisableCursor();
-            }
-
-            PlayJournalSound();
-        }
-    }
-
-    public void AddNote(string description)
-    {
-        Note note = new Note(description);
-        _notes.Add(note);
-        PlayPickUpNoteSound();
-        UpdateJournal();
-    }
-
-    private void UpdateJournal()
-    {
-        if(Util.IsNotNull(_note) && _note.activeSelf)
-        {
-
-            if (_notes.Count <= 1)
-            {
-                SetNotesArrows(false);
-            }
-            else
-            {
-                SetNotesArrows(true);
-            }
-
-            if(_notes.Count == 1)
-            {
-                _noteIndex = 0;
-                SetNoteText();
             }
         }
     }
 
-    private void SetNoteText()
-    {
-        if (Util.IsNotNull(_note))
-        {
-            var noteText = _note.GetComponentInChildren<TextMeshProUGUI>(true);
-
-            if (Util.IsNotNull(noteText))
-            {
-               
-                if (_notes.Count > 0 && _noteIndex >= 0)
-                {
-                    noteText.SetText(_notes[_noteIndex]._description);
-
-                    if(_notes.Count <= 1)
-                    {
-                        SetNotesArrows(false);
-                    }
-                    else
-                    {
-                        SetNotesArrows(true);
-                    }
-
-                }
-                else
-                {
-                    noteText.SetText("EMPTY");
-                    SetNotesArrows(false);
-
-                }
-            }
-        }       
-    }
-
-    public void NextNote()
-    {
-        if (_notes.Count > 1)
-        {
-            _noteIndex = (_noteIndex + 1) % _notes.Count;
-            SetNoteText();
-            PlayJournalSound();
-        }
-    }
-
-    public void PreviousNote()
-    {
-        if (_notes.Count > 1)
-        {
-            _noteIndex = (_noteIndex - 1) < 0 ? _notes.Count - 1 : (_noteIndex - 1);
-            SetNoteText();
-            PlayJournalSound();
-        }
-    }
-
-    private void PlayJournalSound()
-    {
-        if (Util.IsNotNull(_audioSource) && Util.IsNotNull(_pickUpNoteSound))
-        {
-            _audioSource.clip = _journalSound;
-            _audioSource.volume = _journalVolume;
-            _audioSource.Play();
-        }
-    }
-
-    private void PlayPickUpNoteSound()
-    {
-        if (Util.IsNotNull(_audioSource) && Util.IsNotNull(_pickUpNoteSound))
-        {
-            _audioSource.clip = _pickUpNoteSound;
-            _audioSource.volume = _pickUpNoteVolume;
-            _audioSource.Play();
-        }
-    }
-
-    private void SetNotesArrows(bool state)
-    {
-        if(Util.IsNotNull(_noteNext) && Util.IsNotNull(_notePrev))
-        _noteNext.SetActive(state);
-        _notePrev.SetActive(state);
-    }
-// Journal & Notes End
-
-// Slot Higlight
-
-    private void HiglightSlot(GameObject slot)
-    {
-        UnhighlightSlot();
-        if(Util.IsNotNull(slot))
-        {
-            var text = slot.GetComponentInChildren<TextMeshProUGUI>();
-            if (Util.IsNotNull(text))
-            {
-                text.color = _highlight;
-                _lastSlotUsed = slot;
-            }
-        } 
-      
-    }
-
-    private void UnhighlightSlot()
-    {
-        if(_lastSlotUsed != null)
-        {
-            var text = _lastSlotUsed.GetComponentInChildren<TextMeshProUGUI>();
-            if (Util.IsNotNull(text))
-            {
-                text.color = _unhighlight;
-            }
-            
-        }
-    }
-
-
-// Slot End
-
-// Flashlight
-
-    private void PlayToggleFlashlightSound()
-    {
-       if (Util.IsNotNull(_audioSource) && Util.IsNotNull(_flashlightToggleSound))
-       {
-           _audioSource.clip = _flashlightToggleSound;
-           _audioSource.volume = _flashlightToggleVolume;
-           _audioSource.Play();
-       }
-        
-    }
-    public void SetHasFlashlight(bool state)
-    {
-        _hasFlashlight = state;
-    }
-
-    public void EquipFlashlight()
-    {
-        if(_hasFlashlight) 
-        {
-            if(Util.IsNotNull(_flashlight))
-            {
-               if(Util.ObjectToggle(_flashlight))
-               {
-                    UnEquip(_flashlight);
-                    HiglightSlot(_slot2);
-                    if(Util.IsNotNull(_flashlightLight))
-                    {
-                        _flashlightLight.SetActive(false);
-                    }
-
-               }
-               else
-               {
-                    UnhighlightSlot();
-               }
-            }
-           
-                
-        }
-
-    }
-
-    // Flashlight End
-
-
-   private void UnEquip(GameObject newEquip)
+    // Weapon End
+    private void UnEquip(GameObject newEquip)
     {
         if (_lastEquiped != null && _lastEquiped != newEquip)
         {
             _lastEquiped.SetActive(false);
 
-            if(_cursor.IsVisiable())
+            if (_cursor.IsVisiable())
             {
                 _cursor.DisableCursor();
             }
@@ -375,9 +406,9 @@ public class InventoryManager : MonoBehaviour
 
     public void LMB()
     {
-        if(_flashlight.activeInHierarchy)
+        if (_flashlight.activeInHierarchy)
         {
-            if(_flashlightLight != null)
+            if (_flashlightLight != null)
             {
                 Util.ObjectToggle(_flashlightLight);
                 PlayToggleFlashlightSound();

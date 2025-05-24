@@ -75,7 +75,7 @@ public class ShootingController : MonoBehaviour
 
     private bool GetShootInput()
     {
-        if (Util.IsNotNull(_playerInput))
+        if (_playerInput != null)
         {
             return _playerInput.shootInput;
         }
@@ -100,7 +100,7 @@ public class ShootingController : MonoBehaviour
 
     private void PlayShootingSound()
     {
-        if (Util.IsNotNull(_shootingSound))
+        if (_shootingSound != null)
         {
             _audioSource.PlayOneShot(_shootingSound);
         }
@@ -108,7 +108,7 @@ public class ShootingController : MonoBehaviour
 
     private void PlayEmptyMagazineSound()
     {
-        if (Util.IsNotNull(_emptyMagazineSound))
+        if (_emptyMagazineSound != null)
         {
             _audioSource.PlayOneShot(_emptyMagazineSound);
         }
@@ -130,7 +130,7 @@ public class ShootingController : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Util.IsNotNull(_equipedWeapon) && _shootInput && _canShoot && _weaponData.ammo > 0)
+        if (_equipedWeapon != null && _shootInput && _canShoot && _weaponData.ammo > 0)
         {
             _canShoot = false;
             _hits = Physics.RaycastAll(_weaponCamera.transform.position, _weaponCamera.transform.forward, _shootingDistance);
@@ -167,7 +167,7 @@ public class ShootingController : MonoBehaviour
 
             if (_hits[i].collider.gameObject.layer == LayerMask.NameToLayer("Surface"))
             {
-                if (Util.IsNotNull(_bulletHole))
+                if (_bulletHole != null)
                 {
                     Vector3 vec = ((_weaponCamera.transform.position - _hits[i].point).normalized) * 0.001f; // points thowards weponCamera
 
@@ -182,7 +182,7 @@ public class ShootingController : MonoBehaviour
 
     private void DestroyEquipedWeapon()
     {
-        if (Util.IsNotNull(_equipedWeapon))
+        if (_equipedWeapon != null)
         {
             Destroy(_equipedWeapon);
         }
@@ -195,7 +195,7 @@ public class ShootingController : MonoBehaviour
             return;
         }
 
-        if (Util.IsNotNull(_weaponData) && _weaponData.weaponType == weapon)
+        if (_weaponData != null && _weaponData.weaponType == weapon)
         {
             return;
         }

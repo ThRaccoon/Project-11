@@ -43,7 +43,7 @@ public class PlayerBaseState
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---
-        if (Util.IsNotNull(_playerInput))
+        if (_playerInput != null)
         {
             _movementInput = _playerInput.movementInput;
             _runInput = _playerInput.runInput;
@@ -72,7 +72,7 @@ public class PlayerBaseState
     {
         Vector3 movementVector = new Vector3(movementInput.x * movementSpeed, 0.0f, movementInput.y * movementSpeed);
 
-        if (Util.IsNotNull(_cameraRotation))
+        if (_cameraRotation != null)
         {
             movementVector = _cameraRotation.rotation * movementVector;
         }
@@ -81,7 +81,7 @@ public class PlayerBaseState
 
     protected void ApplyMovementForce(Vector3 movementVector)
     {
-        if (Util.IsNotNull(_rigidbody))
+        if (_rigidbody != null)
         {
             _rigidbody.AddForce(movementVector, ForceMode.Acceleration);
         }

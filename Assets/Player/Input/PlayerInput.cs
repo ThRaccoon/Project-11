@@ -3,9 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    private PlayerInputManager _playerInputManager;
+    [SerializeField] private PlayerInteract _playerInteract;
+    [SerializeField] private InventoryManager _inventoryManager;
 
-    private GameObject _player;
+    private PlayerInputManager _playerInputManager;
 
     public Vector2 rotationInput { get; private set; }
 
@@ -15,12 +16,10 @@ public class PlayerInput : MonoBehaviour
 
     public bool shootInput { get; private set; }
 
-    
+
     private void Awake()
     {
         _playerInputManager = new PlayerInputManager();
-
-        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnEnable()
@@ -84,56 +83,35 @@ public class PlayerInput : MonoBehaviour
         runInput = ctx.ReadValueAsButton();
     }
 
-
     private void GetUseInput(InputAction.CallbackContext ctx)
     {
-        if (Util.IsNotNull(_player))
+        if (_playerInteract != null)
         {
-            var playerInteract = _player.GetComponent<PlayerInteract>();
-
-            if (Util.IsNotNull(playerInteract))
-            {
-                playerInteract.PerformInteraction();
-            }
+            _playerInteract.PerformInteraction();
         }
     }
 
     private void GetLMBInput(InputAction.CallbackContext ctx)
     {
-        if (Util.IsNotNull(_player))
+        if (_inventoryManager != null)
         {
-            var inventoryManager = _player.GetComponent<InventoryManager>();
-
-            if (inventoryManager != null)
-            {
-                inventoryManager.LMB();
-            }
+            _inventoryManager.LMB();
         }
     }
 
     private void GetUseInput2(InputAction.CallbackContext ctx)
     {
-        if (Util.IsNotNull(_player))
+        if (_inventoryManager != null)
         {
-            var inventoryManager = _player.GetComponent<InventoryManager>();
-
-            if (Util.IsNotNull(inventoryManager))
-            {
-                inventoryManager.EquipFlashlight();
-            }
+            _inventoryManager.EquipFlashlight();
         }
     }
 
     private void GetUseInput3(InputAction.CallbackContext ctx)
     {
-        if (Util.IsNotNull(_player))
+        if (_inventoryManager != null)
         {
-            var inventoryManager = _player.GetComponent<InventoryManager>();
-
-            if (Util.IsNotNull(inventoryManager))
-            {
-                inventoryManager.OpenJournal();
-            }
+            _inventoryManager.OpenJournal();
         }
     }
 }

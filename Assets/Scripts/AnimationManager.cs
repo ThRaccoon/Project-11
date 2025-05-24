@@ -52,7 +52,7 @@ public class AnimationManager
 
         if (_waitBeforeAnimSwitchTimer.Flag || !useTimer)
         {
-            if (Util.IsNotNull(_animator))
+            if (_animator != null)
             {
                 if (_currentAnim != animationName)
                 {
