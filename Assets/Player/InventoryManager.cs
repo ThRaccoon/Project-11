@@ -23,7 +23,12 @@ public class WeaponData
     public int ammoOnFound;
     public int ammo;
     public int ammoInMagazine;
+    public int magazineCappacity;
     public int maxAmmo;
+    public int damage;
+    public bool canShoot = true;
+    public Animator animator;
+    public WeaponAnimationManager weaponAnimationManager;
 }
 
 public class Item
@@ -83,6 +88,8 @@ public class InventoryManager : MonoBehaviour
     [Header("ShotGun From UI folder")]
     [SerializeField] private Texture _shotGunTextureSelected;
     [SerializeField] private Texture _shotGunTextureUnselected;
+    [Header("ShootingManager From Camera")]
+    [SerializeField] private ShootingManager _shootingManager;
 
     // ----------------------------------------------------------------------------------------------------------------------------------    
 
@@ -440,17 +447,7 @@ public class InventoryManager : MonoBehaviour
                         break;
                 }
 
-
-                //Ammo text
-                if (_ammoText != null)
-                {
-                    _ammoText.SetActive(true);
-                    var text = _ammoText.GetComponentInChildren<TextMeshProUGUI>();
-                    if (text != null)
-                    {
-                        text.text = "Ammo " + _weapons[_lastUsedWeaponIndex].ammoInMagazine + " } " + _weapons[_lastUsedWeaponIndex].ammo;
-                    }
-                }
+                UpdateAmmoText();
             }
             else
             {
@@ -488,6 +485,59 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    public void StartReload()
+    {
+        if (_lastUsedWeaponIndex >= 0 && _lastUsedWeaponIndex < _weapons.Length && _weapons[_lastUsedWeaponIndex].weaponPrefab.activeInHierarchy && _weapons[_lastUsedWeaponIndex].animator != null)
+        {
+            int neededAmmo = _weapons[_lastUsedWeaponIndex].magazineCappacity - _weapons[_lastUsedWeaponIndex].ammoInMagazine;
+            int bulletsToReload = Mathf.Min(neededAmmo, _weapons[_lastUsedWeaponIndex].ammo);
+            if(bulletsToReload>0)
+            {
+                _weapons[_lastUsedWeaponIndex].weaponAnimationManager.SetIdleState(WeaponAnimationManager.EIdleState.idle);
+                _weapons[_lastUsedWeaponIndex].weaponAnimationManager.SetIdle(false);
+                _weapons[_lastUsedWeaponIndex].animator.Play("Reload");
+            }
+        }
+    }
+
+    public void EndReload()
+    {
+        if (_lastUsedWeaponIndex >= 0 && _lastUsedWeaponIndex < _weapons.Length)
+        {
+             int neededAmmo = _weapons[_lastUsedWeaponIndex].magazineCappacity - _weapons[_lastUsedWeaponIndex].ammoInMagazine;
+             int bulletsReloaded = Mathf.Min(neededAmmo, _weapons[_lastUsedWeaponIndex].ammo);
+            _weapons[_lastUsedWeaponIndex].ammoInMagazine += bulletsReloaded;
+            _weapons[_lastUsedWeaponIndex].ammo -= bulletsReloaded;
+            UpdateAmmoText();
+        }
+
+    }
+
+    public void SetCanShoot(bool canShoot, EWeaponType type)
+    {
+        for (int i = 0; i < _weapons.Length; i++)
+        {
+            if (_weapons[i].weaponType == type)
+            {
+                _weapons[i].canShoot = canShoot;
+            }
+        }
+    }
+
+    public void UpdateAmmoText()
+    {
+        //Ammo text
+        if (_ammoText != null)
+        {
+            _ammoText.SetActive(true);
+            var text = _ammoText.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.text = "Ammo " + _weapons[_lastUsedWeaponIndex].ammoInMagazine + " } " + _weapons[_lastUsedWeaponIndex].ammo;
+            }
+        }
+    }
+
     // Weapon End
     private void UnEquip(GameObject newEquip)
     {
@@ -518,11 +568,24 @@ public class InventoryManager : MonoBehaviour
         }
         else if (_lastUsedWeaponIndex >= 0 && _lastUsedWeaponIndex < _weapons.Length)
         {
-            if (_weapons[_lastUsedWeaponIndex].weaponPrefab.activeInHierarchy)
+            if (_weapons[_lastUsedWeaponIndex].weaponPrefab.activeInHierarchy && _weapons[_lastUsedWeaponIndex].canShoot && _shootingManager != null)
             {
-                return;
+                if (_weapons[_lastUsedWeaponIndex].ammoInMagazine > 0)
+                {
+                    _shootingManager.Shoot(_weapons[_lastUsedWeaponIndex].damage);
+                    _weapons[_lastUsedWeaponIndex].weaponAnimationManager.SetIdle(false);
+                    _weapons[_lastUsedWeaponIndex].animator.Play("Shoot");
+                    _weapons[_lastUsedWeaponIndex].ammoInMagazine--;
+                    UpdateAmmoText();
+                }
+                else
+                {
+                    _weapons[_lastUsedWeaponIndex].animator.Play("ShootEmpty");
+                    _weapons[_lastUsedWeaponIndex].weaponAnimationManager.SetIdleState(WeaponAnimationManager.EIdleState.idleEmpty);
+                }
             }
         }
 
     }
+
 }

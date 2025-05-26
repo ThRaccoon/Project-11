@@ -171,6 +171,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""R"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fb94a75-40a6-4920-a50f-60f264daccfd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -297,6 +306,17 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a654efce-78ce-4fc7-9c91-583d4f1d68b5"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""R"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4e83a214-caee-400b-b33d-cff42b6d8868"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": ""Press"",
@@ -333,6 +353,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround__2 = m_OnGround.FindAction("_2", throwIfNotFound: true);
         m_OnGround__3 = m_OnGround.FindAction("_3", throwIfNotFound: true);
         m_OnGround_Q = m_OnGround.FindAction("Q", throwIfNotFound: true);
+        m_OnGround_R = m_OnGround.FindAction("R", throwIfNotFound: true);
     }
 
     ~@PlayerInputManager()
@@ -422,6 +443,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnGround__2;
     private readonly InputAction m_OnGround__3;
     private readonly InputAction m_OnGround_Q;
+    private readonly InputAction m_OnGround_R;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
     /// </summary>
@@ -469,6 +491,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnGround/Q".
         /// </summary>
         public InputAction @Q => m_Wrapper.m_OnGround_Q;
+        /// <summary>
+        /// Provides access to the underlying input action "OnGround/R".
+        /// </summary>
+        public InputAction @R => m_Wrapper.m_OnGround_R;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -522,6 +548,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @Q.started += instance.OnQ;
             @Q.performed += instance.OnQ;
             @Q.canceled += instance.OnQ;
+            @R.started += instance.OnR;
+            @R.performed += instance.OnR;
+            @R.canceled += instance.OnR;
         }
 
         /// <summary>
@@ -560,6 +589,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @Q.started -= instance.OnQ;
             @Q.performed -= instance.OnQ;
             @Q.canceled -= instance.OnQ;
+            @R.started -= instance.OnR;
+            @R.performed -= instance.OnR;
+            @R.canceled -= instance.OnR;
         }
 
         /// <summary>
@@ -663,5 +695,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnQ(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "R" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnR(InputAction.CallbackContext context);
     }
 }

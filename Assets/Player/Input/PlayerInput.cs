@@ -47,6 +47,8 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.Q.performed += GetUseInputQ;
 
+        _playerInputManager.OnGround.R.performed += GetUseInputR;
+
     }
 
     private void OnDisable()
@@ -71,6 +73,8 @@ public class PlayerInput : MonoBehaviour
         _playerInputManager.OnGround._3.performed -= GetUseInput3;
 
         _playerInputManager.OnGround.Q.performed -= GetUseInputQ;
+
+        _playerInputManager.OnGround.R.performed -= GetUseInputR;
 
         _playerInputManager.Disable();
     }
@@ -136,6 +140,14 @@ public class PlayerInput : MonoBehaviour
         if (_inventoryManager != null)
         {
             _inventoryManager.EquipNextWeapon();
+        }
+    }
+    
+    private void GetUseInputR(InputAction.CallbackContext ctx)
+    {
+        if (_inventoryManager != null)
+        {
+            _inventoryManager.StartReload();
         }
     }
 }

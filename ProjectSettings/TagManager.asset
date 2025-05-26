@@ -14,6 +14,15 @@ TagManager:
   - NotePrev
   - NoteNext
   - Flashlight
+  - InteractIcon
+  - Note
+  - Slot3
+  - CameraHolder
+  - CameraRotation
+  - Slot2
+  - Slot1
+  - Slot4
+  - Pistol
   layers:
   - Default
   - TransparentFX
@@ -45,7 +54,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - EnemyBoundingBox
   - EnemyRigidbody
   m_SortingLayers:
   - name: Default

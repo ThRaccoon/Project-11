@@ -72,7 +72,7 @@ public class EnemyHealthManager : MonoBehaviour
 
         if (attacker != null)
         {
-            if (attacker.CompareTag("Player"))
+            if (_enemy != null && attacker.CompareTag("Player"))
             {
                 _enemy.ShouldAttack = true;
             }
