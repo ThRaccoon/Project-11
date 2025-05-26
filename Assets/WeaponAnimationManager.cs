@@ -123,7 +123,7 @@ public class WeaponAnimationManager : MonoBehaviour
         {
             if (_lastIdle != idle)
             {
-                _animator.CrossFade(idle, 0.2f);
+                _animator.CrossFade(idle, 0.4f);
             }
             else
             {
