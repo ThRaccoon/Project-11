@@ -35,16 +35,7 @@ public class EIdleSuperS : EnemyBaseSuperState
 
         if (_enemy.ShouldChase && _didPhysicsUpdateRan)
         {
-            _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
-
-            if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
-            {
-                _stateManager.ChangeState(_enemy.chaseStateController);
-            }
-            else
-            {
-                _enemy.ShouldChase = false;
-            }
+            _stateManager.ChangeState(_enemy.chaseStateController);
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
     }

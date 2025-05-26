@@ -23,7 +23,7 @@ public class EReturnS : EReturnSuperS
 
         _navMeshAgent.CalculatePath(_enemy.spawnPos, _pathToSpawn);
 
-        ToggleRigWeight(false);
+        ToggleRigWeight(true);
     }
 
     public override void DoLogicUpdate()
@@ -47,19 +47,19 @@ public class EReturnS : EReturnSuperS
         {
             _navMeshAgent.SetDestination(_enemy.spawnPos);
 
-            SetAgentSpeed(_enemy.walkSpeed);
+            _enemy.SetAgentSpeed(_enemy.walkSpeed);
             _animationManager.PlayCrossFadeAnimation("Walk");
+        }
+        else
+        {
+            _enemy.SetAgentSpeed(0f);
+            _animationManager.PlayCrossFadeAnimation("Idle");
         }
         // ----------------------------------------------------------------------------------------------------------------------------------
 
 
         // --- State Transitions ---
         if (IsOnPosition(_enemyTransform.position, _enemy.spawnPos) && _didPhysicsUpdateRan)
-        {
-            _stateManager.ChangeState(_enemy.idleStateController);
-        }
-
-        if (_pathToSpawn.status != NavMeshPathStatus.PathComplete && _didPhysicsUpdateRan)
         {
             _stateManager.ChangeState(_enemy.idleStateController);
         }
@@ -76,7 +76,5 @@ public class EReturnS : EReturnSuperS
         base.DoOnExit();
 
         _recalcPathToSpawnTimer.Reset();
-
-        _navMeshAgent.ResetPath();
     }
 }

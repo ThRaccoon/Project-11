@@ -47,7 +47,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
@@ -161,14 +161,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268138824995242131}
   serializedVersion: 2
-  m_LocalRotation: {x: 1, y: 0, z: 0, w: -0.00000019470718}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0.7071068, w: 0}
   m_LocalPosition: {x: -0.0094883125, y: 0.0019089072, z: 0.00060937623}
   m_LocalScale: {x: -1.005, y: -1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4927541613736371193}
   m_Father: {fileID: 776517379725612442}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180, y: -90, z: 0}
 --- !u!33 &2973620315899614352
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -256,10 +256,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee66677cde41884a90800471e403e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshCollider: {fileID: 0}
-  _audioSource: {fileID: 0}
+  _meshCollider: {fileID: 3609410534254040195}
+  _MeshColliders:
+  - {fileID: 4048818390710339942}
+  _audioSource: {fileID: 8834022825500045856}
   _isInitiallyLocked: 0
-  _isInitiallyOpened: 0
+  _isInitiallyOpened: 1
   _openAngle: 90
   _closedAngle: 0
   _rotationSpeed: 2
@@ -445,14 +447,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4246157874978152932}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000037748947, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.009523, y: 0.0020421015, z: 0.00055097847}
   m_LocalScale: {x: 1.005, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1929292464939185538}
   m_Father: {fileID: 776517379725612442}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &7825724198056731284
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -540,10 +542,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee66677cde41884a90800471e403e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshCollider: {fileID: 0}
-  _audioSource: {fileID: 0}
+  _meshCollider: {fileID: 1434991809492518352}
+  _MeshColliders:
+  - {fileID: 6638631478870049960}
+  _audioSource: {fileID: 8834022825500045856}
   _isInitiallyLocked: 0
-  _isInitiallyOpened: 0
+  _isInitiallyOpened: 1
   _openAngle: 90
   _closedAngle: 0
   _rotationSpeed: 2

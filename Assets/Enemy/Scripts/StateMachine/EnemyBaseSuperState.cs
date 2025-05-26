@@ -56,7 +56,7 @@ public class EnemyBaseSuperState : ScriptableObject
 
     protected bool IsPlayerInRange(float range)
     {
-        float _distanceToPlayer = Vector3.Distance(_enemyTransform.position, _playerTransform.position);
+        float _distanceToPlayer = (_enemyTransform.position - _playerTransform.position).sqrMagnitude;
 
         if (_distanceToPlayer < range)
         {
@@ -83,9 +83,9 @@ public class EnemyBaseSuperState : ScriptableObject
 
     protected bool IsOnPosition(Vector3 current, Vector3 end)
     {
-        float distance = Vector3.Distance(current, end);
+        float distance = (current - end).sqrMagnitude;
 
-        if (distance < 1f)
+        if (distance < 2f) // Should be 2 not 1 because of sqrMagnitude
         {
             return true;
         }
@@ -95,21 +95,5 @@ public class EnemyBaseSuperState : ScriptableObject
     protected void ToggleRigWeight(bool isActive)
     {
         _rig.weight = isActive ? 1 : 0;
-    }
-
-    protected void SetAgentSpeed(float speed)
-    {
-        _navMeshAgent.speed = speed;
-
-        if (speed == 0f)
-        {
-            _navMeshAgent.ResetPath();
-            _navMeshAgent.velocity = Vector3.zero;
-            _navMeshAgent.isStopped = true;
-        }
-        else
-        {
-            _navMeshAgent.isStopped = false;
-        }
     }
 }

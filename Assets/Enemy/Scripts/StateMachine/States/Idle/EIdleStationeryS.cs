@@ -17,11 +17,10 @@ public class EIdleStationeryS : EIdleSuperS
 
         Debug.Log("Enemy Idle Stationery State");
 
-        SetAgentSpeed(0f);
-
+        _enemy.SetAgentSpeed(0f);
         _animationManager.PlayCrossFadeAnimation("Idle", useTimer: false);
 
-        ToggleRigWeight(true);
+        ToggleRigWeight(false);
     }
 
     public override void DoLogicUpdate()

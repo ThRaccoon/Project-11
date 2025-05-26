@@ -21,34 +21,17 @@ public class EAttackS : EAttackSuperS
                                            _enemyTransform.position.y,
                                            _playerTransform.position.z));
 
-
-        //SetAgentSpeed(0f);
-
-        //_navMeshAgent.ResetPath();
-        //_navMeshAgent.speed = 0f;
-        //_navMeshAgent.velocity = Vector3.zero;
-        //_navMeshAgent.isStopped = true;
-
+        _enemy.SetAgentSpeed(0f);
         _animationManager.PlayCrossFadeAnimation("Attack");
-
-
 
         ToggleRigWeight(true);
     }
-
-    protected float a = 0.1f;
 
     public override void DoLogicUpdate()
     {
         base.DoLogicUpdate();
 
         // --- Timers ---
-        a -= Time.deltaTime;
-        if (a <= 0f)
-        {
-            _navMeshAgent.speed = 0f;
-        }
-
         // ----------------------------------------------------------------------------------------------------------------------------------
 
         // --- Logic ---

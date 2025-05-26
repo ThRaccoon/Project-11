@@ -58,11 +58,8 @@ public class EnemyIdlePatrolS : EIdleSuperS
         // --- Logic ---
         if (IsOnPosition(_enemyTransform.position, _currentPatrolPoint.position))
         {
-            _navMeshAgent.ResetPath();
-
-            SetAgentSpeed(0f);
+            _enemy.SetAgentSpeed(0f);
             _animationManager.PlayCrossFadeAnimation("Idle");
-
 
             _waitOnPatrolPointTimer.Tick();
 
@@ -72,6 +69,8 @@ public class EnemyIdlePatrolS : EIdleSuperS
 
                 _waitOnPatrolPointTimer.Reset();
             }
+
+            _waitBeforeReturnToSpawnTimer.Reset();
         }
         else
         {
@@ -79,16 +78,14 @@ public class EnemyIdlePatrolS : EIdleSuperS
             {
                 _navMeshAgent.SetDestination(_currentPatrolPoint.position);
 
-                SetAgentSpeed(_enemy.walkSpeed);
+                _enemy.SetAgentSpeed(_enemy.walkSpeed);
                 _animationManager.PlayCrossFadeAnimation("Walk");
 
                 _waitBeforeReturnToSpawnTimer.Reset();
             }
             else
             {
-                _navMeshAgent.ResetPath();
-
-                SetAgentSpeed(0f);
+                _enemy.SetAgentSpeed(0f);
                 _animationManager.PlayCrossFadeAnimation("Idle");
 
                 _waitBeforeReturnToSpawnTimer.Tick();
@@ -100,7 +97,7 @@ public class EnemyIdlePatrolS : EIdleSuperS
 
 
         // --- State Transitions ---
-        if (!IsOnPosition(_enemyTransform.position, _enemy.spawnPos) && _waitBeforeReturnToSpawnTimer.Flag && _didPhysicsUpdateRan)
+        if (_waitBeforeReturnToSpawnTimer.Flag && _didPhysicsUpdateRan)
         {
             _stateManager.ChangeState(_enemy.returnStateController);
         }
@@ -122,8 +119,6 @@ public class EnemyIdlePatrolS : EIdleSuperS
         _waitBeforeReturnToSpawnTimer.Duration = Random.Range(Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.x),
                                                               Mathf.RoundToInt(_enemy.waitBeforeGiveUpDuration.y) + 1);
         _waitBeforeReturnToSpawnTimer.Reset();
-
-        _navMeshAgent.ResetPath();
     }
 
 

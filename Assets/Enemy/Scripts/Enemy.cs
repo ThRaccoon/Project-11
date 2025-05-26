@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
@@ -45,7 +46,6 @@ public class Enemy : MonoBehaviour
     [field: SerializeField] public Transform patrolPointB { get; private set; }
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // --- Public Variables ---
     [field: Space(30)]
     [field: Header("Debug")]
@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
     // --- Private Variables ---
     private AnimationManager _animationManager;
 
-    private bool _shouldChase;
+    [SerializeField] private bool _shouldChase;
     #region Getters / Setters
 
     public bool ShouldChase
@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
     }
     #endregion
 
-    private bool _shouldAttack;
+    [SerializeField] private bool _shouldAttack;
     #region Getters / Setters
 
     public bool ShouldAttack
@@ -73,7 +73,6 @@ public class Enemy : MonoBehaviour
         set => _shouldAttack = value;
     }
     #endregion
-
 
     #region State Machine
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -107,6 +106,10 @@ public class Enemy : MonoBehaviour
         // --- Objects ---
         _animationManager = new AnimationManager(_animator);
 
+        // --- Square Ranges ---
+        chaseRange = chaseRange * chaseRange;
+        attackRange = attackRange * attackRange;
+
         // --- Assigned On Start ---
         attackRange += _navMeshAgent.stoppingDistance;
 
@@ -139,8 +142,7 @@ public class Enemy : MonoBehaviour
             returnSInstance.Initialize(this, transform, _navMeshAgent, _animator, _animationManager, _rig, stateManager, _playerTransform);
         }
 
-        //stateManager.Initialize(idleStateController);
-        stateManager.Initialize(chaseStateController);
+        stateManager.Initialize(idleStateController);
     }
 
     private void Update()
@@ -153,6 +155,31 @@ public class Enemy : MonoBehaviour
         stateManager.currentState.PhysicsUpdate();
     }
 
+
+    public void SetAgentSpeed(float speed)
+    {
+        if (_navMeshAgent.speed == speed) return;
+
+        StartCoroutine(DelayedSetSpeed(speed));
+    }
+
+    private IEnumerator DelayedSetSpeed(float speed)
+    {
+        yield return null; // Waits exactly 1 frame
+
+        _navMeshAgent.speed = speed;
+
+        if (speed == 0f)
+        {
+            _navMeshAgent.ResetPath();
+            _navMeshAgent.velocity = Vector3.zero;
+            _navMeshAgent.isStopped = true;
+        }
+        else
+        {
+            _navMeshAgent.isStopped = false;
+        }
+    }
 
     private void OnDrawGizmos()
     {

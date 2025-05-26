@@ -31,48 +31,46 @@ public class EChaseS : EChaseSuperS
 
     public override void DoLogicUpdate()
     {
-        _animationManager.PlayCrossFadeAnimation("Chase");
-        _navMeshAgent.SetDestination(_enemy.patrolPointA.position);
         base.DoLogicUpdate();
 
         // --- Timers ---
-        //_recalcPathToPlayerTimer.Tick();
+        _recalcPathToPlayerTimer.Tick();
 
-        //if (_recalcPathToPlayerTimer.Flag)
-        //{
-        //    _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
+        if (_recalcPathToPlayerTimer.Flag)
+        {
+            _navMeshAgent.CalculatePath(_playerTransform.position, _pathToPlayer);
 
-        //    _recalcPathToPlayerTimer.Reset();
-        //}
-        //// ----------------------------------------------------------------------------------------------------------------------------------
-
-
-        //// --- Logic ---
-        //if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
-        //{
-        //    _navMeshAgent.SetDestination(_playerTransform.position);
-
-        //    SetAgentSpeed(_enemy.chaseSpeed);
-        //    _animationManager.PlayCrossFadeAnimation("Chase");
-
-        //    _waitBeforeGiveUpTimer.Reset();
-        //}
-        //else
-        //{
-        //    SetAgentSpeed(0f);
-        //    _animationManager.PlayCrossFadeAnimation("Idle");
-
-        //    _waitBeforeGiveUpTimer.Tick();
-        //}
-        //// ----------------------------------------------------------------------------------------------------------------------------------
+            _recalcPathToPlayerTimer.Reset();
+        }
+        // ----------------------------------------------------------------------------------------------------------------------------------
 
 
-        //// --- State Transitions ---
-        //if (_waitBeforeGiveUpTimer.Flag && _didPhysicsUpdateRan)
-        //{
-        //    _stateManager.ChangeState(_enemy.returnStateController);
-        //}
-        //// ----------------------------------------------------------------------------------------------------------------------------------
+        // --- Logic ---
+        if (_pathToPlayer.status == NavMeshPathStatus.PathComplete)
+        {
+            _navMeshAgent.SetDestination(_playerTransform.position);
+
+            _enemy.SetAgentSpeed(_enemy.chaseSpeed);
+            _animationManager.PlayCrossFadeAnimation("Chase");
+
+            _waitBeforeGiveUpTimer.Reset();
+        }
+        else
+        {
+            _enemy.SetAgentSpeed(0f);
+            _animationManager.PlayCrossFadeAnimation("Idle");
+
+            _waitBeforeGiveUpTimer.Tick();
+        }
+        // ----------------------------------------------------------------------------------------------------------------------------------
+
+
+        // --- State Transitions ---
+        if (_waitBeforeGiveUpTimer.Flag && _didPhysicsUpdateRan)
+        {
+            _stateManager.ChangeState(_enemy.returnStateController);
+        }
+        // ----------------------------------------------------------------------------------------------------------------------------------
     }
 
     public override void DoPhysicsUpdate()

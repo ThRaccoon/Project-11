@@ -6,6 +6,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [SerializeField] private MeshCollider _meshCollider;
+    [SerializeField] private MeshCollider[] _MeshColliders;
     [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -44,29 +45,18 @@ public class InteractDoor : MonoBehaviour, IInteractable
     private float SlerpProgress;
     private Quaternion _startRotationPoint;
     private Quaternion _targetRotationPoint;
-    private MeshCollider[] _MeshColliders;
 
-    private enum DoorState
+    private enum EDoorState
     {
         Opened, Opening, Closed, Closing, Locked
     }
 
-    private DoorState _currentState = DoorState.Closed;
+    private EDoorState _currentState = EDoorState.Closed;
 
     private void Awake()
     {
-        // --- Components ---
-        _meshCollider = GetComponent<MeshCollider>();
-        _MeshColliders = GetComponentsInChildren<MeshCollider>();
-        _audioSource = GetComponent<AudioSource>();
-
-        if (_audioSource != null)
-        {
-            _audioSource = GetComponentInParent<AudioSource>();
-        }
-
         // --- Bools ---
-        _currentState = _isInitiallyOpened ? DoorState.Opened : DoorState.Closed;
+        _currentState = _isInitiallyOpened ? EDoorState.Opened : EDoorState.Closed;
 
         // --- Logic ---
         if (_isOpenDirectionReversed)
@@ -77,7 +67,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        if (_currentState == DoorState.Opening || _currentState == DoorState.Closing)
+        if (_currentState == EDoorState.Opening || _currentState == EDoorState.Closing)
         {
             SlerpProgress += _rotationSpeed * Time.deltaTime;
 
@@ -95,13 +85,13 @@ public class InteractDoor : MonoBehaviour, IInteractable
                     meshCollider.enabled = true;
                 }
 
-                if (_currentState == DoorState.Opening)
+                if (_currentState == EDoorState.Opening)
                 {
-                    _currentState = DoorState.Opened;
+                    _currentState = EDoorState.Opened;
                 }
                 else
                 {
-                    _currentState = DoorState.Closed;
+                    _currentState = EDoorState.Closed;
                 }
             }
         }
@@ -124,17 +114,17 @@ public class InteractDoor : MonoBehaviour, IInteractable
             }
             else
             {
-                if (_currentState == DoorState.Closed)
+                if (_currentState == EDoorState.Closed)
                 {
                     PlaySound(_openingSound);
                     Rotate(Quaternion.Euler(_initialX, _openAngle, _initialZ));
-                    _currentState = DoorState.Opening;
+                    _currentState = EDoorState.Opening;
                 }
-                else if (_currentState == DoorState.Opened)
+                else if (_currentState == EDoorState.Opened)
                 {
                     PlaySound(_closingSound);
                     Rotate(Quaternion.Euler(_initialX, _closedAngle, _initialZ));
-                    _currentState = DoorState.Closing;
+                    _currentState = EDoorState.Closing;
                 }
             }
         }
