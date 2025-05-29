@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8985786441953000548}
   - component: {fileID: 4103696824187167947}
   - component: {fileID: 912619617722407256}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9000926843834891107}
   - component: {fileID: 963393693095751804}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 2343642664873807596}
   - component: {fileID: 6114622273000814855}
   - component: {fileID: 1668444950489860721}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 293682032822284052}
   - component: {fileID: 8044564743719635026}
   - component: {fileID: 3239760548794206792}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1328,7 +1328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1212761896780568818}
   - component: {fileID: 3440828868530110372}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1386,7 +1386,7 @@ GameObject:
   - component: {fileID: 416320224378564921}
   - component: {fileID: 5768202762653684814}
   - component: {fileID: 5265935647220158576}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1553,7 +1553,7 @@ GameObject:
   - component: {fileID: 3518602933267740490}
   - component: {fileID: 1657919154722273911}
   - component: {fileID: 9186315064828925987}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1684,7 +1684,7 @@ GameObject:
   - component: {fileID: 8846504517360222615}
   - component: {fileID: 5048555338910332992}
   - component: {fileID: 5077246524126824496}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2197,7 +2197,7 @@ GameObject:
   - component: {fileID: 1412159543400420772}
   - component: {fileID: 2931831696591962071}
   - component: {fileID: 6064198451684315400}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2456,7 +2456,7 @@ GameObject:
   - component: {fileID: 2990367585766542007}
   - component: {fileID: 924575076612033375}
   - component: {fileID: 7480982768086176974}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3208,7 +3208,7 @@ GameObject:
   - component: {fileID: 4313380442687148946}
   - component: {fileID: 292270284002927976}
   - component: {fileID: 163998447812067553}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3780,7 +3780,7 @@ GameObject:
   - component: {fileID: 4495031901822481296}
   - component: {fileID: 7545758493396031549}
   - component: {fileID: 7921761824436363190}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3911,7 +3911,7 @@ GameObject:
   - component: {fileID: 6616451310475194234}
   - component: {fileID: 8184614696260960829}
   - component: {fileID: 239677065881001834}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: mixamorig:Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4745,7 +4745,7 @@ GameObject:
   - component: {fileID: 6555182955047667912}
   - component: {fileID: 3921659175704793048}
   - component: {fileID: 968155532377003198}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: GasMask_2_Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4867,7 +4867,8 @@ MonoBehaviour:
   _navMeshAgent: {fileID: 6716855458112730983}
   _animator: {fileID: 9045170129916440322}
   _rig: {fileID: 5253727069198426711}
-  _playerTransform: {fileID: 0}
+  _MultiAimConstraint: {fileID: 6038592830980258982}
+  _playerTransform: {fileID: 5891272955355131519}
   <chaseRange>k__BackingField: 5
   <attackRange>k__BackingField: 1
   <walkSpeed>k__BackingField: 1.2
@@ -4876,14 +4877,16 @@ MonoBehaviour:
   <recalcPathDuration>k__BackingField: 0.1
   <waitBeforeGiveUpDuration>k__BackingField: {x: 5, y: 8}
   transformYOffset: 1.5
-  <collisionLayersToIgnore>k__BackingField:
+  <collisionLayerToIgnore>k__BackingField:
     serializedVersion: 2
-    m_Bits: 2147483648
+    m_Bits: 1073741824
   <waitOnPatrolPointDuration>k__BackingField: 0
   <patrolPointA>k__BackingField: {fileID: 0}
   <patrolPointB>k__BackingField: {fileID: 0}
   <spawnPos>k__BackingField: {x: 0, y: 0, z: 0}
-  idleSTemplate: {fileID: 11400000, guid: 9e9e87a53b0042a46941b74b85b13202, type: 2}
+  _shouldChase: 0
+  _shouldAttack: 0
+  idleSTemplate: {fileID: 11400000, guid: 2bd7cad6cb6b9dc458940c689afc34a1, type: 2}
   chaseSTemplate: {fileID: 11400000, guid: 4b5bc168c645a7740a3415e4aec350da, type: 2}
   attackSTemplate: {fileID: 11400000, guid: 2baa2bc409ac9fe4db3b57b315b2156b, type: 2}
   returnSTemplate: {fileID: 11400000, guid: 2059d14cbcfda614b80c325e1b382702, type: 2}
@@ -4909,8 +4912,6 @@ MonoBehaviour:
   _bodyMultiplier: 1
   _armsMultiplier: 0.75
   _legsMultiplier: 0.5
-  _kill: 0
-  _killed: 0
 --- !u!114 &968155532377003198
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,10 +6,9 @@ public class InteractDoor : MonoBehaviour, IInteractable
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
     [SerializeField] private MeshCollider _meshCollider;
-    [SerializeField] private MeshCollider[] _MeshColliders;
+    [SerializeField] private MeshCollider[] _childMeshColliders;
     [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
-
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
@@ -30,7 +29,6 @@ public class InteractDoor : MonoBehaviour, IInteractable
     [SerializeField] private float _initialZ;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Audio Clips")]
@@ -39,7 +37,6 @@ public class InteractDoor : MonoBehaviour, IInteractable
     [SerializeField] private AudioClip _openingSound;
     [SerializeField] private AudioClip _closingSound;
     // ----------------------------------------------------------------------------------------------------------------------------------
-
 
     // --- Private Variables ---
     private float SlerpProgress;
@@ -80,7 +77,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
                     _meshCollider.enabled = true;
                 }
 
-                foreach (MeshCollider meshCollider in _MeshColliders)
+                foreach (MeshCollider meshCollider in _childMeshColliders)
                 {
                     meshCollider.enabled = true;
                 }
@@ -106,11 +103,10 @@ public class InteractDoor : MonoBehaviour, IInteractable
             {
                 // if the player have the key
                 // _isInitiallyLocked = false;
-                //PlaySound(_unlockingSound);
+                // PlaySound(_unlockingSound);
 
                 // if the player don't have the key
                 PlaySound(_lockedSound);
-
             }
             else
             {
@@ -137,7 +133,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
             _meshCollider.enabled = false;
         }
 
-        foreach (MeshCollider meshCollider in _MeshColliders)
+        foreach (MeshCollider meshCollider in _childMeshColliders)
         {
             meshCollider.enabled = false;
         }

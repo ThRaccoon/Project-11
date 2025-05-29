@@ -4,7 +4,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
-    [Header("Auto Assigned")]
     [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -44,14 +43,6 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        // --- Components ---
-        _audioSource = GetComponent<AudioSource>();
-        
-        if (_audioSource != null)
-        {
-            _audioSource = GetComponentInParent<AudioSource>();
-        }
-
         // --- Bools ---
         _currentState = _isInitiallyOpened ? DrawerState.Opened : DrawerState.Closed;
     }
@@ -82,30 +73,26 @@ public class InteractDrawer : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (this.enabled)
+        if (_isInitiallyLocked)
         {
-            if (_isInitiallyLocked)
+            // if the player have the key
+            _isInitiallyLocked = false;
+            PlaySound(_unlockingSound);
+
+            // if the player don't have the key
+            PlaySound(_lockedSound);
+        }
+        else
+        {
+            if (_currentState == DrawerState.Closed)
             {
-                // if the player have the key
-                _isInitiallyLocked = false;
-                PlaySound(_unlockingSound);
-
-                // if the player don't have the key
-                PlaySound(_lockedSound);
-
+                Slide(new Vector3(transform.localPosition.x, transform.localPosition.y, _openZPosition));
+                _currentState = DrawerState.Opening;
             }
-            else
+            else if (_currentState == DrawerState.Opened)
             {
-                if (_currentState == DrawerState.Closed)
-                {
-                    Slide(new Vector3(transform.localPosition.x, transform.localPosition.y, _openZPosition));
-                    _currentState = DrawerState.Opening;
-                }
-                else if (_currentState == DrawerState.Opened)
-                {
-                    Slide(new Vector3(transform.localPosition.x, transform.localPosition.y, _closedZPosition));
-                    _currentState = DrawerState.Closing;
-                }
+                Slide(new Vector3(transform.localPosition.x, transform.localPosition.y, _closedZPosition));
+                _currentState = DrawerState.Closing;
             }
         }
     }

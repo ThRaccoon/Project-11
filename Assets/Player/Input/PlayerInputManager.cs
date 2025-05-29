@@ -128,9 +128,27 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""094f88ed-4774-4349-9f96-7f73e3623db8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""E"",
                     ""type"": ""Button"",
                     ""id"": ""22e73203-9317-45d9-826c-92b5ac037aa3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""R"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fb94a75-40a6-4920-a50f-60f264daccfd"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -158,24 +176,6 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""name"": ""_3"",
                     ""type"": ""Button"",
                     ""id"": ""25cb1f06-71cc-4553-9600-8e481575b519"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Q"",
-                    ""type"": ""Button"",
-                    ""id"": ""094f88ed-4774-4349-9f96-7f73e3623db8"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""R"",
-                    ""type"": ""Button"",
-                    ""id"": ""8fb94a75-40a6-4920-a50f-60f264daccfd"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -348,12 +348,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround_WASD = m_OnGround.FindAction("WASD", throwIfNotFound: true);
         m_OnGround_LShift = m_OnGround.FindAction("LShift", throwIfNotFound: true);
         m_OnGround_LMB = m_OnGround.FindAction("LMB", throwIfNotFound: true);
+        m_OnGround_Q = m_OnGround.FindAction("Q", throwIfNotFound: true);
         m_OnGround_E = m_OnGround.FindAction("E", throwIfNotFound: true);
+        m_OnGround_R = m_OnGround.FindAction("R", throwIfNotFound: true);
         m_OnGround__1 = m_OnGround.FindAction("_1", throwIfNotFound: true);
         m_OnGround__2 = m_OnGround.FindAction("_2", throwIfNotFound: true);
         m_OnGround__3 = m_OnGround.FindAction("_3", throwIfNotFound: true);
-        m_OnGround_Q = m_OnGround.FindAction("Q", throwIfNotFound: true);
-        m_OnGround_R = m_OnGround.FindAction("R", throwIfNotFound: true);
     }
 
     ~@PlayerInputManager()
@@ -438,12 +438,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnGround_WASD;
     private readonly InputAction m_OnGround_LShift;
     private readonly InputAction m_OnGround_LMB;
+    private readonly InputAction m_OnGround_Q;
     private readonly InputAction m_OnGround_E;
+    private readonly InputAction m_OnGround_R;
     private readonly InputAction m_OnGround__1;
     private readonly InputAction m_OnGround__2;
     private readonly InputAction m_OnGround__3;
-    private readonly InputAction m_OnGround_Q;
-    private readonly InputAction m_OnGround_R;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
     /// </summary>
@@ -472,9 +472,17 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @LMB => m_Wrapper.m_OnGround_LMB;
         /// <summary>
+        /// Provides access to the underlying input action "OnGround/Q".
+        /// </summary>
+        public InputAction @Q => m_Wrapper.m_OnGround_Q;
+        /// <summary>
         /// Provides access to the underlying input action "OnGround/E".
         /// </summary>
         public InputAction @E => m_Wrapper.m_OnGround_E;
+        /// <summary>
+        /// Provides access to the underlying input action "OnGround/R".
+        /// </summary>
+        public InputAction @R => m_Wrapper.m_OnGround_R;
         /// <summary>
         /// Provides access to the underlying input action "OnGround/_1".
         /// </summary>
@@ -487,14 +495,6 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnGround/_3".
         /// </summary>
         public InputAction @_3 => m_Wrapper.m_OnGround__3;
-        /// <summary>
-        /// Provides access to the underlying input action "OnGround/Q".
-        /// </summary>
-        public InputAction @Q => m_Wrapper.m_OnGround_Q;
-        /// <summary>
-        /// Provides access to the underlying input action "OnGround/R".
-        /// </summary>
-        public InputAction @R => m_Wrapper.m_OnGround_R;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -533,9 +533,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @LMB.started += instance.OnLMB;
             @LMB.performed += instance.OnLMB;
             @LMB.canceled += instance.OnLMB;
+            @Q.started += instance.OnQ;
+            @Q.performed += instance.OnQ;
+            @Q.canceled += instance.OnQ;
             @E.started += instance.OnE;
             @E.performed += instance.OnE;
             @E.canceled += instance.OnE;
+            @R.started += instance.OnR;
+            @R.performed += instance.OnR;
+            @R.canceled += instance.OnR;
             @_1.started += instance.On_1;
             @_1.performed += instance.On_1;
             @_1.canceled += instance.On_1;
@@ -545,12 +551,6 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @_3.started += instance.On_3;
             @_3.performed += instance.On_3;
             @_3.canceled += instance.On_3;
-            @Q.started += instance.OnQ;
-            @Q.performed += instance.OnQ;
-            @Q.canceled += instance.OnQ;
-            @R.started += instance.OnR;
-            @R.performed += instance.OnR;
-            @R.canceled += instance.OnR;
         }
 
         /// <summary>
@@ -574,9 +574,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @LMB.started -= instance.OnLMB;
             @LMB.performed -= instance.OnLMB;
             @LMB.canceled -= instance.OnLMB;
+            @Q.started -= instance.OnQ;
+            @Q.performed -= instance.OnQ;
+            @Q.canceled -= instance.OnQ;
             @E.started -= instance.OnE;
             @E.performed -= instance.OnE;
             @E.canceled -= instance.OnE;
+            @R.started -= instance.OnR;
+            @R.performed -= instance.OnR;
+            @R.canceled -= instance.OnR;
             @_1.started -= instance.On_1;
             @_1.performed -= instance.On_1;
             @_1.canceled -= instance.On_1;
@@ -586,12 +592,6 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @_3.started -= instance.On_3;
             @_3.performed -= instance.On_3;
             @_3.canceled -= instance.On_3;
-            @Q.started -= instance.OnQ;
-            @Q.performed -= instance.OnQ;
-            @Q.canceled -= instance.OnQ;
-            @R.started -= instance.OnR;
-            @R.performed -= instance.OnR;
-            @R.canceled -= instance.OnR;
         }
 
         /// <summary>
@@ -661,12 +661,26 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLMB(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "Q" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnQ(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "E" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnE(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "R" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnR(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "_1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -688,19 +702,5 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On_3(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Q" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnQ(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "R" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnR(InputAction.CallbackContext context);
     }
 }

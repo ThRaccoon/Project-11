@@ -6,10 +6,8 @@ public class Player : MonoBehaviour
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("UI")]
-    [Header("From Camera -> Canvas")]
     [SerializeField] private Image _staminaBarFiller;
     // ----------------------------------------------------------------------------------------------------------------------------------
-
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
@@ -18,7 +16,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _cameraRotation;
     [SerializeField] private PlayerInput _playerInput;
     // ----------------------------------------------------------------------------------------------------------------------------------
-
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
@@ -29,7 +26,6 @@ public class Player : MonoBehaviour
     [Tooltip("How fast the player stops. Value should be between 0 and 0.9.")]
     [field: SerializeField] public float stoppingForce { get; private set; }
     // ----------------------------------------------------------------------------------------------------------------------------------
-
 
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Header("Run")]
@@ -185,7 +181,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(_staminaBarFiller != null)
+        if (_staminaBarFiller != null)
         {
             _staminaBarFiller.fillAmount = CurrentStamina / maxStamina;
         }

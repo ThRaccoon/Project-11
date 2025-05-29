@@ -14,8 +14,6 @@ public class PlayerInput : MonoBehaviour
 
     public bool runInput { get; private set; }
 
-    public bool shootInput { get; private set; }
-
 
     private void Awake()
     {
@@ -37,18 +35,17 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.LMB.performed += GetLMBInput;
 
-        _playerInputManager.OnGround.E.performed += GetUseInput;
+        _playerInputManager.OnGround.Q.performed += GetQInput;
 
-        _playerInputManager.OnGround._1.performed += GetUseInput1;
+        _playerInputManager.OnGround.E.performed += GetEInput;
 
-        _playerInputManager.OnGround._2.performed += GetUseInput2;
+        _playerInputManager.OnGround.R.performed += GetRInput;
 
-        _playerInputManager.OnGround._3.performed += GetUseInput3;
+        _playerInputManager.OnGround._1.performed += Get1Input;
 
-        _playerInputManager.OnGround.Q.performed += GetUseInputQ;
+        _playerInputManager.OnGround._2.performed += Get2Input;
 
-        _playerInputManager.OnGround.R.performed += GetUseInputR;
-
+        _playerInputManager.OnGround._3.performed += Get3Input;
     }
 
     private void OnDisable()
@@ -64,17 +61,17 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround.LMB.performed -= GetLMBInput;
 
-        _playerInputManager.OnGround.E.performed -= GetUseInput;
+        _playerInputManager.OnGround.Q.performed -= GetQInput;
 
-        _playerInputManager.OnGround._1.performed -= GetUseInput1;
+        _playerInputManager.OnGround.E.performed -= GetEInput;
 
-        _playerInputManager.OnGround._2.performed -= GetUseInput2;
+        _playerInputManager.OnGround.R.performed -= GetRInput;
 
-        _playerInputManager.OnGround._3.performed -= GetUseInput3;
+        _playerInputManager.OnGround._1.performed -= Get1Input;
 
-        _playerInputManager.OnGround.Q.performed -= GetUseInputQ;
+        _playerInputManager.OnGround._2.performed -= Get2Input;
 
-        _playerInputManager.OnGround.R.performed -= GetUseInputR;
+        _playerInputManager.OnGround._3.performed -= Get3Input;
 
         _playerInputManager.Disable();
     }
@@ -95,14 +92,6 @@ public class PlayerInput : MonoBehaviour
         runInput = ctx.ReadValueAsButton();
     }
 
-    private void GetUseInput(InputAction.CallbackContext ctx)
-    {
-        if (_playerInteract != null)
-        {
-            _playerInteract.PerformInteraction();
-        }
-    }
-
     private void GetLMBInput(InputAction.CallbackContext ctx)
     {
         if (_inventoryManager != null)
@@ -111,7 +100,31 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void GetUseInput1(InputAction.CallbackContext ctx)
+    private void GetQInput(InputAction.CallbackContext ctx)
+    {
+        if (_inventoryManager != null)
+        {
+            _inventoryManager.EquipNextWeapon();
+        }
+    }
+
+    private void GetEInput(InputAction.CallbackContext ctx)
+    {
+        if (_playerInteract != null)
+        {
+            _playerInteract.PerformInteraction();
+        }
+    }
+
+    private void GetRInput(InputAction.CallbackContext ctx)
+    {
+        if (_inventoryManager != null)
+        {
+            _inventoryManager.StartReload();
+        }
+    }
+
+    private void Get1Input(InputAction.CallbackContext ctx)
     {
         if (_inventoryManager != null)
         {
@@ -119,7 +132,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void GetUseInput2(InputAction.CallbackContext ctx)
+    private void Get2Input(InputAction.CallbackContext ctx)
     {
         if (_inventoryManager != null)
         {
@@ -127,27 +140,11 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    private void GetUseInput3(InputAction.CallbackContext ctx)
+    private void Get3Input(InputAction.CallbackContext ctx)
     {
         if (_inventoryManager != null)
         {
             _inventoryManager.OpenJournal();
-        }
-    }
-
-    private void GetUseInputQ(InputAction.CallbackContext ctx)
-    {
-        if (_inventoryManager != null)
-        {
-            _inventoryManager.EquipNextWeapon();
-        }
-    }
-    
-    private void GetUseInputR(InputAction.CallbackContext ctx)
-    {
-        if (_inventoryManager != null)
-        {
-            _inventoryManager.StartReload();
         }
     }
 }

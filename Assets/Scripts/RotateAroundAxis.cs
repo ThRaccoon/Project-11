@@ -11,7 +11,6 @@ public class RotateAroundAxis : MonoBehaviour
     [SerializeField] private float _z;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     private void Update()
     {
         if (_shouldRotate)

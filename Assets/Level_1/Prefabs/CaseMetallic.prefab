@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshCollider: {fileID: 0}
+  _MeshColliders: []
   _audioSource: {fileID: 0}
   _isInitiallyLocked: 0
   _isInitiallyOpened: 0
@@ -500,6 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshCollider: {fileID: 0}
+  _MeshColliders: []
   _audioSource: {fileID: 0}
   _isInitiallyLocked: 0
   _isInitiallyOpened: 0

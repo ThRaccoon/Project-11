@@ -26,7 +26,6 @@ public static class Util
         {
             obj.SetActive(false);
             return false;
-
         }
         else
         {

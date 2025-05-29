@@ -8,7 +8,6 @@ public class PickUpNote : MonoBehaviour, IInteractable
     [SerializeField, TextArea(3, 20)] private string _description;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player");

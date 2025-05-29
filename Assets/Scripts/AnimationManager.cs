@@ -46,22 +46,21 @@ public class AnimationManager
         _waitBeforeAnimSwitchTimer = new GlobalTimer(_animSwitchDuration);
     }
 
-    public void PlayCrossFadeAnimation(string animationName, float blendValue = 0.2f, bool useTimer = true)
+    public void PlayCrossFadeAnimation(string animationName, float blendValue = 0.25f, bool useTimer = true)
     {
+        if (_animator == null) return;
+
         _waitBeforeAnimSwitchTimer.Tick();
 
         if (_waitBeforeAnimSwitchTimer.Flag || !useTimer)
         {
-            if (_animator != null)
+            if (_currentAnim != animationName)
             {
-                if (_currentAnim != animationName)
-                {
-                    _animator.CrossFade(animationName, blendValue);
+                _animator.CrossFade(animationName, blendValue);
 
-                    _currentAnim = animationName;
+                _currentAnim = animationName;
 
-                    _waitBeforeAnimSwitchTimer.Reset();
-                }
+                _waitBeforeAnimSwitchTimer.Reset();
             }
         }
     }

@@ -7,9 +7,10 @@ public class InteractionPopUp : MonoBehaviour
     [Header("Components")]
     private Camera _mainCamera;
     private TextMeshPro _textMeshPro;
-    [SerializeField] private float _activationRange = 0;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
+    // --- Private Variables ---
+    [SerializeField] private float _activationRange;
 
     void Awake()
     {

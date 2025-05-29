@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private Animator _animator;
     [SerializeField] private Rig _rig;
+    [SerializeField] private MultiAimConstraint _MultiAimConstraint;
     [field: Space(10)]
     [SerializeField] private Transform _playerTransform;
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ public class Enemy : MonoBehaviour
     [field: Space(10)]
     [field: Header("Other")]
     [field: SerializeField] public float transformYOffset;
-    [field: SerializeField] public LayerMask collisionLayersToIgnore { get; private set; }
+    [field: SerializeField] public LayerMask collisionLayerToIgnore { get; private set; }
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -104,6 +105,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         // --- Objects ---
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _animationManager = new AnimationManager(_animator);
 
         // --- Square Ranges ---
@@ -111,6 +113,11 @@ public class Enemy : MonoBehaviour
         attackRange = attackRange * attackRange;
 
         // --- Assigned On Start ---
+        _MultiAimConstraint.data.sourceObjects = new WeightedTransformArray
+        {
+            new WeightedTransform(_playerTransform, 1f)
+        };
+
         attackRange += _navMeshAgent.stoppingDistance;
 
         // --- Instantiate State Instances ---

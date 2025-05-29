@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshCollider: {fileID: 0}
+  _MeshColliders: []
   _audioSource: {fileID: 0}
   _isInitiallyLocked: 0
   _isInitiallyOpened: 0
@@ -477,6 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshCollider: {fileID: 0}
+  _MeshColliders: []
   _audioSource: {fileID: 0}
   _isInitiallyLocked: 0
   _isInitiallyOpened: 0
@@ -720,7 +722,6 @@ GameObject:
   - component: {fileID: 33292544065594860}
   - component: {fileID: 23768600293838534}
   - component: {fileID: 64061997182270530}
-  - component: {fileID: 5077620535871202466}
   m_Layer: 0
   m_Name: MorgueBox_Bed3_NS
   m_TagString: Untagged
@@ -818,28 +819,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300016, guid: 3c169c4578e06a4439f0140b54e4eacd, type: 3}
---- !u!114 &5077620535871202466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602824069864722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df886287973b5ef4e9fd84a0b5fdeb47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioSource: {fileID: 0}
-  _isInitiallyLocked: 0
-  _isInitiallyOpened: 0
-  _openZPosition: -0.75
-  _closedZPosition: 0
-  _slideSpeed: 1
-  _lockedSound: {fileID: 0}
-  _unlockingSound: {fileID: 0}
-  _openingSound: {fileID: 0}
-  _closingSound: {fileID: 0}
 --- !u!1 &1663684148417420
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshCollider: {fileID: 0}
+  _MeshColliders: []
   _audioSource: {fileID: 0}
   _isInitiallyLocked: 0
   _isInitiallyOpened: 0

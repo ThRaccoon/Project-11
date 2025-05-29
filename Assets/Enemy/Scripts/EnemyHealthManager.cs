@@ -25,10 +25,6 @@ public class EnemyHealthManager : MonoBehaviour
     [SerializeField] private float _armsMultiplier;
     [SerializeField] private float _legsMultiplier;
     // ----------------------------------------------------------------------------------------------------------------------------------
-
-    [SerializeField] private bool _kill = false; // Debug
-    [SerializeField] private bool _killed = false; // Debug
-
     private void Awake()
     {
         foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
@@ -36,16 +32,6 @@ public class EnemyHealthManager : MonoBehaviour
             rb.isKinematic = true;
         }
     }
-
-    private void Update() // Debug
-    {
-        if (_kill == true && _killed == false)
-        {
-            TakeDamage(100, "Head", gameObject);
-            _killed = true;
-        }
-    }
-
 
     public void TakeDamage(float baseDamage, string hitTag, GameObject attacker)
     {
@@ -74,7 +60,7 @@ public class EnemyHealthManager : MonoBehaviour
         {
             if (_enemy != null && attacker.CompareTag("Player"))
             {
-                _enemy.ShouldAttack = true;
+                _enemy.ShouldChase = true;
             }
         }
 
@@ -99,8 +85,6 @@ public class EnemyHealthManager : MonoBehaviour
             if (_enemy != null)
                 _enemy.enabled = false;
         }
-
-        _killed = true;
     }
 
     public float GetMaxHealth()

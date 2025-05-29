@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 8103241276833534793}
   - component: {fileID: 6415431401645481369}
   - component: {fileID: 4710428799474780693}
-  - component: {fileID: 2669927917485654406}
   - component: {fileID: 4192703831588525243}
+  - component: {fileID: 2669927917485654406}
+  - component: {fileID: 7912688529421862453}
   - component: {fileID: 6656474756059781445}
   m_Layer: 0
   m_Name: Player
@@ -153,7 +154,7 @@ MonoBehaviour:
   _capsuleCollider: {fileID: 8666110050069885387}
   _rigidbody: {fileID: 2430832040300796052}
   _cameraRotation: {fileID: 8568536737820498547}
-  _playerInput: {fileID: 0}
+  _playerInput: {fileID: 8103241276833534793}
   <walkSpeed>k__BackingField: 8
   <stoppingForce>k__BackingField: 0.5
   <runSpeed>k__BackingField: 12
@@ -183,37 +184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionRange: 1.75
   _interactionIcon: {fileID: 0}
---- !u!114 &2669927917485654406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5785065308060052077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51b42d03e4cb58e4997bca098ba1a278, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pickUpNoteSound: {fileID: 8300000, guid: 0729503847eaf94429686622db4f33a4, type: 3}
-  _pickUpNoteVolume: 0.5
-  _journalSound: {fileID: 8300000, guid: 8936ebd732f30b2439a6a0dcd0117490, type: 3}
-  _journalVolume: 0.5
-  _flashlightToggleSound: {fileID: 8300000, guid: e4882f446c58c9344a664d020d10bcc4, type: 3}
-  _flashlightToggleVolume: 0.5
-  _highlight: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
-  _unhighlight: {r: 0, g: 0, b: 0, a: 0}
-  _note: {fileID: 0}
-  _noteNext: {fileID: 0}
-  _notePrev: {fileID: 0}
-  _flashlight: {fileID: 0}
-  _flashlightLight: {fileID: 0}
-  _slot1: {fileID: 0}
-  _slot2: {fileID: 0}
-  _slot3: {fileID: 0}
-  _cursor: {fileID: 0}
-  _audioSource: {fileID: 6656474756059781445}
-  _weapons: []
 --- !u!114 &4192703831588525243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +198,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cursorTexture: {fileID: 2800000, guid: 3cc924bfac9693744964f4a1a36e38e2, type: 3}
   _cursorPointTexture: {fileID: 2800000, guid: 6714d3fb00e650d45b8a40512609902f, type: 3}
+--- !u!114 &2669927917485654406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5785065308060052077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b42d03e4cb58e4997bca098ba1a278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cursorController: {fileID: 4192703831588525243}
+  _shootingManager: {fileID: 0}
+  _weaponAnimationManager: {fileID: 7912688529421862453}
+  _audioSource: {fileID: 6656474756059781445}
+  _weapons:
+  - animator: {fileID: 0}
+    weaponPrefab: {fileID: 0}
+    weaponType: 1
+    isAcquired: 1
+    reserveCapacity: 0
+    magazineCapacity: 0
+    ammoOnFound: 0
+    ammoInReserve: 0
+    ammoInMagazine: 7
+    damage: 20
+    canShoot: 1
+  - animator: {fileID: 0}
+    weaponPrefab: {fileID: 0}
+    weaponType: 2
+    isAcquired: 1
+    reserveCapacity: 0
+    magazineCapacity: 0
+    ammoOnFound: 0
+    ammoInReserve: 0
+    ammoInMagazine: 2
+    damage: 0
+    canShoot: 1
+  _ammoText: {fileID: 0}
+  _pistolImage: {fileID: 0}
+  _shotGunImage: {fileID: 0}
+  _pistolTextureSelected: {fileID: 2800000, guid: 26a608c422741b5458f9fa8e216f512a, type: 3}
+  _pistolTextureUnselected: {fileID: 2800000, guid: 1bf35d78dfa7c0047bb5a9141ccc7d1f, type: 3}
+  _shotGunTextureSelected: {fileID: 2800000, guid: 6c04ad4093fda174a823596b6a672fcc, type: 3}
+  _shotGunTextureUnselected: {fileID: 2800000, guid: 307a797336b8a0541bd7220f5516d257, type: 3}
+  _slot1: {fileID: 0}
+  _flashlightHand: {fileID: 0}
+  _flashlightLight: {fileID: 0}
+  _flashlightToggleSound: {fileID: 8300000, guid: e4882f446c58c9344a664d020d10bcc4, type: 3}
+  _flashlightToggleVolume: 0.5
+  _slot2: {fileID: 0}
+  _journalSound: {fileID: 8300000, guid: 8936ebd732f30b2439a6a0dcd0117490, type: 3}
+  _journalVolume: 0.5
+  _slot3: {fileID: 0}
+  _note: {fileID: 0}
+  _noteNext: {fileID: 0}
+  _notePrev: {fileID: 0}
+  _pickUpNoteSound: {fileID: 8300000, guid: 0729503847eaf94429686622db4f33a4, type: 3}
+  _pickUpNoteVolume: 0.5
+  _highlighted: {r: 1, g: 1, b: 1, a: 1}
+  _unhighlighted: {r: 0.6666667, g: 0.6666667, b: 0.6666667, a: 0.6666667}
+--- !u!114 &7912688529421862453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5785065308060052077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47ed5e860f318a449cb41c06a49d744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 6415431401645481369}
+  _playerInput: {fileID: 8103241276833534793}
+  _inventoryManager: {fileID: 2669927917485654406}
 --- !u!82 &6656474756059781445
 AudioSource:
   m_ObjectHideFlags: 0
@@ -241,7 +288,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.723
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -250,9 +297,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 1.01
+  MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -422,7 +469,7 @@ GameObject:
   - component: {fileID: 8568536737820498547}
   m_Layer: 0
   m_Name: CameraRotation
-  m_TagString: Untagged
+  m_TagString: CameraRotation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -453,7 +500,7 @@ GameObject:
   - component: {fileID: 4422014677258673265}
   m_Layer: 0
   m_Name: CameraHolder
-  m_TagString: Untagged
+  m_TagString: CameraHolder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

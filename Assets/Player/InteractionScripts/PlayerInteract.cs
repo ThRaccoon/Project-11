@@ -12,19 +12,15 @@ public class PlayerInteract : MonoBehaviour
     private Camera _playerCamera;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Space(30)]
     [Header("Settings")]
     [SerializeField] private float _interactionRange;
-    [Header("From Camera -> Canvas")]
     [SerializeField] private GameObject _interactionIcon;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-
     // --- Private Variables ---
     private RaycastHit _hitInfo;
-
 
     private void Awake()
     {
@@ -33,7 +29,6 @@ public class PlayerInteract : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Do not use Util.IsNotNull here to prevent console spamming
         if (_interactionIcon != null)
         {
             if (_playerCamera != null)

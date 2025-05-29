@@ -42,9 +42,27 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Q",
+                    "type": "Button",
+                    "id": "094f88ed-4774-4349-9f96-7f73e3623db8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "E",
                     "type": "Button",
                     "id": "22e73203-9317-45d9-826c-92b5ac037aa3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "R",
+                    "type": "Button",
+                    "id": "8fb94a75-40a6-4920-a50f-60f264daccfd",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -72,24 +90,6 @@
                     "name": "_3",
                     "type": "Button",
                     "id": "25cb1f06-71cc-4553-9600-8e481575b519",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Q",
-                    "type": "Button",
-                    "id": "094f88ed-4774-4349-9f96-7f73e3623db8",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "R",
-                    "type": "Button",
-                    "id": "8fb94a75-40a6-4920-a50f-60f264daccfd",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",

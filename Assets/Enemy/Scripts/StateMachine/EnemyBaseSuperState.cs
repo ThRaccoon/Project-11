@@ -73,7 +73,7 @@ public class EnemyBaseSuperState : ScriptableObject
         Vector3 end = _playerTransform.position;
         RaycastHit hit;
 
-        Physics.Linecast(start, end, out hit, ~_enemy.collisionLayersToIgnore);
+        Physics.Linecast(start, end, out hit, ~_enemy.collisionLayerToIgnore);
         if (hit.collider.CompareTag("Player"))
         {
             return true;
@@ -85,7 +85,7 @@ public class EnemyBaseSuperState : ScriptableObject
     {
         float distance = (current - end).sqrMagnitude;
 
-        if (distance < 2f) // Should be 2 not 1 because of sqrMagnitude
+        if (distance < 1.5f) // Should be 1.5 not 1 because of sqrMagnitude
         {
             return true;
         }
