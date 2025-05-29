@@ -549,10 +549,6 @@ public class InventoryManager : MonoBehaviour
 
                     _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.Shoot);
                 }
-                else
-                {
-                    _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.ShootEmpty);
-                }
             }
         }
     }
