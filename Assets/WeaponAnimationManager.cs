@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class WeaponAnimationManager : MonoBehaviour
@@ -17,7 +16,7 @@ public class WeaponAnimationManager : MonoBehaviour
         Pull,
         Idle, Walk, Run, Shoot,
         Reload,
-        IdleEmpty, WalkEmpty, RunEmpty, ShootEmpty,
+        IdleEmpty, WalkEmpty, RunEmpty
 
     }
 
@@ -174,29 +173,6 @@ public class WeaponAnimationManager : MonoBehaviour
                 if (_playerInput.runInput != true || _player.CurrentStamina <= 0)
                 {
                     ChangeState(EWeaponState.WalkEmpty);
-                }
-
-                break;
-
-            case EWeaponState.ShootEmpty:
-                PlayAnimation("ShootEmpty");
-
-                if (IsAnimationFinished("ShootEmpty"))
-                {
-                    if (_playerInput.movementInput == Vector2.zero)
-                    {
-                        ChangeState(EWeaponState.IdleEmpty);
-                    }
-
-                    if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput != true)
-                    {
-                        ChangeState(EWeaponState.WalkEmpty);
-                    }
-
-                    if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput == true && _player.CurrentStamina > 0)
-                    {
-                        ChangeState(EWeaponState.RunEmpty);
-                    }
                 }
 
                 break;
