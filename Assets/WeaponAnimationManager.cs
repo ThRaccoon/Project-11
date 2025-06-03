@@ -1,197 +1,110 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class WeaponAnimationManager : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private InventoryManager _inventoryManager;
-    private Animator _animator;
+    [SerializeField] private Animator _animator;
 
     private string _currentAnim;
-
-
     public enum EWeaponState
     {
         Default,
+        Idle,
         Pull,
-        Idle, Walk, Run, Shoot,
-        Reload,
-        IdleEmpty, WalkEmpty, RunEmpty
+        Walk,
+        Shoot,
+        Reload
 
     }
+
+    private GlobalTimer _timer = new GlobalTimer(0f, true);
+
 
     private EWeaponState _currentState = EWeaponState.Default;
 
     private void Update()
     {
-        switch (_currentState)
+        if (_inventoryManager.currentWeapon == null || _animator == null || !_inventoryManager.currentWeapon.weaponPrefab.activeInHierarchy)
+            return;
+       
+        if (_timer.Flag)
         {
-            case EWeaponState.Pull:
-                _inventoryManager.SetCanShoot(false, _inventoryManager.currentWeapon.weaponType);
-                PlayAnimation("Pull");
+            if(_currentAnim == "Reload")
+            {
+                _inventoryManager.EndReload();
+            }
 
-                if (IsAnimationFinished("Pull"))
-                {
-                    _inventoryManager.SetCanShoot(true, _inventoryManager.currentWeapon.weaponType);
+            _inventoryManager.currentWeapon.canShoot = true;
+            switch (_currentState)
+            {
+                case EWeaponState.Pull:
 
-                    if (_inventoryManager.currentWeapon.ammoInMagazine > 0)
+                    PlayAnimation("Pull");
+                    ChangeState(EWeaponState.Idle);
+
+                    break;
+
+                case EWeaponState.Idle:
+                    PlayAnimation("Idle");
+
+                    if (_playerInput.movementInput != Vector2.zero)
+                    {
+                        ChangeState(EWeaponState.Walk);
+                    }
+                    break;
+
+                case EWeaponState.Walk:
+
+                    PlayAnimation("Walk");
+
+                    if (_playerInput.movementInput == Vector2.zero)
                     {
                         ChangeState(EWeaponState.Idle);
                     }
-                    else
-                    {
-                        ChangeState(EWeaponState.IdleEmpty);
-                    }
-                }
+                    break;
 
-                break;
+                case EWeaponState.Shoot:
 
-            case EWeaponState.Idle:
-                PlayAnimation("Idle");
-
-                if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput != true)
-                {
-                    ChangeState(EWeaponState.Walk);
-                }
-
-                if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput == true && _player.CurrentStamina > 0)
-                {
-                    ChangeState(EWeaponState.Run);
-                }
-
-                break;
-
-            case EWeaponState.Walk:
-                PlayAnimation("Walk");
-
-                if (_playerInput.movementInput == Vector2.zero)
-                {
-                    ChangeState(EWeaponState.Idle);
-                }
-
-                if (_playerInput.runInput == true && _player.CurrentStamina > 0)
-                {
-                    ChangeState(EWeaponState.Run);
-                }
-
-                break;
-
-            case EWeaponState.Run:
-                PlayAnimation("Run");
-
-                if (_playerInput.movementInput == Vector2.zero)
-                {
-                    ChangeState(EWeaponState.Idle);
-                }
-
-                if (_playerInput.runInput != true || _player.CurrentStamina <= 0)
-                {
-                    ChangeState(EWeaponState.Walk);
-                }
-
-                break;
-
-            case EWeaponState.Shoot:
-                _inventoryManager.SetCanShoot(false, _inventoryManager.currentWeapon.weaponType);
-                PlayAnimation("Shoot");
-
-                if (IsAnimationFinished("Shoot"))
-                {
-                    _inventoryManager.SetCanShoot(true, _inventoryManager.currentWeapon.weaponType);
+                    PlayAnimation("Shoot");
 
                     if (_playerInput.movementInput == Vector2.zero)
                     {
                         ChangeState(EWeaponState.Idle);
                     }
 
-                    if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput != true)
+                    if (_playerInput.movementInput != Vector2.zero)
                     {
                         ChangeState(EWeaponState.Walk);
                     }
 
-                    if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput == true && _player.CurrentStamina > 0)
-                    {
-                        ChangeState(EWeaponState.Run);
-                    }
-                }
+                    break;
 
-                break;
+                case EWeaponState.Reload:
 
-            case EWeaponState.Reload:
-                _inventoryManager.SetCanShoot(false, _inventoryManager.currentWeapon.weaponType);
-                PlayAnimation("Reload");
-
-                if (IsAnimationFinished("Reload"))
-                {
-                    _inventoryManager.EndReload();
-
-                    _inventoryManager.SetCanShoot(true, _inventoryManager.currentWeapon.weaponType);
-
+                    PlayAnimation("Reload");
                     ChangeState(EWeaponState.Idle);
-                }
-
-                break;
-
-            case EWeaponState.IdleEmpty:
-                PlayAnimation("IdleEmpty");
-
-                if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput != true)
-                {
-                    ChangeState(EWeaponState.WalkEmpty);
-                }
-
-                if (_playerInput.movementInput != Vector2.zero && _playerInput.runInput == true && _player.CurrentStamina > 0)
-                {
-                    ChangeState(EWeaponState.RunEmpty);
-                }
-
-                break;
-
-            case EWeaponState.WalkEmpty:
-                PlayAnimation("WalkEmpty");
-
-                if (_playerInput.movementInput == Vector2.zero)
-                {
-                    ChangeState(EWeaponState.IdleEmpty);
-                }
-
-                if (_playerInput.runInput == true && _player.CurrentStamina > 0)
-                {
-                    ChangeState(EWeaponState.RunEmpty);
-                }
-
-                break;
-
-            case EWeaponState.RunEmpty:
-                PlayAnimation("RunEmpty");
-
-                if (_playerInput.movementInput == Vector2.zero)
-                {
-                    ChangeState(EWeaponState.IdleEmpty);
-                }
-
-                if (_playerInput.runInput != true || _player.CurrentStamina <= 0)
-                {
-                    ChangeState(EWeaponState.WalkEmpty);
-                }
-
-                break;
+                    
+                    break;
+            }
         }
+        else
+        {
+            _timer.Tick();
+        }
+
     }
 
 
     public void OnWeaponEnabled(Animator animator)
     {
+        _currentAnim = "Default";
         _animator = animator;
+        _timer.Flag = true;
 
         _currentState = EWeaponState.Pull;
-    }
-
-    public void OnWeaponDisable(Animator animator)
-    {
-        _animator = null;
-
-        _currentState = EWeaponState.Default;
     }
 
     public void ChangeState(EWeaponState newState)
@@ -199,27 +112,34 @@ public class WeaponAnimationManager : MonoBehaviour
         _currentState = newState;
     }
 
-    private bool IsAnimationFinished(string stateName)
-    {
-        if (_animator == null) return false;
 
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-
-        if (_animator.IsInTransition(0)) return false;
-
-        if (!stateInfo.IsName(stateName)) return false;
-
-        return stateInfo.normalizedTime >= 1f;
-    }
-
-    private void PlayAnimation(string animName, float fadeValue = 0.4f)
+    private void PlayAnimation(string animName)
     {
         if (_currentAnim == animName) return;
 
         if (_animator != null && _animator.gameObject.activeInHierarchy)
         {
-            _animator.CrossFade(animName, fadeValue);
+            _animator.Play(animName);
             _currentAnim = animName;
+
+            if (animName == "Pull")
+            {
+                _inventoryManager.currentWeapon.canShoot = false;
+                _timer.Duration = _inventoryManager.currentWeapon.pullDuration;
+                _timer.Reset();
+            }
+            else if (animName == "Shoot")
+            {
+                _inventoryManager.currentWeapon.canShoot = false;
+                _timer.Duration = _inventoryManager.currentWeapon.shootDuration;
+                _timer.Reset();
+            }
+            else if (animName == "Reload")
+            {
+                _inventoryManager.currentWeapon.canShoot = false;
+                _timer.Duration = _inventoryManager.currentWeapon.reloadDuration;
+                _timer.Reset();
+            }
         }
     }
 }

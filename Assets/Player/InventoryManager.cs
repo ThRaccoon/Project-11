@@ -30,6 +30,10 @@ public class WeaponData
 
     public int damage;
     public bool canShoot = true;
+    public float reloadDuration;
+    public float shootDuration;
+    public float pullDuration;
+   
 }
 
 public class ItemData
@@ -184,7 +188,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        if (_lastUsedWeaponIndex < 0 && _lastUsedWeaponIndex >= _weapons.Length)
+        if (_lastUsedWeaponIndex < 0 || _lastUsedWeaponIndex >= _weapons.Length)
         {
             return;
         }
@@ -319,19 +323,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
-
-    public void SetCanShoot(bool canShoot, EWeaponType weapon)
-    {
-        for (int i = 0; i < _weapons.Length; i++)
-        {
-            if (_weapons[i].weaponType == weapon)
-            {
-                _weapons[i].canShoot = canShoot;
-            }
-        }
-    }
-
 
     // --- Flashlight Related ---
     public void EquipFlashlight()
@@ -549,9 +540,9 @@ public class InventoryManager : MonoBehaviour
 
                     _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.Shoot);
                 }
-                else 
+                else
                 {
-                    _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.IdleEmpty);
+                    _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.Reload);
                 }
             }
         }
@@ -583,5 +574,20 @@ public class InventoryManager : MonoBehaviour
             _audioSource.volume = volume;
             _audioSource.Play();
         }
+    }
+
+    public void SetCurrentWeaponShoot(bool canShoot)
+    {
+        if (_lastUsedWeaponIndex < 0 || _lastUsedWeaponIndex >= _weapons.Length)
+        {
+            return;
+        }
+
+        if (!_weapons[_lastUsedWeaponIndex].weaponPrefab.activeInHierarchy)
+        {
+            return;
+        }
+
+        _weapons[_lastUsedWeaponIndex].canShoot = canShoot;
     }
 }
