@@ -33,7 +33,12 @@ public class WeaponData
     public float reloadDuration;
     public float shootDuration;
     public float pullDuration;
-   
+
+    public AudioClip shootSound;
+    [SerializeField, Range(0f, 1f)] public float shootVolume = 0.5f;
+
+    public AudioClip reloadSound;
+    [SerializeField, Range(0f, 1f)] public float reloadVolume = 0.5f;
 }
 
 public class ItemData
