@@ -118,8 +118,6 @@ public class Enemy : MonoBehaviour
             new WeightedTransform(_playerTransform, 1f)
         };
 
-        attackRange += _navMeshAgent.stoppingDistance;
-
         // --- Instantiate State Instances ---
         idleSInstance = Instantiate(idleSTemplate);
         chaseSInstance = Instantiate(chaseSTemplate);
