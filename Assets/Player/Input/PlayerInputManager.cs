@@ -180,6 +180,15 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""d449da35-40c3-4c0d-8c17-ec0456f9318a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -295,6 +304,17 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8545cd51-57af-4968-a7b4-1533953a2477"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""00321349-72a6-477b-be49-3ac132423d1e"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": ""Press"",
@@ -354,6 +374,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         m_OnGround__1 = m_OnGround.FindAction("_1", throwIfNotFound: true);
         m_OnGround__2 = m_OnGround.FindAction("_2", throwIfNotFound: true);
         m_OnGround__3 = m_OnGround.FindAction("_3", throwIfNotFound: true);
+        m_OnGround_Esc = m_OnGround.FindAction("Esc", throwIfNotFound: true);
     }
 
     ~@PlayerInputManager()
@@ -444,6 +465,7 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnGround__1;
     private readonly InputAction m_OnGround__2;
     private readonly InputAction m_OnGround__3;
+    private readonly InputAction m_OnGround_Esc;
     /// <summary>
     /// Provides access to input actions defined in input action map "OnGround".
     /// </summary>
@@ -495,6 +517,10 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "OnGround/_3".
         /// </summary>
         public InputAction @_3 => m_Wrapper.m_OnGround__3;
+        /// <summary>
+        /// Provides access to the underlying input action "OnGround/Esc".
+        /// </summary>
+        public InputAction @Esc => m_Wrapper.m_OnGround_Esc;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -551,6 +577,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @_3.started += instance.On_3;
             @_3.performed += instance.On_3;
             @_3.canceled += instance.On_3;
+            @Esc.started += instance.OnEsc;
+            @Esc.performed += instance.OnEsc;
+            @Esc.canceled += instance.OnEsc;
         }
 
         /// <summary>
@@ -592,6 +621,9 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
             @_3.started -= instance.On_3;
             @_3.performed -= instance.On_3;
             @_3.canceled -= instance.On_3;
+            @Esc.started -= instance.OnEsc;
+            @Esc.performed -= instance.OnEsc;
+            @Esc.canceled -= instance.OnEsc;
         }
 
         /// <summary>
@@ -702,5 +734,12 @@ public partial class @PlayerInputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void On_3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Esc" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEsc(InputAction.CallbackContext context);
     }
 }
