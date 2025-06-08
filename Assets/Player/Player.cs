@@ -92,6 +92,7 @@ public class Player : MonoBehaviour
     [field: Space(30)]
     [field: Header("Ground / Ceiling  Checks")]
     [field: SerializeField] public float standingGroundCheckLength { get; private set; }
+    [field: SerializeField] public float groundCheckOffset { get; private set; }
 
 
     #region Getters / Setters

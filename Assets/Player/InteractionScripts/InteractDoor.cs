@@ -5,8 +5,10 @@ public class InteractDoor : MonoBehaviour, IInteractable
 {
     // ----------------------------------------------------------------------------------------------------------------------------------
     [Header("Components")]
-    [SerializeField] private MeshCollider _meshCollider;
-    [SerializeField] private MeshCollider[] _childMeshColliders;
+    [SerializeField] private BoxCollider _boxCollider;
+    [Space(10)]
+    [SerializeField] private BoxCollider[] _childBoxColliders;
+    [Space(15)]
     [SerializeField] private AudioSource _audioSource;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -33,15 +35,29 @@ public class InteractDoor : MonoBehaviour, IInteractable
     [Space(30)]
     [Header("Audio Clips")]
     [SerializeField] private AudioClip _lockedSound;
+    [SerializeField, Range(0f, 1f)] private float _lockedVolume = 0.5f;
+    [Space(10)]
     [SerializeField] private AudioClip _unlockingSound;
+    [SerializeField, Range(0f, 1f)] private float _unlockingVolume = 0.5f;
+    [Space(10)]
     [SerializeField] private AudioClip _openingSound;
+    [SerializeField, Range(0f, 1f)] private float _openingVolume = 0.5f;
+    [Space(10)]
+    [SerializeField] private AudioClip _openedSound;
+    [SerializeField, Range(0f, 1f)] private float _openedVolume = 0.5f;
+    [Space(10)]
     [SerializeField] private AudioClip _closingSound;
+    [SerializeField, Range(0f, 1f)] private float _closingVolume = 0.5f;
+    [Space(10)]
+    [SerializeField] private AudioClip _closedSound;
+    [SerializeField, Range(0f, 1f)] private float _closedVolume = 0.5f; 
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     // --- Private Variables ---
     private float SlerpProgress;
     private Quaternion _startRotationPoint;
     private Quaternion _targetRotationPoint;
+    private AudioClip _lastClip;
 
     private enum EDoorState
     {
@@ -52,6 +68,11 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void Awake()
     {
+        // Assaign Components
+        _boxCollider = GetComponent<BoxCollider>();
+        _childBoxColliders = GetComponentsInChildren<BoxCollider>();
+        _audioSource = GetComponent<AudioSource>();
+
         // --- Bools ---
         _currentState = _isInitiallyOpened ? EDoorState.Opened : EDoorState.Closed;
 
@@ -72,23 +93,25 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
             if (SlerpProgress >= 1.0f)
             {
-                if (_meshCollider != null)
+                if (_boxCollider != null)
                 {
-                    _meshCollider.enabled = true;
+                    _boxCollider.enabled = true;
                 }
 
-                foreach (MeshCollider meshCollider in _childMeshColliders)
+                foreach (BoxCollider boxCollider in _childBoxColliders)
                 {
-                    meshCollider.enabled = true;
+                    boxCollider.enabled = true;
                 }
 
                 if (_currentState == EDoorState.Opening)
                 {
                     _currentState = EDoorState.Opened;
+                    PlaySound(_openedSound, _openedVolume);
                 }
                 else
                 {
                     _currentState = EDoorState.Closed;
+                    PlaySound(_closedSound, _closedVolume);
                 }
             }
         }
@@ -97,45 +120,42 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (this.enabled)
+        if (_isInitiallyLocked)
         {
-            if (_isInitiallyLocked)
-            {
-                // if the player have the key
-                // _isInitiallyLocked = false;
-                // PlaySound(_unlockingSound);
+            // if the player have the key
+            // _isInitiallyLocked = false;
+            // PlaySound(_unlockingSound);
 
-                // if the player don't have the key
-                PlaySound(_lockedSound);
-            }
-            else
+            // if the player don't have the key
+            PlaySound(_lockedSound, _lockedVolume, true);
+        }
+        else
+        {
+            if (_currentState == EDoorState.Closed)
             {
-                if (_currentState == EDoorState.Closed)
-                {
-                    PlaySound(_openingSound);
-                    Rotate(Quaternion.Euler(_initialX, _openAngle, _initialZ));
-                    _currentState = EDoorState.Opening;
-                }
-                else if (_currentState == EDoorState.Opened)
-                {
-                    PlaySound(_closingSound);
-                    Rotate(Quaternion.Euler(_initialX, _closedAngle, _initialZ));
-                    _currentState = EDoorState.Closing;
-                }
+                PlaySound(_openingSound, _openingVolume);
+                Rotate(Quaternion.Euler(_initialX, _openAngle, _initialZ));
+                _currentState = EDoorState.Opening;
+            }
+            else if (_currentState == EDoorState.Opened)
+            {
+                PlaySound(_closingSound, _closingVolume);
+                Rotate(Quaternion.Euler(_initialX, _closedAngle, _initialZ));
+                _currentState = EDoorState.Closing;
             }
         }
     }
 
     private void Rotate(Quaternion targetRotation)
     {
-        if (_meshCollider != null)
+        if (_boxCollider != null)
         {
-            _meshCollider.enabled = false;
+            _boxCollider.enabled = false;
         }
 
-        foreach (MeshCollider meshCollider in _childMeshColliders)
+        foreach (BoxCollider boxCollider in _childBoxColliders)
         {
-            meshCollider.enabled = false;
+            boxCollider.enabled = false;
         }
 
         SlerpProgress = 0.0f;
@@ -145,12 +165,17 @@ public class InteractDoor : MonoBehaviour, IInteractable
         _targetRotationPoint = targetRotation;
     }
 
-    private void PlaySound(AudioClip clip)
+    private void PlaySound(AudioClip clip, float volume, bool shouldRepeat = false)
     {
-        if (_audioSource != null && clip != null)
+        if (_audioSource == null && clip == null) return;
+
+        if (clip != _lastClip || shouldRepeat)
         {
             _audioSource.clip = clip;
+            _audioSource.volume = volume;
             _audioSource.Play();
         }
+
+        _lastClip = clip;
     }
 }

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4192703831588525243}
   - component: {fileID: 4710428799474780693}
   - component: {fileID: 6656474756059781445}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 85, y: 31, z: 1065}
-  m_LocalScale: {x: 0.75, y: 0.9, z: 0.75}
+  m_LocalScale: {x: 0.8, y: 1.1, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8528998212320821072}
@@ -155,9 +155,9 @@ MonoBehaviour:
   _rigidbody: {fileID: 2430832040300796052}
   _cameraRotation: {fileID: 8568536737820498547}
   _playerInput: {fileID: 8103241276833534793}
-  <walkSpeed>k__BackingField: 8
+  <walkSpeed>k__BackingField: 15
   <stoppingForce>k__BackingField: 0.5
-  <runSpeed>k__BackingField: 12
+  <runSpeed>k__BackingField: 25
   <maxStamina>k__BackingField: 100
   <regenRate>k__BackingField: 20
   <depleteRate>k__BackingField: 10
@@ -169,7 +169,8 @@ MonoBehaviour:
   <pullDownForceIncrement>k__BackingField: -4
   <forceIncrementDelay>k__BackingField: 0.2
   _currentPullDownForce: 0
-  <standingGroundCheckLength>k__BackingField: 0.125
+  <standingGroundCheckLength>k__BackingField: 0.15
+  <groundCheckOffset>k__BackingField: 0.3
 --- !u!114 &2669927917485654406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +197,7 @@ MonoBehaviour:
     ammoOnFound: 0
     ammoInReserve: 111
     ammoInMagazine: 7
-    damage: 0
+    damage: 20
     canShoot: 1
     reloadDuration: 2.48
     shootDuration: 0.375
@@ -320,7 +321,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 1.01
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -406,7 +407,7 @@ GameObject:
   - component: {fileID: 8528998212320821072}
   - component: {fileID: 869534396362354034}
   - component: {fileID: 3593853084450635586}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +460,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 890d0a206cc8f054987046a929b088f1, type: 2}
+  - {fileID: 2100000, guid: 07fadee667c4d2b4d95d85c8eddf79a9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -491,7 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8568536737820498547}
   - component: {fileID: 6640307083050177680}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraRotation
   m_TagString: CameraRotation
   m_Icon: {fileID: 0}
@@ -619,7 +620,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4422014677258673265}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CameraHolder
   m_TagString: CameraHolder
   m_Icon: {fileID: 0}
