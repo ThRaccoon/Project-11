@@ -526,7 +526,7 @@ MonoBehaviour:
   active: 1
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   meteringMode:
     m_OverrideState: 1
     m_Value: 2
@@ -535,13 +535,13 @@ MonoBehaviour:
     m_Value: 1
   fixedExposure:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: -2
   compensation:
     m_OverrideState: 1
     m_Value: 0
   limitMin:
     m_OverrideState: 1
-    m_Value: -1
+    m_Value: -0.85
   limitMax:
     m_OverrideState: 1
     m_Value: 14
@@ -5766,13 +5766,13 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0, b: 0.0009765625, a: 1}
+    m_Value: {r: 0, g: 0, b: 0.00073146453, a: 1}
   middle:
     m_OverrideState: 1
-    m_Value: {r: 0.0046875, g: 0.0109375, b: 0.015625, a: 1}
+    m_Value: {r: 0.001171875, g: 0.002734375, b: 0.00390625, a: 1}
   bottom:
     m_OverrideState: 1
-    m_Value: {r: 0.0625, g: 0.0625, b: 0.0625, a: 1}
+    m_Value: {r: 0.0078125, g: 0.0078125, b: 0.0078125, a: 1}
   gradientDiffusion:
     m_OverrideState: 1
     m_Value: 1

@@ -5,6 +5,7 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] private PlayerInteract _playerInteract;
     [SerializeField] private InventoryManager _inventoryManager;
+    [SerializeField] private MenuManager _menuManager;
 
     private PlayerInputManager _playerInputManager;
 
@@ -14,6 +15,7 @@ public class PlayerInput : MonoBehaviour
 
     public bool runInput { get; private set; }
 
+    public bool isPaused;
 
     private void Awake()
     {
@@ -46,6 +48,8 @@ public class PlayerInput : MonoBehaviour
         _playerInputManager.OnGround._2.performed += Get2Input;
 
         _playerInputManager.OnGround._3.performed += Get3Input;
+
+        _playerInputManager.OnGround.Esc.performed += GetEscInput;
     }
 
     private void OnDisable()
@@ -73,6 +77,8 @@ public class PlayerInput : MonoBehaviour
 
         _playerInputManager.OnGround._3.performed -= Get3Input;
 
+        _playerInputManager.OnGround.Esc.performed -= GetEscInput;
+
         _playerInputManager.Disable();
     }
 
@@ -94,7 +100,7 @@ public class PlayerInput : MonoBehaviour
 
     private void GetLMBInput(InputAction.CallbackContext ctx)
     {
-        if (_inventoryManager != null)
+        if (_inventoryManager != null && !isPaused)
         {
             _inventoryManager.LMB();
         }
@@ -102,7 +108,7 @@ public class PlayerInput : MonoBehaviour
 
     private void GetQInput(InputAction.CallbackContext ctx)
     {
-        if (_inventoryManager != null)
+        if (_inventoryManager != null && !isPaused)
         {
             _inventoryManager.EquipNextWeapon();
         }
@@ -110,7 +116,7 @@ public class PlayerInput : MonoBehaviour
 
     private void GetEInput(InputAction.CallbackContext ctx)
     {
-        if (_playerInteract != null)
+        if (_playerInteract != null && !isPaused)
         {
             _playerInteract.PerformInteraction();
         }
@@ -118,7 +124,7 @@ public class PlayerInput : MonoBehaviour
 
     private void GetRInput(InputAction.CallbackContext ctx)
     {
-        if (_inventoryManager != null)
+        if (_inventoryManager != null && !isPaused)
         {
             _inventoryManager.StartReload();
         }
@@ -126,7 +132,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Get1Input(InputAction.CallbackContext ctx)
     {
-        if (_inventoryManager != null)
+        if (_inventoryManager != null && !isPaused)
         {
             _inventoryManager.EquipWeapon();
         }
@@ -134,7 +140,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Get2Input(InputAction.CallbackContext ctx)
     {
-        if (_inventoryManager != null)
+        if (_inventoryManager != null && !isPaused)
         {
             _inventoryManager.EquipFlashlight();
         }
@@ -142,9 +148,17 @@ public class PlayerInput : MonoBehaviour
 
     private void Get3Input(InputAction.CallbackContext ctx)
     {
-        if (_inventoryManager != null)
+        if (_inventoryManager != null && !isPaused)
         {
             _inventoryManager.OpenJournal();
+        }
+    } 
+    
+    private void GetEscInput(InputAction.CallbackContext ctx)
+    {
+        if (_inventoryManager != null)
+        {
+            _menuManager.OnEsc();
         }
     }
 }
