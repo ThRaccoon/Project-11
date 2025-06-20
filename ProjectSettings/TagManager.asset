@@ -9,20 +9,6 @@ TagManager:
   - Body
   - Arms
   - Legs
-  - Item3DViwer
-  - NoteText
-  - NotePrev
-  - NoteNext
-  - Flashlight
-  - InteractIcon
-  - Note
-  - Slot3
-  - CameraHolder
-  - CameraRotation
-  - Slot2
-  - Slot1
-  - Slot4
-  - Pistol
   layers:
   - Default
   - TransparentFX
@@ -50,12 +36,12 @@ TagManager:
   - 
   - 
   - 
-  - PlayerArmsCollider
+  - 
   - 
   - 
   - 
   - EnemyBoundingBoxCollider
-  - EnemyRigidbodyCollider
+  - EnemyRagdollColliders
   m_SortingLayers:
   - name: Default
     uniqueID: 0

@@ -22,20 +22,28 @@ public class WeaponData
 
     public bool isAcquired;
 
+    public int ammoOnFound;
+
     public int reserveCapacity;
     public int magazineCapacity;
-    public int ammoOnFound;
+     
     public int ammoInReserve;
     public int ammoInMagazine;
 
-    public int damage;
+    public float damage;
+    public float knockbackForce;
+
     public bool canShoot = true;
+    
     public float reloadDuration;
     public float shootDuration;
     public float pullDuration;
 
     public AudioClip shootSound;
     [SerializeField, Range(0f, 1f)] public float shootVolume = 0.5f;
+
+    public AudioClip shootEmptySound;
+    [SerializeField, Range(0f, 1f)] public float shootEmptyVolume = 0.5f;
 
     public AudioClip reloadSound;
     [SerializeField, Range(0f, 1f)] public float reloadVolume = 0.5f;
@@ -538,16 +546,20 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_weapons[_lastUsedWeaponIndex].ammoInMagazine > 0)
                 {
-                    _shootingManager.Shoot(_weapons[_lastUsedWeaponIndex].damage);
+                    _shootingManager.Shoot(_weapons[_lastUsedWeaponIndex].damage, _weapons[_lastUsedWeaponIndex].knockbackForce);
                     _weapons[_lastUsedWeaponIndex].ammoInMagazine--;
 
                     UpdateAmmoText();
 
                     _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.Shoot);
                 }
-                else
+                else if (_weapons[_lastUsedWeaponIndex].ammoInReserve > 0)
                 {
                     _weaponAnimationManager.ChangeState(WeaponAnimationManager.EWeaponState.Reload);
+                }
+                else
+                {
+                    PlaySound(_weapons[_lastUsedWeaponIndex].shootEmptySound, _weapons[_lastUsedWeaponIndex].shootEmptyVolume);
                 }
             }
         }

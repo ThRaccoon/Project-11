@@ -1640,7 +1640,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3550554740217606876}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.9
+  m_Radius: 0.5
   m_Speed: 0
   m_Acceleration: 10000
   avoidancePriority: 50
@@ -1746,12 +1746,15 @@ MonoBehaviour:
   _navMeshAgent: {fileID: 2734074801434817407}
   _animator: {fileID: 3934284515581578656}
   _enemy: {fileID: 7228795231286420881}
+  _headRb: {fileID: 508040667324708304}
+  _bodyRb: {fileID: 1517207660082699696}
   _health: 100
   _maxHealth: 100
   _headMultiplier: 2
   _bodyMultiplier: 1
   _armsMultiplier: 0.75
   _legsMultiplier: 0.5
+  _shouldApplyKnockbackForce: 1
 --- !u!114 &8462254575523460450
 MonoBehaviour:
   m_ObjectHideFlags: 0

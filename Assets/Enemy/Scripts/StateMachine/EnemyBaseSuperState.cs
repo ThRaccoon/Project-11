@@ -85,7 +85,7 @@ public class EnemyBaseSuperState : ScriptableObject
     {
         float distance = (current - end).sqrMagnitude;
 
-        if (distance < 1.5f) // Should be 1.5 not 1 because of sqrMagnitude
+        if (distance < 1.75f) // Should be 1.5 not 1 because of sqrMagnitude
         {
             return true;
         }

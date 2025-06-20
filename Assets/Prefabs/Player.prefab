@@ -204,6 +204,8 @@ MonoBehaviour:
     pullDuration: 0.467
     shootSound: {fileID: 8300000, guid: ac08297d03e7cbe4a9ed388fd08888e2, type: 3}
     shootVolume: 0.15
+    shootEmptySound: {fileID: 0}
+    shootEmptyVolume: 0.5
     reloadSound: {fileID: 8300000, guid: 3e1353222f971c6428ebde027d77a0e2, type: 3}
     reloadVolume: 0.15
   - animator: {fileID: 0}
@@ -222,6 +224,8 @@ MonoBehaviour:
     pullDuration: 0.5
     shootSound: {fileID: 8300000, guid: ac08297d03e7cbe4a9ed388fd08888e2, type: 3}
     shootVolume: 0.15
+    shootEmptySound: {fileID: 0}
+    shootEmptyVolume: 0.5
     reloadSound: {fileID: 8300000, guid: 3e1353222f971c6428ebde027d77a0e2, type: 3}
     reloadVolume: 0.15
   _ammoText: {fileID: 0}
@@ -494,7 +498,7 @@ GameObject:
   - component: {fileID: 6640307083050177680}
   m_Layer: 3
   m_Name: CameraRotation
-  m_TagString: CameraRotation
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -622,7 +626,7 @@ GameObject:
   - component: {fileID: 4422014677258673265}
   m_Layer: 3
   m_Name: CameraHolder
-  m_TagString: CameraHolder
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

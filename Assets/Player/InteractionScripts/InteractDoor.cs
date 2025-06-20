@@ -26,7 +26,6 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     [Space(10)]
     [Header("Advanced Settings")]
-    [SerializeField] private bool _isOpenDirectionReversed;
     [SerializeField] private float _initialX;
     [SerializeField] private float _initialZ;
     // ----------------------------------------------------------------------------------------------------------------------------------
@@ -50,7 +49,7 @@ public class InteractDoor : MonoBehaviour, IInteractable
     [SerializeField, Range(0f, 1f)] private float _closingVolume = 0.5f;
     [Space(10)]
     [SerializeField] private AudioClip _closedSound;
-    [SerializeField, Range(0f, 1f)] private float _closedVolume = 0.5f; 
+    [SerializeField, Range(0f, 1f)] private float _closedVolume = 0.5f;
     // ----------------------------------------------------------------------------------------------------------------------------------
 
     // --- Private Variables ---
@@ -68,19 +67,8 @@ public class InteractDoor : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        // Assaign Components
-        _boxCollider = GetComponent<BoxCollider>();
-        _childBoxColliders = GetComponentsInChildren<BoxCollider>();
-        _audioSource = GetComponent<AudioSource>();
-
         // --- Bools ---
         _currentState = _isInitiallyOpened ? EDoorState.Opened : EDoorState.Closed;
-
-        // --- Logic ---
-        if (_isOpenDirectionReversed)
-        {
-            _openAngle *= -1.0f;
-        }
     }
 
     private void Update()
