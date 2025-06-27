@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class PGroundedSuperS : PlayerBaseState
 {
-    protected float _slopeAngle;
-
-
     public PGroundedSuperS(Player player, Rigidbody rigidBody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
         : base(player, rigidBody, playerInput, cameraRotation, stateManager) { }
 
@@ -38,7 +35,7 @@ public class PGroundedSuperS : PlayerBaseState
     {
         base.PhysicsUpdate();
 
-        IsGrounded(_player.standingGroundCheckLength);
+        IsGrounded(_player.sphereCastLength);
 
         _didPhysicsUpdateRan = true;
     }
@@ -48,21 +45,10 @@ public class PGroundedSuperS : PlayerBaseState
         base.OnExit();
     }
 
-
-    protected void CalculateSlopeAngle()
-    {
-        _slopeAngle = Vector3.Angle(Vector3.up, _hitInfo.normal);
-    }
-
-    protected Vector3 CalculateSlopeProjection(Vector3 movementVector)
-    {
-        return Vector3.ProjectOnPlane(movementVector, _hitInfo.normal);
-    }
-
     protected void ApplyStoppingForce()
     {
         _rigidbody.linearVelocity *= _player.stoppingForce;
-        
+
         if (_rigidbody.linearVelocity.magnitude < 0.01f)
         {
             _rigidbody.linearVelocity = Vector3.zero;

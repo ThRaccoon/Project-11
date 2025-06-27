@@ -36,14 +36,7 @@ public class PGroundedRunS : PGroundedSuperS
     {
         base.PhysicsUpdate();
 
-        CalculateSlopeAngle();
-
         _movementVector = ProcessMovementVector(_movementInput, _player.runSpeed);
-
-        if (_slopeAngle > 0)
-        {
-            _movementVector = CalculateSlopeProjection(_movementVector);
-        }
 
         ApplyMovementForce(_movementVector);
 

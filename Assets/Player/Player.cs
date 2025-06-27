@@ -1,3 +1,5 @@
+using NUnit;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -91,8 +93,12 @@ public class Player : MonoBehaviour
     // ----------------------------------------------------------------------------------------------------------------------------------
     [field: Space(30)]
     [field: Header("Ground / Ceiling  Checks")]
-    [field: SerializeField] public float standingGroundCheckLength { get; private set; }
-    [field: SerializeField] public float groundCheckOffset { get; private set; }
+    [field: SerializeField] public float sphereCastLength { get; private set; }
+    [field: SerializeField] public float sphereCastRadius { get; private set; }
+    [field: SerializeField] public float sphereCastRadiusMultiplier { get; private set; }
+    
+    [field: Space(10)]
+    [field: SerializeField] public float allowedSlopeAngle { get; private set; }
 
 
     #region Getters / Setters
@@ -142,10 +148,11 @@ public class Player : MonoBehaviour
         forceIncrementTimer = new GlobalTimer(forceIncrementDelay);
         staminaRegenTimer = new GlobalTimer(staminaRegenDelay);
 
-        // --- Ray Casts ---
+        // --- Sphere Cast ---
         if (_capsuleCollider != null)
         {
-            standingGroundCheckLength += _capsuleCollider.bounds.extents.y;
+            sphereCastRadius += _capsuleCollider.radius * sphereCastRadiusMultiplier;
+            sphereCastLength += _capsuleCollider.bounds.extents.y - sphereCastRadius;
         }
 
         // --- Drags ---
@@ -193,5 +200,11 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         stateManager.currentState.PhysicsUpdate();
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + (Vector3.down * sphereCastLength), sphereCastRadius);
     }
 }

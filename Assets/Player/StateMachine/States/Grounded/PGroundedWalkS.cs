@@ -40,14 +40,7 @@ public class PGroundedWalkS : PGroundedSuperS
     {
         base.PhysicsUpdate();
 
-        CalculateSlopeAngle();
-
         _movementVector = ProcessMovementVector(_movementInput, _player.walkSpeed);
-
-        if (_slopeAngle > 0)
-        {
-            _movementVector = CalculateSlopeProjection(_movementVector);
-        }
 
         ApplyMovementForce(_movementVector);
 

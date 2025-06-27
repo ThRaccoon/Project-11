@@ -21,8 +21,6 @@ public class PlayerBaseState
     // --- Movement ---
     protected Vector3 _movementVector;
 
-    // --- Other ---
-    private Vector3[] groundCheckOffsets;
 
     public PlayerBaseState(Player player, Rigidbody rigidbody, PlayerInput playerInput, Transform cameraRotation, PlayerStateManager stateManager)
     {
@@ -32,15 +30,6 @@ public class PlayerBaseState
         _cameraRotation = cameraRotation;
         _playerInput = playerInput;
         _stateManager = stateManager;
-
-        // --- Other ---
-        groundCheckOffsets = new Vector3[]
-        {
-        new Vector3(-_player.groundCheckOffset, 0f, 0f),
-        new Vector3(_player.groundCheckOffset, 0f, 0f),
-        new Vector3(0f, 0f, -_player.groundCheckOffset),
-        new Vector3(0f, 0f, _player.groundCheckOffset)
-        };
     }
 
 
@@ -80,6 +69,24 @@ public class PlayerBaseState
     public virtual void OnExit() { }
 
 
+    protected void RegenStamina()
+    {
+        if (_player.CurrentStamina < _player.maxStamina)
+        {
+            _player.CurrentStamina += _player.regenRate * Time.deltaTime;
+            _player.CurrentStamina = Mathf.Clamp(_player.CurrentStamina, 0, _player.maxStamina);
+        }
+    }
+
+    protected void DepleteStamina()
+    {
+        if (_player.CurrentStamina > 0.0f)
+        {
+            _player.CurrentStamina -= _player.depleteRate * Time.deltaTime;
+            _player.CurrentStamina = Mathf.Clamp(_player.CurrentStamina, 0, _player.maxStamina);
+        }
+    }
+
     protected Vector3 ProcessMovementVector(Vector2 movementInput, float movementSpeed)
     {
         Vector3 movementVector = new Vector3(movementInput.x * movementSpeed, 0.0f, movementInput.y * movementSpeed);
@@ -99,44 +106,17 @@ public class PlayerBaseState
         }
     }
 
-    protected void RegenStamina()
-    {
-        if (_player.CurrentStamina < _player.maxStamina)
-        {
-            _player.CurrentStamina += _player.regenRate * Time.deltaTime;
-            _player.CurrentStamina = Mathf.Clamp(_player.CurrentStamina, 0, _player.maxStamina);
-        }
-    }
-
-    protected void DepleteStamina()
-    {
-        if (_player.CurrentStamina > 0.0f)
-        {
-            _player.CurrentStamina -= _player.depleteRate * Time.deltaTime;
-            _player.CurrentStamina = Mathf.Clamp(_player.CurrentStamina, 0, _player.maxStamina);
-        }
-    }
-
     protected void IsGrounded(float raycastLength)
     {
         _player.IsGrounded = false;
 
-        Debug.DrawRay(_player.transform.position, Vector3.down * raycastLength, Color.white, 2.0f);
-        if (Physics.Raycast(_player.transform.position, Vector3.down, out RaycastHit hit, raycastLength))
+        if (Physics.SphereCast(_player.transform.position, _player.sphereCastRadius, Vector3.down, out RaycastHit hit, _player.sphereCastLength))
         {
-            _hitInfo = hit;
-            _player.IsGrounded = true;
-            return;
-        }
-
-        foreach (Vector3 offset in groundCheckOffsets)
-        {
-            Debug.DrawRay(_player.transform.position + offset, Vector3.down * raycastLength, Color.red, 2.0f);
-            if (Physics.Raycast(_player.transform.position + offset, Vector3.down, out hit, raycastLength))
+            float angle = Vector3.Angle(Vector3.up, hit.normal);
+            if (angle <= _player.allowedSlopeAngle)
             {
                 _hitInfo = hit;
                 _player.IsGrounded = true;
-                break;
             }
         }
     }

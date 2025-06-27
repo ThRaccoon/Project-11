@@ -35,7 +35,7 @@ public class PFallingSuperS : PlayerBaseState
     {
         base.PhysicsUpdate();
 
-        IsGrounded(_player.standingGroundCheckLength);
+        IsGrounded(_player.sphereCastLength);
 
         _didPhysicsUpdateRan = true;
     }
