@@ -46,6 +46,7 @@ MonoBehaviour:
     m_Value:
     - {fileID: 11400000, guid: 404820c4cf36ad944862fa59c56064f0, type: 2}
     - {fileID: 11400000, guid: 2384dbf2c1c420f45a792fbc315fbfb1, type: 2}
+    - {fileID: 11400000, guid: cb724139ea2be234da0b4c3fcd984446, type: 2}
 --- !u!114 &-7796425859217665826
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -661,13 +662,13 @@ MonoBehaviour:
     m_Value: 0
   top:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 0, b: 0.00390625, a: 1}
+    m_Value: {r: 0.0078125, g: 0.0078125, b: 0.0078125, a: 1}
   middle:
     m_OverrideState: 1
-    m_Value: {r: 0.0046875, g: 0.0109375, b: 0.015625, a: 1}
+    m_Value: {r: 0.0078125, g: 0.0078125, b: 0.0078125, a: 1}
   bottom:
     m_OverrideState: 1
-    m_Value: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+    m_Value: {r: 0.03125, g: 0.03125, b: 0.03125, a: 1}
   gradientDiffusion:
     m_OverrideState: 1
     m_Value: 1
