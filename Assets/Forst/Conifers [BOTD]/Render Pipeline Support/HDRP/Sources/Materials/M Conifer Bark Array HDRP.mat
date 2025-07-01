@@ -24,7 +24,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M Conifer Bark Array HDRP
-  m_Shader: {fileID: -6465566751694194690, guid: afe44cbbbd7f19d4b933d5c98d2ea8ff, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: afe44cbbbd7f19d4b933d5c98d2ea8ff,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -81,22 +82,18 @@ Material:
     - _DoubleSidedGIMode: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _DstBlend2: 0
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
     - _ExcludeFromTUAndAA: 0
-    - _MaterialID: 1
-    - _MaterialTypeMask: 2
     - _NormalStrength: 1
     - _OpaqueCullMode: 2
-    - _PerPixelSorting: 0
     - _RayTracing: 0
     - _ReceivesSSR: 0
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
-    - _Smoothness: 0
+    - _Smoothness: 1
     - _SrcBlend: 1
     - _StencilRef: 0
     - _StencilRefDepth: 0
@@ -110,7 +107,6 @@ Material:
     - _StencilWriteMaskMV: 41
     - _SupportDecals: 1
     - _SurfaceType: 0
-    - _TransmissionEnable: 1
     - _TransparentBackfaceEnable: 0
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
@@ -129,4 +125,3 @@ Material:
     - _HueVariation: {r: 0, g: 0.9, b: 0.8255172, a: 0.1}
     - _WindMultipliers: {r: 0.5, g: 2, b: 1, a: 0}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1
